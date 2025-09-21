@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle del Producto</title>
+<style>
+body { font-family: Arial; text-align:center; background:#f9f9f9; }
+h1 { color:#333; }
+img { width:300px; border-radius:10px; }
+button { background:#28a745; color:#fff; border:none; padding:10px; margin-top:10px; cursor:pointer; border-radius:5px; }
+button:hover { background:#218838; }
+</style>
+</head>
+<body>
+<div id="detalle"></div>
+
+<script src="productos.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id"));
+const producto = productos.find(p => p.id === id);
+
+if(producto){
+  document.getElementById("detalle").innerHTML = `
+    <h1>${producto.nombre}</h1>
+    <img src="${producto.imagen}" alt="${producto.nombre}">
+    <p>${producto.descripcion}</p>
+    <p><b>${producto.precio} €</b></p>
+    <button onclick="agregarCarrito(${producto.id})">Añadir al carrito</button>
+    <br><br>
+    <button onclick="window.location.href='index.html'">Volver</button>
+  `;
+} else {
+  document.getElementById("detalle").innerHTML = "<p>Producto no encontrado</p>";
+}
+
+function agregarCarrito(id){
+  let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+  carrito.push(id);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert("Producto añadido al carrito ✅");
+}
+</script>
+</body>
+</html>
