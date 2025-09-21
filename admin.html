@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin - Mi Tienda</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #eef2f3; }
+    form { background: #fff; padding: 20px; margin: 20px auto; width: 300px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input { margin: 10px; padding: 10px; width: 90%; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px; background: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <h1>Panel de Administración 🔑</h1>
+  <form id="form-login">
+    <h3>Iniciar Sesión</h3>
+    <input type="email" id="email" placeholder="Tu email">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button type="button" id="btn-login">Entrar</button>
+  </form>
+
+  <form id="form-producto" style="display:none;">
+    <h3>Añadir Producto</h3>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="descripcion" placeholder="Descripción">
+    <input type="text" id="precio" placeholder="Precio">
+    <input type="text" id="imagen" placeholder="URL de la imagen">
+    <button type="button" id="btn-guardar">Guardar</button>
+  </form>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module">
+    import { auth, signInWithEmailAndPassword, db, collection, addDoc } from "./firebase.js";
+
+    const formLogin = document.getElementById("form-login");
+    const formProducto = document.getElementById("form-producto");
+
+    document.getElementById("btn-login").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login correcto ✅");
+        formLogin.style.display = "none";
+        formProducto.style.display = "block";
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    });
+
+    document.getElementById("btn-guardar").addEventListener("click", async () => {
+      const nombre = document.getElementById("nombre").value;
+      const descripcion = document.getElementById("descripcion").value;
+      const precio = document.getElementById("precio").value;
+      const imagen = document.getElementById("imagen").value;
+
+      try {
+        await addDoc(collection(db, "productos"), { nombre, descripcion, precio, imagen });
+        alert("Producto añadido ✅");
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    });
+  </script>
+</body>
+</html>
