@@ -3,35 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Tienda Online</title>
+<title>Mi Tienda Online 🛒</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Arial; text-align: center; background:#f9f9f9; }
-  h1 { color:#333; }
-  .productos { display:flex; flex-wrap:wrap; justify-content:center; }
-  .producto { border:1px solid #ddd; margin:10px; padding:15px; width:200px; background:#fff; border-radius:10px; }
-  img { width:100%; border-radius:5px; }
-  button { background:#28a745; color:#fff; border:none; padding:8px; margin-top:5px; cursor:pointer; border-radius:5px; }
-  button:hover { background:#218838; }
+body { font-family: 'Montserrat', sans-serif; margin:0; background:#f5f5f5; }
+h1 { text-align:center; color:#333; margin:20px 0; }
+.productos { display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:20px; padding:0 20px 80px 20px; }
+.producto { background:#fff; border-radius:15px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
+.producto:hover { transform: translateY(-5px); }
+.producto img { width:100%; height:200px; object-fit:cover; }
+.producto h2 { margin:10px; font-size:20px; }
+.producto p { margin:5px 10px; }
+.producto button { margin:10px; padding:10px; width:calc(100% - 20px); background:#ff6f61; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+.producto button:hover { background:#e65b50; }
+
+/* Carrito flotante */
+#carrito-btn { position:fixed; bottom:20px; right:20px; background:#28a745; color:#fff; border:none; padding:15px; border-radius:50%; font-size:20px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
+#carrito-flotante { position:fixed; bottom:80px; right:20px; width:300px; max-height:400px; background:#fff; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2); overflow:auto; display:none; flex-direction:column; padding:10px; }
+#carrito-flotante h3 { margin:0 0 10px 0; text-align:center; }
+#carrito-flotante .item { display:flex; justify-content:space-between; margin-bottom:10px; }
+#carrito-flotante button { background:#dc3545; color:#fff; border:none; padding:5px 8px; border-radius:5px; cursor:pointer; }
 </style>
 </head>
 <body>
-<h1>Bienvenido a mi Tienda Online 🚀</h1>
+
+<h1>Bienvenido a mi Tienda Online 🛒</h1>
+
 <div class="productos" id="lista-productos"></div>
+
+<!-- Carrito flotante -->
+<button id="carrito-btn">🛒</button>
+<div id="carrito-flotante">
+  <h3>Tu Carrito</h3>
+  <div id="carrito-items"></div>
+  <button onclick="vaciarCarrito()">Vaciar carrito</button>
+</div>
 
 <script src="productos.js"></script>
 <script>
+// Mostrar productos
 const contenedor = document.getElementById("lista-productos");
 productos.forEach(p => {
   contenedor.innerHTML += `
-  <div class="producto">
-    <img src="${p.imagen}" alt="${p.nombre}">
-    <h2>${p.nombre}</h2>
-    <p>${p.descripcion}</p>
-    <p><b>${p.precio} €</b></p>
-    <button onclick="window.location.href='producto.html?id=${p.id}'">Comprar</button>
-  </div>`;
+    <div class="producto">
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h2>${p.nombre}</h2>
+      <p>${p.descripcion}</p>
+      <p><b>${p.precio} €</b></p>
+      <button onclick="agregarCarrito(${p.id})">Añadir al carrito</button>
+    </div>`;
 });
+
+// Carrito funcional
+let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+const carritoBtn = document.getElementById("carrito-btn");
+const carritoFlotante = document.getElementById("carrito-flotante");
+const carritoItems = document.getElementById("carrito-items");
+
+function actualizarCarrito(){
+  carritoItems.innerHTML = "";
+  carrito.forEach((id,i)=>{
+    const p = productos.find(x=>x.id===id);
+    if(p){
+      carritoItems.innerHTML += `
+        <div class="item">
+          <span>${p.nombre} - ${p.precio}€</span>
+          <button onclick="quitar(${i})">X</button>
+        </div>`;
+    }
+  });
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function agregarCarrito(id){
+  carrito.push(id);
+  actualizarCarrito();
+  alert("Producto añadido al carrito ✅");
+}
+
+function quitar(i){
+  carrito.splice(i,1);
+  actualizarCarrito();
+}
+
+function vaciarCarrito(){
+  carrito = [];
+  actualizarCarrito();
+}
+
+// Mostrar u ocultar carrito
+carritoBtn.addEventListener("click",()=>{
+  carritoFlotante.style.display = carritoFlotante.style.display==="flex" ? "none" : "flex";
+});
+
+// Inicializar
+actualizarCarrito();
 </script>
 </body>
 </html>
-
