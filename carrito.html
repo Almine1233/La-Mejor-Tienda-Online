@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito</title>
+<style>
+body { font-family: Arial; text-align:center; background:#f9f9f9; }
+h1 { color:#333; }
+.producto { border:1px solid #ddd; margin:10px; padding:15px; width:200px; background:#fff; border-radius:10px; display:inline-block; }
+button { background:#dc3545; color:#fff; border:none; padding:5px; margin-top:5px; cursor:pointer; border-radius:5px; }
+button:hover { background:#c82333; }
+</style>
+</head>
+<body>
+<h1>Carrito 🛒</h1>
+<div id="lista-carrito"></div>
+<button onclick="vaciarCarrito()">Vaciar carrito</button>
+<script src="productos.js"></script>
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+const cont = document.getElementById("lista-carrito");
+function mostrarCarrito(){
+  cont.innerHTML = "";
+  carrito.forEach((id, index) => {
+    const p = productos.find(x=>x.id===id);
+    if(p){
+      cont.innerHTML += `
+        <div class="producto">
+          <h2>${p.nombre}</h2>
+          <p>${p.descripcion}</p>
+          <p><b>${p.precio} €</b></p>
+          <button onclick="quitar(${index})">Eliminar</button>
+        </div>
+      `;
+    }
+  });
+}
+function quitar(i){
+  carrito.splice(i,1);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  mostrarCarrito();
+}
+function vaciarCarrito(){
+  carrito = [];
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  mostrarCarrito();
+}
+mostrarCarrito();
+</script>
+</body>
+</html>
