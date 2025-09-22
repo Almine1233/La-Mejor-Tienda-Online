@@ -1,103 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Tienda Online 🛒</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-<style>
-body { font-family: 'Montserrat', sans-serif; margin:0; background:#f5f5f5; }
-h1 { text-align:center; color:#333; margin:20px 0; }
-.productos { display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:20px; padding:0 20px 80px 20px; }
-.producto { background:#fff; border-radius:15px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
-.producto:hover { transform: translateY(-5px); }
-.producto img { width:100%; height:200px; object-fit:cover; }
-.producto h2 { margin:10px; font-size:20px; }
-.producto p { margin:5px 10px; }
-.producto button { margin:10px; padding:10px; width:calc(100% - 20px); background:#ff6f61; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
-.producto button:hover { background:#e65b50; }
-
-/* Carrito flotante */
-#carrito-btn { position:fixed; bottom:20px; right:20px; background:#28a745; color:#fff; border:none; padding:15px; border-radius:50%; font-size:20px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
-#carrito-flotante { position:fixed; bottom:80px; right:20px; width:300px; max-height:400px; background:#fff; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2); overflow:auto; display:none; flex-direction:column; padding:10px; }
-#carrito-flotante h3 { margin:0 0 10px 0; text-align:center; }
-#carrito-flotante .item { display:flex; justify-content:space-between; margin-bottom:10px; }
-#carrito-flotante button { background:#dc3545; color:#fff; border:none; padding:5px 8px; border-radius:5px; cursor:pointer; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Mejor Tienda Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; margin:0; background: #f8f9fa; }
+    header { background: #4CAF50; color:white; padding:20px; text-align:center; font-size: 28px; font-weight: bold; }
+    .donaciones { background: #fff3cd; padding:15px; text-align:center; border-bottom:2px solid #ffeeba; }
+    .donaciones button { background:#ff9800; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:5px; font-size:16px; }
+    .donaciones button:hover { background:#e68900; }
+    .contenedor { display:flex; flex-wrap:wrap; justify-content:center; padding:20px; }
+    .producto { border:1px solid #ddd; padding:15px; margin:15px; width:280px; background:white; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); text-align:center; }
+    .producto img { width:100%; border-radius:10px; }
+    h2 { margin:10px 0; font-size:20px; }
+    p { margin:5px 0; }
+    .botones { margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+    .botones button { padding:10px; border:none; border-radius:5px; font-size:15px; cursor:pointer; }
+    .comprar { background:#007bff; color:white; }
+    .comprar:hover { background:#0069d9; }
+    .carrito { background:#28a745; color:white; }
+    .carrito:hover { background:#218838; }
+    /* carrito flotante */
+    #carrito-flotante { position:fixed; bottom:20px; right:20px; background:#fff; border:2px solid #4CAF50; border-radius:10px; padding:15px; width:280px; max-height:400px; overflow:auto; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+    #carrito-flotante h3 { margin:0 0 10px 0; text-align:center; }
+    /* sección donación */
+    #donar { padding:40px; text-align:center; background:#e9ecef; margin-top:20px; }
+  </style>
 </head>
 <body>
+  <header>Bienvenido a la mejor tienda online 🛒</header>
 
-<h1>Bienvenido a mi Tienda Online 🛒</h1>
+  <div class="donaciones">
+    <p>¿Quieres apoyar este proyecto? 💖</p>
+    <button onclick="location.href='#donar'">Donar</button>
+  </div>
 
-<div class="productos" id="lista-productos"></div>
+  <div class="contenedor" id="lista-productos">
+    <!-- productos generados desde productos.js -->
+  </div>
 
-<!-- Carrito flotante -->
-<button id="carrito-btn">🛒</button>
-<div id="carrito-flotante">
-  <h3>Tu Carrito</h3>
-  <div id="carrito-items"></div>
-  <button onclick="vaciarCarrito()">Vaciar carrito</button>
-</div>
+  <div id="donar">
+    <h2>🙏 Gracias por tu apoyo</h2>
+    <p>Gracias por querer donar, ayudas a un chaval a cumplir su sueño 🚀</p>
+  </div>
 
-<script src="productos.js"></script>
-<script>
-// Mostrar productos
-const contenedor = document.getElementById("lista-productos");
-productos.forEach(p => {
-  contenedor.innerHTML += `
-    <div class="producto">
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h2>${p.nombre}</h2>
-      <p>${p.descripcion}</p>
-      <p><b>${p.precio} €</b></p>
-      <button onclick="agregarCarrito(${p.id})">Añadir al carrito</button>
-    </div>`;
-});
+  <!-- carrito flotante -->
+  <div id="carrito-flotante">
+    <h3>🛒 Carrito</h3>
+    <ul id="items-carrito"></ul>
+  </div>
 
-// Carrito funcional
-let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-const carritoBtn = document.getElementById("carrito-btn");
-const carritoFlotante = document.getElementById("carrito-flotante");
-const carritoItems = document.getElementById("carrito-items");
-
-function actualizarCarrito(){
-  carritoItems.innerHTML = "";
-  carrito.forEach((id,i)=>{
-    const p = productos.find(x=>x.id===id);
-    if(p){
-      carritoItems.innerHTML += `
-        <div class="item">
-          <span>${p.nombre} - ${p.precio}€</span>
-          <button onclick="quitar(${i})">X</button>
-        </div>`;
-    }
-  });
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-function agregarCarrito(id){
-  carrito.push(id);
-  actualizarCarrito();
-  alert("Producto añadido al carrito ✅");
-}
-
-function quitar(i){
-  carrito.splice(i,1);
-  actualizarCarrito();
-}
-
-function vaciarCarrito(){
-  carrito = [];
-  actualizarCarrito();
-}
-
-// Mostrar u ocultar carrito
-carritoBtn.addEventListener("click",()=>{
-  carritoFlotante.style.display = carritoFlotante.style.display==="flex" ? "none" : "flex";
-});
-
-// Inicializar
-actualizarCarrito();
-</script>
+  <script src="productos.js"></script>
 </body>
 </html>
+
