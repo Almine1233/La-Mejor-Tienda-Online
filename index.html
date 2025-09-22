@@ -4,55 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Mejor Tienda Online</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Montserrat', sans-serif; margin:0; background: #f8f9fa; }
-    header { background: #4CAF50; color:white; padding:20px; text-align:center; font-size: 28px; font-weight: bold; }
-    .donaciones { background: #fff3cd; padding:15px; text-align:center; border-bottom:2px solid #ffeeba; }
-    .donaciones button { background:#ff9800; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:5px; font-size:16px; }
-    .donaciones button:hover { background:#e68900; }
-    .contenedor { display:flex; flex-wrap:wrap; justify-content:center; padding:20px; }
-    .producto { border:1px solid #ddd; padding:15px; margin:15px; width:280px; background:white; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); text-align:center; }
-    .producto img { width:100%; border-radius:10px; }
-    h2 { margin:10px 0; font-size:20px; }
-    p { margin:5px 0; }
-    .botones { margin-top:10px; display:flex; flex-direction:column; gap:8px; }
-    .botones button { padding:10px; border:none; border-radius:5px; font-size:15px; cursor:pointer; }
-    .comprar { background:#007bff; color:white; }
-    .comprar:hover { background:#0069d9; }
-    .carrito { background:#28a745; color:white; }
-    .carrito:hover { background:#218838; }
-    /* carrito flotante */
-    #carrito-flotante { position:fixed; bottom:20px; right:20px; background:#fff; border:2px solid #4CAF50; border-radius:10px; padding:15px; width:280px; max-height:400px; overflow:auto; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-    #carrito-flotante h3 { margin:0 0 10px 0; text-align:center; }
-    /* sección donación */
-    #donar { padding:40px; text-align:center; background:#e9ecef; margin-top:20px; }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
+    header { background: #4CAF50; color: white; padding: 20px; text-align: center; }
+    h1 { margin: 0; }
+    .donar { background: #ffeb3b; padding: 10px; text-align: center; }
+    .donar button { padding: 10px 20px; border: none; background: #ff9800; color: white; cursor: pointer; border-radius: 5px; }
+    .donar button:hover { background: #e68900; }
+    .contenedor { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+    .producto { border: 1px solid #ccc; margin: 10px; padding: 15px; width: 250px; background: white; border-radius: 10px; text-align: center; }
+    .producto img { width: 100%; border-radius: 10px; }
+    .producto h2 { font-size: 20px; margin: 10px 0; }
+    .producto p { margin: 5px 0; }
+    .producto button { padding: 10px; margin: 5px 0; border: none; border-radius: 5px; cursor: pointer; width: 100%; }
+    .comprar { background: #007bff; color: white; }
+    .comprar:hover { background: #0056b3; }
+    .carrito-btn { background: #28a745; color: white; }
+    .carrito-btn:hover { background: #1e7e34; }
+
+    /* Carrito flotante */
+    #carrito-icono {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 50%;
+      width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; cursor: pointer;
+    }
+    #carrito-panel {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 15px;
+      width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
-  <header>Bienvenido a la mejor tienda online 🛒</header>
+  <header>
+    <h1>🎉 Bienvenido a la Mejor Tienda Online 🎉</h1>
+  </header>
 
-  <div class="donaciones">
-    <p>¿Quieres apoyar este proyecto? 💖</p>
-    <button onclick="location.href='#donar'">Donar</button>
+  <div class="donar">
+    <p>💖 ¿Quieres apoyar este proyecto? ¡Haz una donación!</p>
+    <button onclick="window.location.href='donar.html'">Donar</button>
   </div>
 
   <div class="contenedor" id="lista-productos">
-    <!-- productos generados desde productos.js -->
+    <!-- Los productos se cargan desde productos.js -->
   </div>
 
-  <div id="donar">
-    <h2>🙏 Gracias por tu apoyo</h2>
-    <p>Gracias por querer donar, ayudas a un chaval a cumplir su sueño 🚀</p>
+  <!-- Carrito flotante -->
+  <div id="carrito-icono">🛒</div>
+  <div id="carrito-panel">
+    <h3>Tu Carrito</h3>
+    <ul id="carrito-lista"></ul>
+    <p><b>Total: <span id="carrito-total">0</span> €</b></p>
   </div>
 
-  <!-- carrito flotante -->
-  <div id="carrito-flotante">
-    <h3>🛒 Carrito</h3>
-    <ul id="items-carrito"></ul>
-  </div>
+  <footer>
+    <p>🙏 Gracias por visitar mi tienda. Tu apoyo significa mucho ❤️</p>
+  </footer>
 
   <script src="productos.js"></script>
 </body>
 </html>
-
