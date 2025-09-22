@@ -1,8 +1,10 @@
-// Productos iniciales
+// Productos iniciales con imágenes reales
 let productos = JSON.parse(localStorage.getItem("productos")) || [
-  { nombre: "Auriculares Gamer", descripcion: "Con micrófono y luces LED", precio: 25, imagen: "https://via.placeholder.com/250x200?text=Auriculares" },
-  { nombre: "Teclado Mecánico", descripcion: "Switches azules, retroiluminado", precio: 40, imagen: "https://via.placeholder.com/250x200?text=Teclado" },
-  { nombre: "Ratón Inalámbrico", descripcion: "Ergonómico y rápido", precio: 15, imagen: "https://via.placeholder.com/250x200?text=Ratón" },
+  { nombre: "Auriculares Gamer", descripcion: "Con micrófono y luces LED RGB", precio: 29, imagen: "https://m.media-amazon.com/images/I/71r5pFwq1cL._AC_SL1500_.jpg" },
+  { nombre: "Teclado Mecánico", descripcion: "Retroiluminado RGB, switches azules", precio: 45, imagen: "https://m.media-amazon.com/images/I/81d0k2vsm+L._AC_SL1500_.jpg" },
+  { nombre: "Ratón Inalámbrico", descripcion: "Sensor preciso y diseño ergonómico", precio: 19, imagen: "https://m.media-amazon.com/images/I/61B8wzFf5mL._AC_SL1500_.jpg" },
+  { nombre: "Monitor 24'' Full HD", descripcion: "Pantalla IPS con 75Hz", precio: 120, imagen: "https://m.media-amazon.com/images/I/81QpkIctqPL._AC_SL1500_.jpg" },
+  { nombre: "Silla Gamer", descripcion: "Ergonómica con soporte lumbar", precio: 150, imagen: "https://m.media-amazon.com/images/I/71g1N5D3LPL._AC_SL1500_.jpg" },
 ];
 
 // Renderizar productos
