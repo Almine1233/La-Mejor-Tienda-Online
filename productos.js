@@ -1,47 +1,47 @@
-let productos = [
-  {
-    id: 1,
-    nombre: "Auriculares Gamer",
-    descripcion: "Auriculares con sonido envolvente y micro integrado",
-    precio: 45,
-    imagen: "https://images.unsplash.com/photo-1593134731660-6db0e271d17e?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    id: 2,
-    nombre: "Camiseta Estilosa",
-    descripcion: "Camiseta cómoda y moderna para el día a día",
-    precio: 20,
-    imagen: "https://images.unsplash.com/photo-1602810318724-bd2e8e50393e?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    id: 3,
-    nombre: "Mochila Urbana",
-    descripcion: "Mochila resistente para colegio o viajes",
-    precio: 35,
-    imagen: "https://images.unsplash.com/photo-1593032465172-f88f4eae7390?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    id: 4,
-    nombre: "Gafas de Sol",
-    descripcion: "Gafas de sol modernas con protección UV",
-    precio: 25,
-    imagen: "https://images.unsplash.com/photo-1524230576980-5d180019ba1d?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    id: 5,
-    nombre: "Reloj Deportivo",
-    descripcion: "Reloj inteligente con seguimiento de actividad",
-    precio: 60,
-    imagen: "https://images.unsplash.com/photo-1519112230140-41ee79c1492b?auto=format&fit=crop&w=400&q=80"
-  }
+const productos = [
+  { id:1, nombre:"Camiseta", descripcion:"Camiseta de algodón 100%", precio:15, imagen:"https://picsum.photos/300/200?random=1" },
+  { id:2, nombre:"Zapatillas", descripcion:"Zapatillas deportivas cómodas", precio:45, imagen:"https://picsum.photos/300/200?random=2" },
+  { id:3, nombre:"Mochila", descripcion:"Mochila resistente al agua", precio:30, imagen:"https://picsum.photos/300/200?random=3" },
+  { id:4, nombre:"Auriculares", descripcion:"Auriculares con sonido envolvente", precio:60, imagen:"https://picsum.photos/300/200?random=4" },
+  { id:5, nombre:"Reloj", descripcion:"Reloj digital multifunción", precio:25, imagen:"https://picsum.photos/300/200?random=5" }
 ];
 
-function guardarProductos() {
-  localStorage.setItem("productos", JSON.stringify(productos));
+let carrito = [];
+
+function renderProductos() {
+  const contenedor = document.getElementById("lista-productos");
+  contenedor.innerHTML = "";
+  productos.forEach(prod => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${prod.imagen}" alt="${prod.nombre}">
+      <h2>${prod.nombre}</h2>
+      <p>${prod.descripcion}</p>
+      <p><b>Precio: ${prod.precio}€</b></p>
+      <div class="botones">
+        <button class="comprar">Comprar</button>
+        <button class="carrito" onclick="agregarCarrito(${prod.id})">Añadir al carrito</button>
+      </div>
+    `;
+    contenedor.appendChild(div);
+  });
 }
 
-function cargarProductos() {
-  let datos = localStorage.getItem("productos");
-  if (datos) productos = JSON.parse(datos);
+function agregarCarrito(id) {
+  const prod = productos.find(p => p.id === id);
+  carrito.push(prod);
+  renderCarrito();
 }
-cargarProductos();
+
+function renderCarrito() {
+  const ul = document.getElementById("items-carrito");
+  ul.innerHTML = "";
+  carrito.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} - ${item.precio}€`;
+    ul.appendChild(li);
+  });
+}
+
+renderProductos();
