@@ -4,21 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Mejor Tienda Online</title>
-  <style>.filtros {
-  margin: 20px;
-}
-.filtros button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.filtros button:hover {
-  background: #0056b3;
-}
+  <style>
+    .filtros {
+      margin: 20px;
+      text-align: center;
+    }
+    .filtros button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .filtros button:hover {
+      background: #0056b3;
+    }
 
     body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
     header { background: #4CAF50; color: white; padding: 20px; text-align: center; }
@@ -26,14 +28,6 @@
     .donar { background: #ffeb3b; padding: 10px; text-align: center; }
     .donar button { padding: 10px 20px; border: none; background: #ff9800; color: white; cursor: pointer; border-radius: 5px; }
     .donar button:hover { background: #e68900; }
-    <!-- Filtros de categorías -->
-<div class="filtros">
-  <button onclick="filtrarProductos('todos')">Todos</button>
-  <button onclick="filtrarProductos('Gaming')">Gaming</button>
-  <button onclick="filtrarProductos('Accesorios')">Accesorios</button>
-  <button onclick="filtrarProductos('Audio')">Audio</button>
-  <button onclick="filtrarProductos('Dispositivos')">Dispositivos</button>
-</div>
 
     .contenedor { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
     .producto { border: 1px solid #ccc; margin: 10px; padding: 15px; width: 280px; background: white; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
@@ -90,6 +84,15 @@
   <div class="donar">
     <p>💖 ¿Quieres apoyar este proyecto? ¡Haz una donación!</p>
     <button onclick="window.location.href='donar.html'">Donar</button>
+  </div>
+
+  <!-- Filtros de categorías -->
+  <div class="filtros">
+    <button onclick="filtrarProductos('todos')">Todos</button>
+    <button onclick="filtrarProductos('Gaming')">Gaming</button>
+    <button onclick="filtrarProductos('Accesorios')">Accesorios</button>
+    <button onclick="filtrarProductos('Audio')">Audio</button>
+    <button onclick="filtrarProductos('Dispositivos')">Dispositivos</button>
   </div>
 
   <div class="contenedor" id="lista-productos">
