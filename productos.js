@@ -1,69 +1,59 @@
-let productos = JSON.parse(localStorage.getItem("productos")) || [
-  { nombre: "Auriculares Gamer", descripcion: "Con micrófono y luces LED RGB", precio: 29, categoria: "Gaming", imagen: "https://m.media-amazon.com/images/I/71r5pFwq1cL._AC_SL1500_.jpg" },
-  { nombre: "Teclado Mecánico", descripcion: "Retroiluminado RGB, switches azules", precio: 45, categoria: "Gaming", imagen: "https://m.media-amazon.com/images/I/81d0k2vsm+L._AC_SL1500_.jpg" },
-  { nombre: "Ratón Inalámbrico", descripcion: "Sensor preciso y diseño ergonómico", precio: 19, categoria: "Accesorios", imagen: "https://m.media-amazon.com/images/I/61B8wzFf5mL._AC_SL1500_.jpg" },
-  { nombre: "Monitor 24'' Full HD", descripcion: "Pantalla IPS con 75Hz", precio: 120, categoria: "Dispositivos", imagen: "https://m.media-amazon.com/images/I/81QpkIctqPL._AC_SL1500_.jpg" },
-  { nombre: "Silla Gamer", descripcion: "Ergonómica con soporte lumbar", precio: 150, categoria: "Gaming", imagen: "https://m.media-amazon.com/images/I/71g1N5D3LPL._AC_SL1500_.jpg" },
-  { nombre: "Torre de PC", descripcion: "PC Gaming Ryzen 5 + RTX 3060", precio: 950, categoria: "Dispositivos", imagen: "https://m.media-amazon.com/images/I/71tHKT+7h-L._AC_SL1500_.jpg" },
-  { nombre: "AirPods Pro", descripcion: "Auriculares inalámbricos con cancelación de ruido", precio: 229, categoria: "Audio", imagen: "https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg" },
-  { nombre: "Altavoces Bluetooth", descripcion: "Sonido estéreo y batería de larga duración", precio: 59, categoria: "Audio", imagen: "https://m.media-amazon.com/images/I/71cQWYVtc+L._AC_SL1500_.jpg" },
-  { nombre: "Tablet 10''", descripcion: "Pantalla HD, 4GB RAM, 64GB almacenamiento", precio: 180, categoria: "Dispositivos", imagen: "https://m.media-amazon.com/images/I/71t6xY4a4+L._AC_SL1500_.jpg" },
-  { nombre: "Smartwatch", descripcion: "Reloj inteligente con monitor de salud y notificaciones", precio: 75, categoria: "Accesorios", imagen: "https://m.media-amazon.com/images/I/71E6pGrvC3L._AC_SL1500_.jpg" },
+const productos = [
+  { id: 1, nombre: "PC Gamer", precio: 1200, categoria: "Gaming", imagen: "https://via.placeholder.com/300x200?text=PC+Gamer" },
+  { id: 2, nombre: "AirPods", precio: 180, categoria: "Audio", imagen: "https://via.placeholder.com/300x200?text=AirPods" },
+  { id: 3, nombre: "Altavoces Bluetooth", precio: 90, categoria: "Audio", imagen: "https://via.placeholder.com/300x200?text=Altavoces" },
+  { id: 4, nombre: "Monitor 27''", precio: 250, categoria: "Gaming", imagen: "https://via.placeholder.com/300x200?text=Monitor" },
+  { id: 5, nombre: "Teclado Mecánico", precio: 70, categoria: "Accesorios", imagen: "https://via.placeholder.com/300x200?text=Teclado" },
+  { id: 6, nombre: "Ratón Gamer", precio: 45, categoria: "Accesorios", imagen: "https://via.placeholder.com/300x200?text=Raton" },
+  { id: 7, nombre: "Silla Gaming", precio: 180, categoria: "Gaming", imagen: "https://via.placeholder.com/300x200?text=Silla" },
+  { id: 8, nombre: "Tablet Android", precio: 300, categoria: "Dispositivos", imagen: "https://via.placeholder.com/300x200?text=Tablet" },
+  { id: 9, nombre: "Smartwatch", precio: 150, categoria: "Dispositivos", imagen: "https://via.placeholder.com/300x200?text=Smartwatch" },
+  { id: 10, nombre: "Auriculares Gaming", precio: 80, categoria: "Audio", imagen: "https://via.placeholder.com/300x200?text=Auriculares" }
 ];
 
-// Renderizar productos
-function mostrarProductos(lista = productos) {
-  const contenedor = document.getElementById("lista-productos");
+const contenedor = document.getElementById("lista-productos");
+let carrito = [];
+
+function mostrarProductos() {
   contenedor.innerHTML = "";
-  lista.forEach((p, i) => {
-    contenedor.innerHTML += `
-      <div class="producto">
-        <img src="${p.imagen}" alt="${p.nombre}">
-        <h2>${p.nombre}</h2>
-        <p>${p.descripcion}</p>
-        <p><b>${p.precio} €</b></p>
-        <button class="comprar">Comprar</button>
-        <button class="carrito-btn" onclick="agregarCarrito(${i})">Añadir al carrito</button>
-      </div>
+  productos.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h2>${p.nombre}</h2>
+      <p><b>${p.precio} €</b></p>
+      <button class="comprar">Comprar</button>
+      <button class="carrito-btn" onclick="agregarAlCarrito(${p.id})">Añadir al carrito</button>
     `;
+    contenedor.appendChild(div);
   });
 }
 
-// Filtro por categoría
-function filtrarProductos(categoria) {
-  if (categoria === "todos") {
-    mostrarProductos(productos);
-  } else {
-    const filtrados = productos.filter(p => p.categoria === categoria);
-    mostrarProductos(filtrados);
-  }
-}
-
-// Carrito (igual que antes)
-let carrito = [];
-function agregarCarrito(i) {
-  carrito.push(productos[i]);
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
+  carrito.push(producto);
   actualizarCarrito();
 }
+
 function actualizarCarrito() {
   const lista = document.getElementById("carrito-lista");
   const total = document.getElementById("carrito-total");
   lista.innerHTML = "";
   let suma = 0;
-  carrito.forEach((p, i) => {
-    lista.innerHTML += `<li>${p.nombre} - ${p.precio}€ <button onclick="eliminarCarrito(${i})">❌</button></li>`;
+  carrito.forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = `${p.nombre} - ${p.precio} €`;
+    lista.appendChild(li);
     suma += p.precio;
   });
   total.textContent = suma;
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
-function eliminarCarrito(i) {
-  carrito.splice(i, 1);
-  actualizarCarrito();
-}
+
 document.getElementById("carrito-icono").addEventListener("click", () => {
   const panel = document.getElementById("carrito-panel");
   panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
 
-// Mostrar productos al cargar
 mostrarProductos();
