@@ -5,71 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Mejor Tienda Online</title>
   <style>
-    .filtros {
-      margin: 20px;
-      text-align: center;
-    }
-    .filtros button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .filtros button:hover {
-      background: #0056b3;
-    }
-
-    body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
-    header { background: #4CAF50; color: white; padding: 20px; text-align: center; }
-    h1 { margin: 0; }
-    .donar { background: #ffeb3b; padding: 10px; text-align: center; }
-    .donar button { padding: 10px 20px; border: none; background: #ff9800; color: white; cursor: pointer; border-radius: 5px; }
-    .donar button:hover { background: #e68900; }
+    body { font-family: Arial, sans-serif; margin: 0; background: #121212; color: #eee; }
+    header { background: #1e1e1e; color: #00d4ff; padding: 20px; text-align: center; }
+    h1 { margin: 0; font-size: 28px; }
+    
+    .donar { background: #1f2a2a; padding: 15px; text-align: center; }
+    .donar button { padding: 10px 20px; border: none; background: #00b894; color: white; cursor: pointer; border-radius: 5px; }
+    .donar button:hover { background: #00997a; }
 
     .contenedor { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
-    .producto { border: 1px solid #ccc; margin: 10px; padding: 15px; width: 280px; background: white; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+    .producto { border: 1px solid #333; margin: 10px; padding: 15px; width: 280px; background: #1e1e1e; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.4);}
     .producto img { width: 100%; border-radius: 10px; }
-    .producto h2 { font-size: 20px; margin: 10px 0; }
+    .producto h2 { font-size: 20px; margin: 10px 0; color: #00d4ff; }
     .producto p { margin: 5px 0; }
     .producto button { padding: 10px; margin: 5px 0; border: none; border-radius: 5px; cursor: pointer; width: 100%; }
     .comprar { background: #007bff; color: white; }
     .comprar:hover { background: #0056b3; }
-    .carrito-btn { background: #28a745; color: white; }
-    .carrito-btn:hover { background: #1e7e34; }
+    .carrito-btn { background: #00b894; color: white; }
+    .carrito-btn:hover { background: #00997a; }
 
     /* Carrito flotante */
     #carrito-icono {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #4CAF50;
-      color: white;
+      background: #00d4ff;
+      color: #121212;
       border-radius: 50%;
       width: 60px; height: 60px;
       display: flex; align-items: center; justify-content: center;
       font-size: 24px; cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
     }
     #carrito-panel {
       position: fixed;
       bottom: 90px;
       right: 20px;
-      background: white;
-      border: 1px solid #ccc;
+      background: #1e1e1e;
+      border: 1px solid #333;
       padding: 15px;
-      width: 300px;
+      width: 320px;
       max-height: 400px;
       overflow-y: auto;
       display: none;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      color: white;
     }
+    #carrito-panel button { margin-top: 10px; background: #007bff; color: white; }
 
     footer {
-      background: #333;
-      color: white;
+      background: #1e1e1e;
+      color: #aaa;
       text-align: center;
       padding: 15px;
       margin-top: 30px;
@@ -86,17 +73,8 @@
     <button onclick="window.location.href='donar.html'">Donar</button>
   </div>
 
-  <!-- Filtros de categorías -->
-  <div class="filtros">
-    <button onclick="filtrarProductos('todos')">Todos</button>
-    <button onclick="filtrarProductos('Gaming')">Gaming</button>
-    <button onclick="filtrarProductos('Accesorios')">Accesorios</button>
-    <button onclick="filtrarProductos('Audio')">Audio</button>
-    <button onclick="filtrarProductos('Dispositivos')">Dispositivos</button>
-  </div>
-
   <div class="contenedor" id="lista-productos">
-    <!-- Los productos se cargan desde productos.js -->
+    <!-- Productos desde productos.js -->
   </div>
 
   <!-- Carrito flotante -->
@@ -105,10 +83,12 @@
     <h3>Tu Carrito</h3>
     <ul id="carrito-lista"></ul>
     <p><b>Total: <span id="carrito-total">0</span> €</b></p>
+    <button onclick="window.location.href='carrito.html'">Comprar Todo</button>
   </div>
 
   <footer>
     <p>🙏 Gracias por visitar mi tienda. Tu apoyo significa mucho ❤️</p>
+    <p>ℹ️ Más info en <a href="info.html" style="color:#00d4ff;">Información & Contacto</a></p>
   </footer>
 
   <script src="productos.js"></script>
