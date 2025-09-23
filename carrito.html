@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carrito</title>
-<style>
-body { font-family: Arial; text-align:center; background:#f9f9f9; }
-h1 { color:#333; }
-.producto { border:1px solid #ddd; margin:10px; padding:15px; width:200px; background:#fff; border-radius:10px; display:inline-block; }
-button { background:#dc3545; color:#fff; border:none; padding:5px; margin-top:5px; cursor:pointer; border-radius:5px; }
-button:hover { background:#c82333; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #121212; color: #eee; margin: 0; padding: 20px; }
+    h1 { text-align: center; color: #00d4ff; }
+    .carrito { background: #1e1e1e; padding: 20px; border-radius: 10px; margin: 20px auto; width: 90%; max-width: 600px; }
+    .carrito ul { list-style: none; padding: 0; }
+    .carrito li { margin: 8px 0; }
+    .formulario { margin-top: 20px; }
+    .formulario input, .formulario textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; }
+    .formulario button { width: 100%; padding: 12px; background: #00b894; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .formulario button:hover { background: #00997a; }
+  </style>
 </head>
 <body>
-<h1>Carrito 🛒</h1>
-<div id="lista-carrito"></div>
-<button onclick="vaciarCarrito()">Vaciar carrito</button>
-<script src="productos.js"></script>
-<script>
-let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-const cont = document.getElementById("lista-carrito");
-function mostrarCarrito(){
-  cont.innerHTML = "";
-  carrito.forEach((id, index) => {
-    const p = productos.find(x=>x.id===id);
-    if(p){
-      cont.innerHTML += `
-        <div class="producto">
-          <h2>${p.nombre}</h2>
-          <p>${p.descripcion}</p>
-          <p><b>${p.precio} €</b></p>
-          <button onclick="quitar(${index})">Eliminar</button>
-        </div>
-      `;
-    }
-  });
-}
-function quitar(i){
-  carrito.splice(i,1);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  mostrarCarrito();
-}
-function vaciarCarrito(){
-  carrito = [];
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  mostrarCarrito();
-}
-mostrarCarrito();
-</script>
+  <h1>Finalizar Compra 🛒</h1>
+  <div class="carrito">
+    <h3>Productos en tu carrito:</h3>
+    <ul id="lista-carrito"></ul>
+    <p><b>Total: <span id="total">0</span> €</b></p>
+
+    <div class="formulario">
+      <h3>Información de envío</h3>
+      <input type="text" placeholder="Nombre completo">
+      <input type="text" placeholder="Dirección">
+      <input type="text" placeholder="Teléfono">
+      <input type="email" placeholder="Correo electrónico">
+      <p><i>Método de pago: próximamente</i></p>
+      <button>Confirmar Pedido</button>
+    </div>
+  </div>
+
+  <script>
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const lista = document.getElementById("lista-carrito");
+    const total = document.getElementById("total");
+    let suma = 0;
+    carrito.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = `${p.nombre} - ${p.precio} €`;
+      lista.appendChild(li);
+      suma += p.precio;
+    });
+    total.textContent = suma;
+  </script>
 </body>
 </html>
