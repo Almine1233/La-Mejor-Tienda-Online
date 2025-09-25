@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #222; color: white; padding: 20px; text-align: center; }
+    h1 { margin: 0; }
+
+    .contenedor { max-width: 900px; margin: 30px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+    .resumen { margin-bottom: 20px; }
+    .resumen h2 { margin-bottom: 10px; }
+    .resumen ul { list-style: none; padding: 0; }
+    .resumen li { padding: 8px; border-bottom: 1px solid #ccc; }
+    .total { font-weight: bold; margin-top: 10px; }
+
+    form { display: flex; flex-direction: column; }
+    label { margin: 10px 0 5px; }
+    input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%; }
+    button { margin-top: 20px; background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #1e7e34; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 Finalizar Compra</h1>
+  </header>
+
+  <div class="contenedor">
+    <!-- Resumen del carrito -->
+    <div class="resumen">
+      <h2>Tu pedido</h2>
+      <ul id="lista-carrito"></ul>
+      <p class="total">Total: <span id="total"></span> €</p>
+    </div>
+
+    <!-- Formulario de compra -->
+    <h2>Tus datos</h2>
+    <form id="form-compra">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" required>
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" required>
+
+      <label for="direccion">Dirección</label>
+      <textarea id="direccion" rows="3" required></textarea>
+
+      <label for="ciudad">Ciudad</label>
+      <input type="text" id="ciudad" required>
+
+      <label for="codigo">Código Postal</label>
+      <input type="text" id="codigo" required>
+
+      <label for="metodo">Método de pago</label>
+      <select id="metodo" required>
+        <option value="">-- Selecciona --</option>
+        <option value="tarjeta">Tarjeta de crédito</option>
+        <option value="paypal">PayPal</option>
+        <option value="transferencia">Transferencia bancaria</option>
+      </select>
+
+      <button type="submit">✅ Confirmar Compra</button>
+    </form>
+  </div>
+
+  <script>
+    // Mostrar carrito
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const lista = document.getElementById("lista-carrito");
+    const total = document.getElementById("total");
+
+    let suma = 0;
+    carrito.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = `${p.nombre} - ${p.precio} €`;
+      lista.appendChild(li);
+      suma += p.precio;
+    });
+    total.textContent = suma;
+
+    // Procesar compra
+    document.getElementById("form-compra").addEventListener("submit", e => {
+      e.preventDefault();
+      alert("🎉 ¡Gracias por tu compra, " + document.getElementById("nombre").value + "!\nTe enviaremos un email con los detalles.");
+      localStorage.removeItem("carrito");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
