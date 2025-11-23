@@ -3,60 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>La Mejor Tienda Online</title>
+  <title>La Mejor Tienda Online — Versión Wow</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>🛒 La Mejor Tienda Online</h1>
+  <header class="topbar">
+    <div class="logo">La Mejor Tienda Online</div>
+    <div class="search">
+      <input id="q" placeholder="Buscar productos, p. ej. AirPods, PC..." />
+      <select id="sort" title="Ordenar">
+        <option value="relevance">Relevancia</option>
+        <option value="price-asc">Precio: bajo → alto</option>
+        <option value="price-desc">Precio: alto → bajo</option>
+      </select>
+    </div>
+    <div class="top-actions">
+      <a href="info.html">Información</a>
+      <button id="cart-btn" title="Abrir carrito">🛒 <span id="cart-count">0</span></button>
+    </div>
   </header>
 
-  <!-- Banner de bienvenida amarillo -->
-  <section class="bienvenida">
-    <h2>🎉 Bienvenido a <span>La Mejor Tienda Online</span> 🎉</h2>
-    <p>Todo lo que necesitas en un solo sitio. Tecnología, hogar, deporte y más.</p>
-    <button class="ver-productos" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver productos</button>
-  </section>
-
-  <!-- Imagen DONAR (sube download.jpg al repo, si la pones en la raíz usa "download.jpg") -->
-  <section class="donar">
-    <a href="donar.html" title="Donar">
-      <img src="/mnt/data/download.jpg" alt="Donar" class="img-donar">
-    </a>
-  </section>
-
-  <!-- Filtros y buscador -->
-  <section class="controls">
-    <div class="filtros" id="filtros">
-      <button onclick="filtrarProductos('todos')">Todos</button>
-      <button onclick="filtrarProductos('Gaming')">Gaming</button>
-      <button onclick="filtrarProductos('Audio')">Audio</button>
-      <button onclick="filtrarProductos('Accesorios')">Accesorios</button>
-      <button onclick="filtrarProductos('Dispositivos')">Dispositivos</button>
-      <button onclick="filtrarProductos('Hogar')">Hogar</button>
-      <button onclick="filtrarProductos('Cocina')">Cocina</button>
-      <button onclick="filtrarProductos('Deporte')">Deporte</button>
-    </div>
-    <div class="buscador">
-      <input id="q" placeholder="Buscar producto..." oninput="buscarProductos()" />
+  <!-- Hero / Bienvenida -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>🎉 Bienvenido a <span>La Mejor Tienda Online</span></h1>
+      <p>Encuentra tecnología, hogar, deporte y más — todo en un solo lugar.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver productos</button>
+        <a class="btn ghost" href="donar.html"><img src="/mnt/data/download.jpg" alt="Donar" class="donate-thumb"> Donar</a>
+      </div>
     </div>
   </section>
 
-  <!-- Productos -->
-  <main id="productos" class="grid"></main>
+  <!-- Filtros -->
+  <nav class="filters">
+    <div class="cats" id="categories"></div>
+    <div class="pager" id="pager"></div>
+  </nav>
 
-  <!-- Carrito flotante -->
-  <div id="carrito-icono" title="Abrir carrito">🛒</div>
-  <aside id="carrito-panel" aria-hidden="true">
-    <h3>Tu Carrito</h3>
-    <ul id="carrito-lista"></ul>
-    <p class="total">Total: <span id="carrito-total">0.00</span> €</p>
-    <button id="comprar-todo">Comprar todo</button>
+  <!-- Grid de productos -->
+  <main id="productos" class="grid" aria-live="polite"></main>
+
+  <!-- Quick view modal -->
+  <div id="quickview" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" onclick="closeQuickView()">✖</button>
+      <div id="quick-body"></div>
+    </div>
+  </div>
+
+  <!-- Carrito slide -->
+  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
+    <h3>Tu carrito</h3>
+    <ul id="cart-items"></ul>
+    <div class="cart-footer">
+      <div>Total: <strong id="cart-total">0.00</strong> €</div>
+      <div class="cart-actions">
+        <button class="btn" onclick="clearCart()">Vaciar</button>
+        <button class="btn primary" id="checkout-btn">Comprar todo</button>
+      </div>
+    </div>
   </aside>
 
   <footer>
-    <p>📧 Información: <a href="info.html">Contacta aquí</a></p>
-    <p>© La Mejor Tienda Online — Proyecto personal</p>
+    <div>© La Mejor Tienda Online — Proyecto personal</div>
+    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
   </footer>
 
   <script src="productos.js"></script>
