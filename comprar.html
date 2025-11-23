@@ -1,56 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Finalizar Compra</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .box{max-width:900px;margin:24px auto;background:#fff;padding:20px;border-radius:12px}
-    label{display:block;margin:10px 0 6px}
-    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #d8dfe6}
-    button{margin-top:12px;padding:12px;border-radius:8px;border:none;background:linear-gradient(90deg,#00b894,#00d4ff);color:#021219;font-weight:800;cursor:pointer}
-  </style>
-</head>
-<body>
-  <header><h1>Finalizar Compra</h1></header>
-  <div class="box">
-    <div id="resumen"></div>
-    <form id="form">
-      <label>Nombre completo</label><input id="nombre" required>
-      <label>Email</label><input id="email" type="email" required>
-      <label>Dirección</label><textarea id="direccion" rows="3" required></textarea>
-      <label>Teléfono</label><input id="telefono" required>
-      <p style="color:#6b7780">Método de pago: próximamente (a integrar luego)</p>
-      <button type="submit">Confirmar pedido</button>
-    </form>
-  </div>
-
-  <script>
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const resumen = document.getElementById('resumen');
-    let total = 0;
-    if (!carrito.length) resumen.innerHTML = '<p>No hay artículos en el carrito. <a href="index.html">Volver</a></p>';
-    else {
-      const ul = document.createElement('ul');
-      carrito.forEach(p=>{
-        const li = document.createElement('li');
-        li.textContent = `${p.nombre} - ${p.precio} € x${p.cantidad || 1}`;
-        ul.appendChild(li);
-        total += p.precio * (p.cantidad || 1);
-      });
-      resumen.appendChild(ul);
-      const t = document.createElement('p');
-      t.style.fontWeight='800'; t.textContent = 'Total: ' + total.toFixed(2) + ' €';
-      resumen.appendChild(t);
-    }
-
-    document.getElementById('form').addEventListener('submit', e=>{
-      e.preventDefault();
-      // Aquí simularíamos el envío; más adelante podemos integrar email/Netlify Forms.
-      alert('✅ Pedido confirmado. ¡Gracias! Te contactaremos pronto.');
-      localStorage.removeItem('carrito');
-      window.location.href = 'index.html';
-    });
-  </script>
-</body>
-</html>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finalizar compra</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="topbar"><div class="logo">Finalizar compra</div></header>
+<main style="max-width:900px;margin:24px auto;background:#fff;padding:18px;border-radius:12px">
+  <div id="resumen"></div>
+  <form id="form">
+    <label>Nombre completo</label><input id="nombre" required>
+    <label>Email</label><input id="email" type="email" required>
+    <label>Dirección</label><textarea id="direccion" rows="3" required></textarea>
+    <label>Teléfono</label><input id="telefono" required>
+    <p style="color:#6b7780">Método de pago: próximamente</p>
+    <button type="submit" class="btn primary">Confirmar pedido</button>
+  </form>
+</main>
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart_v1')) || [];
+  const resumen = document.getElementById('resumen');
+  let total = 0;
+  if(!cart.length) resumen.innerHTML = '<p>No hay artículos en el carrito. <a href="index.html">Volver</a></p>';
+  else{
+    const ul=document.createElement('ul');
+    cart.forEach(p=>{ const li=document.createElement('li'); li.textContent=`${p.nombre} - ${p.precio} € x${p.cantidad||1}`; ul.appendChild(li); total+=p.precio*(p.cantidad||1);});
+    resumen.appendChild(ul);
+    const t=document.createElement('p'); t.style.fontWeight='800'; t.textContent='Total: '+total.toFixed(2)+' €'; resumen.appendChild(t);
+  }
+  document.getElementById('form').addEventListener('submit', e=>{
+    e.preventDefault();
+    alert('✅ Pedido confirmado. Gracias! (simulado)');
+    localStorage.removeItem('cart_v1');
+    window.location.href='index.html';
+  });
+</script>
+</body></html>
