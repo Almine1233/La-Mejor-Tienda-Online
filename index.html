@@ -1,137 +1,231 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Mejor Tienda Online</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Mejorada</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
-    header { background: #333; color: white; padding: 20px; text-align: center; }
-    h1 { margin: 0; }
-
-    /* Cartel Bienvenida */
-    .bienvenida {
-      background: linear-gradient(135deg, #4CAF50, #2e7d32);
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-      margin: 20px auto;
-      border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      animation: aparecer 1.5s ease;
-    }
-    .bienvenida h2 {
-      font-size: 32px;
-      margin: 0 0 10px;
-    }
-    .bienvenida span {
-      color: #ffeb3b;
-      font-weight: bold;
-    }
-    .bienvenida p {
-      font-size: 18px;
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
-    }
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
     }
 
-    /* Donaciones */
-    .donar { text-align: center; margin: 30px 0; }
-    .donar img { width: 220px; cursor: pointer; transition: transform 0.2s; }
-    .donar img:hover { transform: scale(1.1); }
-
-    /* Productos */
-    .contenedor { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
-    .producto { border: 1px solid #ccc; margin: 10px; padding: 15px; width: 280px; background: white; border-radius: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
-    .producto img { width: 100%; border-radius: 10px; }
-    .producto h2 { font-size: 20px; margin: 10px 0; }
-    .producto p { margin: 5px 0; }
-    .producto button { padding: 10px; margin: 5px 0; border: none; border-radius: 5px; cursor: pointer; width: 100%; }
-    .comprar { background: #007bff; color: white; }
-    .comprar:hover { background: #0056b3; }
-    .carrito-btn { background: #28a745; color: white; }
-    .carrito-btn:hover { background: #1e7e34; }
-
-    /* Carrito flotante */
-    #carrito-icono {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #4CAF50;
-      color: white;
-      border-radius: 50%;
-      width: 60px; height: 60px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-    #carrito-panel {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      background: white;
-      border: 1px solid #ccc;
-      padding: 15px;
-      width: 300px;
-      max-height: 400px;
-      overflow-y: auto;
-      display: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    #carrito-panel button {
-      background: #007bff; color: white; padding: 10px; width: 100%;
-      border: none; border-radius: 5px; margin-top: 10px; cursor: pointer;
-    }
-    #carrito-panel button:hover { background: #0056b3; }
-
-    footer {
-      background: #333;
-      color: white;
+    header {
+      background: #222;
+      color: #fff;
+      padding: 20px;
       text-align: center;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+    }
+
+    /* Cartel elegante de bienvenida */
+    .bienvenida {
+      background: linear-gradient(135deg, #ffcf40, #ffd966);
+      color: #222;
+      padding: 25px;
+      margin: 20px auto;
+      width: 90%;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      background: #333;
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    nav a:hover {
+      color: #ffcf40;
+    }
+
+    .contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .producto {
+      background: #fff;
+      width: 260px;
+      margin: 12px;
       padding: 15px;
-      margin-top: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .producto:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+    }
+
+    .producto img {
+      width: 90%;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      margin-top: 10px;
+      background: #ffcf40;
+      color: #222;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #e6b832;
+    }
+
+    .carrito {
+      background: #fff;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .carrito-total {
+      font-size: 1.4rem;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .formulario-compra,
+    .informacion {
+      background: #fff;
+      margin: 25px auto;
+      padding: 25px;
+      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🛒 La Mejor Tienda Online</h1>
-  </header>
 
-  <!-- Cartel Bienvenida -->
-  <div class="bienvenida">
-    <h2>🎉 Bienvenido a <span>La Mejor Tienda Online</span> 🎉</h2>
-    <p>Aquí encontrarás lo que buscas... ¡y mucho más!</p>
-  </div>
+<header>Tienda Oficial Mejorada ✨</header>
 
-  <!-- Botón Donar -->
-  <div class="donar">
-    <a href="donar.html">
-      <img src="download.jpg" alt="Donar">
-    </a>
-  </div>
+<div class="bienvenida">¡Bienvenido a la tienda más elegante y moderna! 🛒✨</div>
 
-  <!-- Productos -->
-  <div class="contenedor" id="lista-productos">
-    <!-- Se cargan desde productos.js -->
-  </div>
+<nav>
+  <a href="#tienda">Tienda</a>
+  <a href="#carrito">Carrito</a>
+  <a href="#info">Información</a>
+</nav>
 
-  <!-- Carrito flotante -->
-  <div id="carrito-icono">🛒</div>
-  <div id="carrito-panel">
-    <h3>Tu Carrito</h3>
-    <ul id="carrito-lista"></ul>
-    <p><b>Total: <span id="carrito-total">0</span> €</b></p>
-    <button onclick="window.location.href='comprar.html'">Comprar Todo</button>
-  </div>
+<!-- TIENDA -->
+<section id="tienda" class="contenedor">
+  <script>
+    const productos = [
+      {nombre: "Torre Gaming RGB", precio: 899, img: "https://i.imgur.com/CKbR3.png"},
+      {nombre: "AirPods Pro", precio: 199, img: "https://i.imgur.com/XK3P0.png"},
+      {nombre: "Altavoces JBL", precio: 120, img: "https://i.imgur.com/hFt90.png"},
+      {nombre: "Monitor 144Hz", precio: 210, img: "https://i.imgur.com/890ab.png"},
+      {nombre: "Teclado Mecánico", precio: 75, img: "https://i.imgur.com/ab39F.png"},
+      {nombre: "Ratón Gamer", precio: 40, img: "https://i.imgur.com/4mfa3.png"},
+      {nombre: "Sony WH1000XM5", precio: 320, img: "https://i.imgur.com/2g2a3.png"},
+      {nombre: "iPad Mini", precio: 450, img: "https://i.imgur.com/pok3m.png"},
+      {nombre: "Auriculares Logitech", precio: 60, img: "https://i.imgur.com/k9b34.png"},
+      {nombre: "Tablet Lenovo", precio: 180, img: "https://i.imgur.com/23k3U.png"}
+    ];
 
-  <footer>
-    <p>🙏 Gracias por visitar mi tienda. Tu apoyo significa mucho ❤️</p>
-  </footer>
+    let carrito = [];
 
-  <script src="productos.js"></script>
+    function renderTienda() {
+      const tienda = document.getElementById("tienda");
+      productos.forEach((p, i) => {
+        tienda.innerHTML += `
+          <div class='producto'>
+            <img src='${p.img}' alt='${p.nombre}'>
+            <h3>${p.nombre}</h3>
+            <p><strong>${p.precio}€</strong></p>
+            <button class='btn' onclick='agregar(${i})'>Añadir al carrito</button>
+          </div>`;
+      });
+    }
+
+    function agregar(i) {
+      carrito.push(productos[i]);
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const cont = document.getElementById("carrito-items");
+      cont.innerHTML = "";
+      let total = 0;
+
+      carrito.forEach((p, i) => {
+        total += p.precio;
+        cont.innerHTML += `<p>${p.nombre} — ${p.precio}€</p>`;
+      });
+
+      document.getElementById("total").innerText = total + "€";
+    }
+
+    window.onload = renderTienda;
+  </script>
+</section>
+
+<!-- CARRITO -->
+<section id="carrito" class="carrito">
+  <h2>🛒 Tu carrito</h2>
+  <div id="carrito-items"></div>
+  <p class="carrito-total">Total: <span id="total">0€</span></p>
+  <a href="#formulario" class="btn">Comprar todo</a>
+</section>
+
+<!-- FORMULARIO DE COMPRA -->
+<section id="formulario" class="formulario-compra">
+  <h2>Formulario de Compra</h2>
+  <p>Rellena tus datos para completar la compra:</p>
+
+  <input type="text" placeholder="Nombre completo">
+  <input type="text" placeholder="Dirección completa">
+  <input type="text" placeholder="Ciudad y país">
+  <input type="email" placeholder="Correo electrónico">
+  <textarea placeholder="Detalles adicionales"></textarea>
+
+  <button class="btn">Finalizar compra</button>
+</section>
+
+<!-- INFORMACIÓN -->
+<section id="info" class="informacion">
+  <h2>Información y Contacto</h2>
+  <p>Para dudas o soporte, contáctame aquí:</p>
+  <p><strong>Email:</strong> alminescompany@gmail.com</p>
+</section>
+
 </body>
 </html>
