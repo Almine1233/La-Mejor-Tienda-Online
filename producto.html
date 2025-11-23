@@ -1,46 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Detalle Producto</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .detalle { max-width:900px; margin:30px auto; background:#fff; padding:20px; border-radius:12px; }
-    .detalle img { width:100%; max-height:420px; object-fit:cover; border-radius:10px; }
-    .detalle h2 { color:#0b3b60; }
-  </style>
-</head>
-<body>
-  <header><h1>Detalle del producto</h1></header>
-  <main class="detalle" id="detalle"></main>
-  <script>
-    const p = JSON.parse(localStorage.getItem('productoSeleccionado'));
-    const cont = document.getElementById('detalle');
-    if (!p) cont.innerHTML = '<p>Producto no encontrado. <a href="index.html">Volver</a></p>';
-    else {
-      cont.innerHTML = `
-        <img src="${p.imagen}" alt="${p.nombre}">
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Detalle producto</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="topbar"><div class="logo">Detalle</div></header>
+<main style="max-width:1000px;margin:28px auto;padding:12px">
+  <div id="detalle"></div>
+</main>
+<script>
+  const p = JSON.parse(localStorage.getItem('productoSeleccionado'));
+  const cont = document.getElementById('detalle');
+  if(!p) cont.innerHTML = '<p>Producto no encontrado. <a href="index.html">Volver</a></p>';
+  else{
+    cont.innerHTML = `<div style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px"><img src="${p.imagen}" style="width:100%;border-radius:12px"></div>
+      <div style="flex:1;min-width:260px">
         <h2>${p.nombre}</h2>
-        <p>${p.descripcion}</p>
+        <p style="color:#6b7780">${p.descripcion}</p>
         <p style="font-weight:800">${p.precio.toFixed(2)} €</p>
-        <div style="display:flex;gap:10px;margin-top:12px">
+        <div style="display:flex;gap:8px;margin-top:12px">
           <button onclick="anadir()" class="btn btn-carrito">Añadir al carrito</button>
-          <button onclick="comprarAhora()" class="btn btn-comprar">Comprar ahora</button>
+          <button onclick="comprarAhora()" class="btn primary">Comprar ahora</button>
         </div>
-      `;
-    }
-    function anadir(){
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      const existe = carrito.find(x=>x.id===p.id);
-      if (existe) existe.cantidad++;
-      else carrito.push({...p, cantidad:1});
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert('Añadido al carrito ✅');
-    }
-    function comprarAhora(){
-      localStorage.setItem('carrito', JSON.stringify([{...p, cantidad:1}]));
-      window.location.href = 'comprar.html';
-    }
-  </script>
-</body>
-</html>
+      </div></div>`;
+  }
+  function anadir(){
+    let cart = JSON.parse(localStorage.getItem('cart_v1')) || [];
+    const existe = cart.find(x=>x.id===p.id);
+    if(existe) existe.cantidad++;
+    else cart.push({...p, cantidad:1});
+    localStorage.setItem('cart_v1', JSON.stringify(cart));
+    alert('Añadido al carrito ✅');
+  }
+  function comprarAhora(){ localStorage.setItem('cart_v1', JSON.stringify([{...p,cantidad:1}])); window.location.href='comprar.html'; }
+</script>
+</body></html>
