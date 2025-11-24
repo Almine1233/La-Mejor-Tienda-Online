@@ -1,227 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Mejor Tienda Online</title>
-
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
-    header {
-      background: linear-gradient(to right, #ffcc00, #ffdb4d);
-      color: #333;
-      padding: 25px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .donar {
-      background: #ffe680;
-      padding: 15px;
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 18px;
-      font-weight: 500;
-      border-bottom: 2px solid #e6c200;
-    }
-    .donar button {
-      padding: 10px 25px;
-      border: none;
-      background: #ff9900;
-      color: white;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: 0.2s;
-    }
-    .donar button:hover { background: #e68a00; }
-
-    /* Filtros */
-    .filtros {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .filtros button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .filtros button:hover { background: #0056b3; }
-
-    /* Productos */
-    .contenedor {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-    }
-    .producto {
-      border: 1px solid #ccc;
-      margin: 10px;
-      padding: 15px;
-      width: 280px;
-      background: white;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: 0.2s;
-    }
-    .producto:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    }
-    .producto img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .producto h2 { font-size: 20px; margin: 10px 0; }
-    .producto p { margin: 5px 0; }
-
-    .producto button {
-      padding: 10px;
-      margin: 5px 0;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-    }
-
-    .comprar { background: #007bff; color: white; }
-    .comprar:hover { background: #0056b3; }
-
-    .carrito-btn { background: #28a745; color: white; }
-    .carrito-btn:hover { background: #1e7e34; }
-
-
-    /* Carrito */
-    #carrito-icono {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #4CAF50;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: 0.3s;
-      z-index: 2000;
-    }
-    #carrito-icono:hover { transform: scale(1.15); }
-
-    #carrito-panel {
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      background: white;
-      border: 1px solid #ccc;
-      padding: 15px;
-      width: 300px;
-      max-height: 400px;
-      overflow-y: auto;
-      display: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      z-index: 2000;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-
-    /* --- DECORACIONES NAVIDEÑAS --- */
-    .decoracion {
-      position: fixed;
-      z-index: 9999;
-      pointer-events: none;
-    }
-
-    #arbol-navidad {
-      width: 130px;
-      bottom: 10px;
-      right: 10px;
-    }
-
-    #papa-noel {
-      width: 130px;
-      bottom: 10px;
-      left: 10px;
-    }
-
-    #guirnalda-izq {
-      width: 200px;
-      top: 0;
-      left: 0;
-    }
-
-    #guirnalda-der {
-      width: 200px;
-      top: 0;
-      right: 0;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Mejor Tienda Online — Wow</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="logo">La Mejor Tienda Online</div>
+    <div class="search">
+      <input id="q" placeholder="Buscar productos... (p. ej. AirPods, PC)" />
+      <select id="sort" title="Ordenar">
+        <option value="relevance">Relevancia</option>
+        <option value="price-asc">Precio: bajo → alto</option>
+        <option value="price-desc">Precio: alto → bajo</option>
+      </select>
+    </div>
+    <div class="top-actions">
+      <a href="info.html">Información</a>
+      <button id="cart-btn" title="Abrir carrito">🛒 <span id="cart-count">0</span></button>
+    </div>
+  </header>
 
-  <header>🎉 Bienvenido a la Mejor Tienda Online 🎉</header>
+  <!-- Hero / Bienvenida -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>🎉 Bienvenido a <span>La Mejor Tienda Online</span></h1>
+      <p>Encuentra tecnología, hogar, deporte, moda y más — todo en un mismo sitio.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver productos</button>
+        <!-- Botón DONAR (estético) usando la imagen que subiste -->
+        <a class="btn ghost" href="donar.html">
+          <img src="/mnt/data/download.jpg" alt="Donar" class="donate-thumb"> Donar
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <div class="donar">
-    ¿Quieres apoyar este proyecto?  
-    <button onclick="window.location.href='donar.html'">Donar</button>
+  <!-- Filters -->
+  <nav class="filters">
+    <div class="cats" id="categories"></div>
+    <div class="controls">
+      <div id="pager" class="pager"></div>
+    </div>
+  </nav>
+
+  <!-- Grid de productos -->
+  <main id="productos" class="grid" aria-live="polite"></main>
+
+  <!-- Quick view modal -->
+  <div id="quickview" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" onclick="closeQuickView()">✖</button>
+      <div id="quick-body"></div>
+    </div>
   </div>
 
-  <!-- Filtros -->
-  <div class="filtros">
-    <button onclick="filtrarProductos('todos')">Todos</button>
-    <button onclick="filtrarProductos('Gaming')">Gaming</button>
-    <button onclick="filtrarProductos('Accesorios')">Accesorios</button>
-    <button onclick="filtrarProductos('Audio')">Audio</button>
-    <button onclick="filtrarProductos('Dispositivos')">Dispositivos</button>
-  </div>
-
-  <div class="contenedor" id="lista-productos">
-    <!-- productos desde productos.js -->
-  </div>
-
-  <!-- Carrito -->
-  <div id="carrito-icono">🛒</div>
-
-  <div id="carrito-panel">
-    <h3>Tu Carrito</h3>
-    <ul id="carrito-lista"></ul>
-    <p><b>Total: <span id="carrito-total">0</span> €</b></p>
-  </div>
+  <!-- Carrito slide -->
+  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
+    <h3>Tu carrito</h3>
+    <ul id="cart-items"></ul>
+    <div class="cart-footer">
+      <div>Total: <strong id="cart-total">0.00</strong> €</div>
+      <div class="cart-actions">
+        <button class="btn" onclick="clearCart()">Vaciar</button>
+        <button class="btn primary" id="checkout-btn">Comprar todo</button>
+      </div>
+    </div>
+  </aside>
 
   <footer>
-    🙏 Gracias por visitar mi tienda. Tu apoyo significa mucho ❤️
+    <div>© La Mejor Tienda Online — Proyecto personal</div>
+    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
   </footer>
 
-  <!-- DECORACIONES NAVIDAD -->
-  <img id="arbol-navidad" class="decoracion" src="https://i.imgur.com/vKw0yZ7.png" alt="Árbol Navidad">
-  <img id="papa-noel" class="decoracion" src="https://i.imgur.com/yrmN5xn.png" alt="Papá Noel">
-  <img id="guirnalda-izq" class="decoracion" src="https://i.imgur.com/XuxzS1i.png" alt="Guirnalda Izquierda">
-  <img id="guirnalda-der" class="decoracion" src="https://i.imgur.com/XuxzS1i.png" alt="Guirnalda Derecha">
+  <!-- DECORACIONES NAVIDEÑAS (aparecen los primeros 10s y luego desaparecen) -->
+  <img id="guirnalda-izq" class="navidad" src="https://i.imgur.com/1njtp7V.png" alt="Guirnalda Izq">
+  <img id="guirnalda-der" class="navidad" src="https://i.imgur.com/1njtp7V.png" alt="Guirnalda Der">
+  <img id="papanoel" class="navidad" src="https://i.imgur.com/kHjXNp7.png" alt="Papá Noel">
+  <img id="arbol" class="navidad" src="https://i.imgur.com/g6WQc2T.png" alt="Árbol de Navidad">
 
   <script src="productos.js"></script>
+  <script src="main.js"></script>
+
+  <!-- Script para que las decoraciones desaparezcan a los 10s -->
+  <script>
+    setTimeout(() => {
+      document.querySelectorAll('.navidad').forEach(el => {
+        el.style.transition = "opacity 1.5s ease, transform 1.5s ease";
+        el.style.opacity = "0";
+        el.style.transform = "translateY(20px)";
+        setTimeout(() => el.remove(), 1500);
+      });
+    }, 10000);
+  </script>
 </body>
 </html>
