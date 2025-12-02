@@ -1,99 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>La Mejor Tienda Online — Wow</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda Online - Navidad</title>
+
+<!-- Fuente bonita -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f7f7f7;
+        overflow-x: hidden;
+    }
+
+    /* Cartel Bienvenida */
+    .welcome {
+        background: linear-gradient(135deg, #ffd54f, #ffca28);
+        padding: 25px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 600;
+        color: #5a3d00;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Productos (solo ejemplo) */
+    .productos {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 20px;
+        padding: 30px;
+    }
+    .producto {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform .2s;
+    }
+    .producto:hover {
+        transform: scale(1.05);
+    }
+    .producto img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    /* ❄ Copos de nieve */
+    .snowflake {
+        position: fixed;
+        top: -10px;
+        font-size: 18px;
+        color: white;
+        animation: fall 10s linear infinite;
+        pointer-events: none;
+    }
+    @keyframes fall {
+        0% { transform: translateY(-10vh); opacity: 1; }
+        100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    /* 🎄 Árbol Navidad */
+    .arbol {
+        position: fixed;
+        right: 15px;
+        bottom: 20px;
+        width: 120px;
+        animation: bounce 2.5s infinite ease-in-out;
+        z-index: 1000;
+    }
+
+    /* 🎅 Papá Noel */
+    .santa {
+        position: fixed;
+        left: 15px;
+        bottom: 20px;
+        width: 150px;
+        animation: updown 3s infinite ease-in-out;
+        z-index: 1000;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes updown {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(12px); }
+    }
+
+    /* 🌟 Guirnaldas */
+    .guirnalda {
+        position: fixed;
+        top: 0;
+        width: 180px;
+        z-index: 1000;
+    }
+    .guirnalda.left { left: 0; }
+    .guirnalda.right { right: 0; }
+
+</style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="logo">La Mejor Tienda Online</div>
-    <div class="search">
-      <input id="q" placeholder="Buscar productos... (p. ej. AirPods, PC)" />
-      <select id="sort" title="Ordenar">
-        <option value="relevance">Relevancia</option>
-        <option value="price-asc">Precio: bajo → alto</option>
-        <option value="price-desc">Precio: alto → bajo</option>
-      </select>
+
+<!-- 🎄 ELEMENTOS NAVIDEÑOS PERMANENTES -->
+<img src="https://i.imgur.com/gp9j6ri.png" class="arbol">
+<img src="https://i.imgur.com/y4S5zbn.png" class="santa">
+<img src="https://i.imgur.com/zEhWPUt.png" class="guirnalda left">
+<img src="https://i.imgur.com/zEhWPUt.png" class="guirnalda right">
+
+<!-- Cartel bienvenida -->
+<div class="welcome">🎉 ¡Bienvenido a La Mejor Tienda Online! 🎄</div>
+
+<!-- Productos (ejemplo) -->
+<div class="productos">
+    <div class="producto">
+        <img src="https://i.imgur.com/UNqYwUy.jpg">
+        <h3>AirPods Pro</h3>
+        <p>129€</p>
     </div>
-    <div class="top-actions">
-      <a href="info.html">Información</a>
-      <button id="cart-btn" title="Abrir carrito">🛒 <span id="cart-count">0</span></button>
+
+    <div class="producto">
+        <img src="https://i.imgur.com/HzS0E0n.jpg">
+        <h3>Torre Gaming RGB</h3>
+        <p>699€</p>
     </div>
-  </header>
 
-  <!-- Hero / Bienvenida -->
-  <section class="hero">
-    <div class="hero-inner">
-      <h1>🎉 Bienvenido a <span>La Mejor Tienda Online</span></h1>
-      <p>Encuentra tecnología, hogar, deporte, moda y más — todo en un mismo sitio.</p>
-      <div class="hero-actions">
-        <button class="btn primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver productos</button>
-        <!-- Botón DONAR (estético) usando la imagen que subiste -->
-        <a class="btn ghost" href="donar.html">
-          <img src="/mnt/data/download.jpg" alt="Donar" class="donate-thumb"> Donar
-        </a>
-      </div>
+    <div class="producto">
+        <img src="https://i.imgur.com/e86H1dw.jpg">
+        <h3>Altavoces BassBoost</h3>
+        <p>89€</p>
     </div>
-  </section>
+</div>
 
-  <!-- Filters -->
-  <nav class="filters">
-    <div class="cats" id="categories"></div>
-    <div class="controls">
-      <div id="pager" class="pager"></div>
-    </div>
-  </nav>
+<script>
+/* ❄ Crear copos solo 10 segundos */
+function crearCopo() {
+    const copo = document.createElement("div");
+    copo.classList.add("snowflake");
+    copo.innerHTML = "❄";
+    copo.style.left = Math.random() * 100 + "vw";
+    copo.style.animationDuration = (6 + Math.random() * 4) + "s";
+    document.body.appendChild(copo);
 
-  <!-- Grid de productos -->
-  <main id="productos" class="grid" aria-live="polite"></main>
+    setTimeout(() => copo.remove(), 10000);
+}
 
-  <!-- Quick view modal -->
-  <div id="quickview" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="close" onclick="closeQuickView()">✖</button>
-      <div id="quick-body"></div>
-    </div>
-  </div>
+const intervalo = setInterval(crearCopo, 200);
 
-  <!-- Carrito slide -->
-  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
-    <h3>Tu carrito</h3>
-    <ul id="cart-items"></ul>
-    <div class="cart-footer">
-      <div>Total: <strong id="cart-total">0.00</strong> €</div>
-      <div class="cart-actions">
-        <button class="btn" onclick="clearCart()">Vaciar</button>
-        <button class="btn primary" id="checkout-btn">Comprar todo</button>
-      </div>
-    </div>
-  </aside>
+setTimeout(() => {
+    clearInterval(intervalo);
+}, 10000);
+</script>
 
-  <footer>
-    <div>© La Mejor Tienda Online — Proyecto personal</div>
-    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
-  </footer>
-
-  <!-- DECORACIONES NAVIDEÑAS (aparecen los primeros 10s y luego desaparecen) -->
-  <img id="guirnalda-izq" class="navidad" src="https://i.imgur.com/1njtp7V.png" alt="Guirnalda Izq">
-  <img id="guirnalda-der" class="navidad" src="https://i.imgur.com/1njtp7V.png" alt="Guirnalda Der">
-  <img id="papanoel" class="navidad" src="https://i.imgur.com/kHjXNp7.png" alt="Papá Noel">
-  <img id="arbol" class="navidad" src="https://i.imgur.com/g6WQc2T.png" alt="Árbol de Navidad">
-
-  <script src="productos.js"></script>
-  <script src="main.js"></script>
-
-  <!-- Script para que las decoraciones desaparezcan a los 10s -->
-  <script>
-    setTimeout(() => {
-      document.querySelectorAll('.navidad').forEach(el => {
-        el.style.transition = "opacity 1.5s ease, transform 1.5s ease";
-        el.style.opacity = "0";
-        el.style.transform = "translateY(20px)";
-        setTimeout(() => el.remove(), 1500);
-      });
-    }, 10000);
-  </script>
 </body>
 </html>
