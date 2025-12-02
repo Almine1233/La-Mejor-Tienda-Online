@@ -70,3 +70,47 @@ footer{max-width:1100px;margin:30px auto;padding:18px;text-align:center;color:#6
 
 /* Responsive */
 @media(max-width:720px){ .search input{width:160px} .hero-inner h1{font-size:20px} .card img{height:160px} }
+.arbol {
+    position: fixed;
+    right: 15px;
+    bottom: 20px;
+    width: 120px;
+    animation: bounce 2.5s infinite ease-in-out;
+    z-index: 1000;
+}
+.santa {
+    position: fixed;
+    left: 15px;
+    bottom: 20px;
+    width: 150px;
+    animation: updown 3s infinite ease-in-out;
+    z-index: 1000;
+}
+.guirnalda {
+    position: fixed;
+    top: 0;
+    width: 180px;
+    z-index: 1000;
+}
+.guirnalda.left { left: 0; }
+.guirnalda.right { right: 0; }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes updown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+}
+.snowflake {
+    position: fixed;
+    top: -10px;
+    font-size: 18px;
+    color: white;
+    animation: fall 10s linear infinite;
+    pointer-events: none;
+}
+@keyframes fall {
+    0% { transform: translateY(-10vh); opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
+}
