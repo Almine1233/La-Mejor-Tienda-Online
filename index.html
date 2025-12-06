@@ -3,162 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tienda Online - Navidad</title>
-
-<!-- Fuente bonita -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<title>La Mejor Tienda Online</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-        background: #f7f7f7;
-        overflow-x: hidden;
-    }
+/* ----------------- ESTILO GENERAL ------------------- */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  transition: background 0.3s, color 0.3s;
+}
 
-    /* Cartel Bienvenida */
-    .welcome {
-        background: linear-gradient(135deg, #ffd54f, #ffca28);
-        padding: 25px;
-        text-align: center;
-        font-size: 32px;
-        font-weight: 600;
-        color: #5a3d00;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
+header {
+  background: #ffcc00;
+  text-align: center;
+  padding: 25px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+}
 
-    /* Productos (solo ejemplo) */
-    .productos {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-        gap: 20px;
-        padding: 30px;
-    }
-    .producto {
-        background: white;
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        text-align: center;
-        transition: transform .2s;
-    }
-    .producto:hover {
-        transform: scale(1.05);
-    }
-    .producto img {
-        width: 100%;
-        border-radius: 10px;
-    }
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
 
-    /* ❄ Copos de nieve */
-    .snowflake {
-        position: fixed;
-        top: -10px;
-        font-size: 18px;
-        color: white;
-        animation: fall 10s linear infinite;
-        pointer-events: none;
-    }
-    @keyframes fall {
-        0% { transform: translateY(-10vh); opacity: 1; }
-        100% { transform: translateY(110vh); opacity: 0; }
-    }
+.producto {
+  border: 1px solid #ccc;
+  margin: 10px;
+  width: 260px;
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
-    /* 🎄 Árbol Navidad */
-    .arbol {
-        position: fixed;
-        right: 15px;
-        bottom: 20px;
-        width: 120px;
-        animation: bounce 2.5s infinite ease-in-out;
-        z-index: 1000;
-    }
+.producto img {
+  width: 100%;
+  border-radius: 12px;
+}
 
-    /* 🎅 Papá Noel */
-    .santa {
-        position: fixed;
-        left: 15px;
-        bottom: 20px;
-        width: 150px;
-        animation: updown 3s infinite ease-in-out;
-        z-index: 1000;
-    }
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
 
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
+/* ----------- MODO OSCURO AUTOMÁTICO ----------- */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: white;
+  }
+  .producto {
+    background: #222;
+    color: white;
+  }
+  header {
+    background: #444;
+    color: #fff;
+  }
+  footer {
+    background: #000;
+  }
+}
 
-    @keyframes updown {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(12px); }
-    }
+/* ----------- DECORACIONES NAVIDEÑAS ----------- */
+.decoracion {
+  position: fixed;
+  z-index: 999;
+  pointer-events: none;
+}
 
-    /* 🌟 Guirnaldas */
-    .guirnalda {
-        position: fixed;
-        top: 0;
-        width: 180px;
-        z-index: 1000;
-    }
-    .guirnalda.left { left: 0; }
-    .guirnalda.right { right: 0; }
+#arbol {
+  bottom: 10px;
+  right: 10px;
+  width: 130px;
+  animation: balanceo 3s infinite ease-in-out;
+}
 
+#papanoel {
+  bottom: 10px;
+  left: 10px;
+  width: 140px;
+  animation: subirBajar 4s infinite ease-in-out;
+}
+
+#guirnalda1 {
+  top: 0;
+  left: 0;
+  width: 200px;
+}
+
+#guirnalda2 {
+  top: 0;
+  right: 0;
+  width: 200px;
+}
+
+@keyframes balanceo {
+  0% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+  100% { transform: rotate(-3deg); }
+}
+
+@keyframes subirBajar {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* -------- COPOS DE NIEVE 10s -------- */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 20px;
+  z-index: 1000;
+  animation: caer 10s linear infinite;
+}
+
+@keyframes caer {
+  0% { transform: translateY(-10px); }
+  100% { transform: translateY(110vh); }
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎄 ELEMENTOS NAVIDEÑOS PERMANENTES -->
-<img src="https://i.imgur.com/gp9j6ri.png" class="arbol">
-<img src="https://i.imgur.com/y4S5zbn.png" class="santa">
-<img src="https://i.imgur.com/zEhWPUt.png" class="guirnalda left">
-<img src="https://i.imgur.com/zEhWPUt.png" class="guirnalda right">
+<header>🎄 Bienvenido a la Mejor Tienda Online 🎄</header>
 
-<!-- Cartel bienvenida -->
-<div class="welcome">🎉 ¡Bienvenido a La Mejor Tienda Online! 🎄</div>
+<!-- DECORACIONES NAVIDAD (siempre visibles) -->
+<img id="arbol" class="decoracion" src="decoraciones/arbol.png">
+<img id="papanoel" class="decoracion" src="decoraciones/papanoel.png">
+<img id="guirnalda1" class="decoracion" src="decoraciones/guirnalda.png">
+<img id="guirnalda2" class="decoracion" src="decoraciones/guirnalda.png">
 
-<!-- Productos (ejemplo) -->
-<div class="productos">
-    <div class="producto">
-        <img src="https://i.imgur.com/UNqYwUy.jpg">
-        <h3>AirPods Pro</h3>
-        <p>129€</p>
-    </div>
+<!-- CONTENEDOR DE PRODUCTOS -->
+<div class="contenedor" id="lista-productos"></div>
 
-    <div class="producto">
-        <img src="https://i.imgur.com/HzS0E0n.jpg">
-        <h3>Torre Gaming RGB</h3>
-        <p>699€</p>
-    </div>
+<footer>Gracias por visitar mi tienda ❤️</footer>
 
-    <div class="producto">
-        <img src="https://i.imgur.com/e86H1dw.jpg">
-        <h3>Altavoces BassBoost</h3>
-        <p>89€</p>
-    </div>
-</div>
+<script src="productos.js"></script>
 
+<!-- COPOS DE NIEVE SOLO 10s -->
 <script>
-/* ❄ Crear copos solo 10 segundos */
 function crearCopo() {
-    const copo = document.createElement("div");
-    copo.classList.add("snowflake");
-    copo.innerHTML = "❄";
-    copo.style.left = Math.random() * 100 + "vw";
-    copo.style.animationDuration = (6 + Math.random() * 4) + "s";
-    document.body.appendChild(copo);
-
-    setTimeout(() => copo.remove(), 10000);
+  const copo = document.createElement("div");
+  copo.classList.add("snowflake");
+  copo.textContent = "❄";
+  copo.style.left = Math.random() * 100 + "vw";
+  copo.style.animationDuration = (4 + Math.random() * 6) + "s";
+  document.body.appendChild(copo);
+  setTimeout(() => copo.remove(), 10000);
 }
 
-const intervalo = setInterval(crearCopo, 200);
+let nieve = setInterval(crearCopo, 200);
 
 setTimeout(() => {
-    clearInterval(intervalo);
-}, 10000);
+  clearInterval(nieve);
+}, 10000); // ❄ SOLO 10 SEGUNDOS
 </script>
-<script src="decoraciones.js"></script>
 
 </body>
 </html>
