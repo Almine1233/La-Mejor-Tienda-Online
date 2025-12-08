@@ -1,198 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Mejor Tienda Online</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Mejor Tienda Online</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Poppins", sans-serif;
-            background-color: #f5f5f5;
-            transition: 0.3s;
-        }
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-        /* 🌙 MODO OSCURO AUTOMÁTICO */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #000 !important;
-                color: #fff !important;
-            }
-        }
-
-        /* 🎄 DECORACIONES NAVIDAD */
-        .decoracion {
-            position: fixed;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        /* Árbol abajo derecha */
-        .arbol {
-            bottom: 10px;
-            right: 10px;
-            width: 150px;
-            animation: subirBajar 4s infinite ease-in-out;
-        }
-
-        /* Papá Noel abajo izquierda */
-        .papanoel {
-            bottom: 10px;
-            left: 10px;
-            width: 150px;
-            animation: moverLado 3s infinite ease-in-out;
-        }
-
-        /* Guirnaldas */
-        .guirnalda {
-            top: 0;
-            width: 250px;
-        }
-
-        .guirnalda-izq {
-            left: 0;
-        }
-
-        .guirnalda-der {
-            right: 0;
-        }
-
-        /* ⛄ Animaciones */
-        @keyframes subirBajar {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes moverLado {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(12px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* ❄ Copos de nieve */
-        .snowflake {
-            position: fixed;
-            top: -20px;
-            font-size: 24px;
-            color: white;
-            animation: caer 5s linear infinite;
-            z-index: 9999;
-        }
-
-        @keyframes caer {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(110vh); }
-        }
-
-        /* -------- TU WEB AQUÍ -------- */
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #008cff;
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .contenedor {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .producto {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 15px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .producto:hover {
-            transform: scale(1.05);
-        }
-
-        .producto img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .btn {
-            margin-top: 8px;
-            display: inline-block;
-            padding: 10px 15px;
-            background: #0077ff;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: #005bca;
-        }
-
-    </style>
+  <!-- Estilos (separado) -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- 🎄 DECORACIONES FIJAS -->
-    <img src="decoraciones/arbol.png" class="decoracion arbol">
-    <img src="decoraciones/papanoel.png" class="decoracion papanoel">
-    <img src="decoraciones/guirnalda.png" class="decoracion guirnalda guirnalda-izq">
-    <img src="decoraciones/guirnalda.png" class="decoracion guirnalda guirnalda-der">
-
-    <!-- TU WEB -->
-    <header>🎁 La Mejor Tienda Online 🎁</header>
-
-    <div class="contenedor">
-        <div class="producto">
-            <img src="productos/airpods.jpg">
-            <h3>AirPods</h3>
-            <p>89,99€</p>
-            <a class="btn" href="#">Comprar</a>
-        </div>
-
-        <div class="producto">
-            <img src="productos/samsungtv.jpg">
-            <h3>Samsung TV 55"</h3>
-            <p>499€</p>
-            <a class="btn" href="#">Comprar</a>
-        </div>
-
-        <div class="producto">
-            <img src="productos/reloj.jpg">
-            <h3>Smartwatch</h3>
-            <p>39,99€</p>
-            <a class="btn" href="#">Comprar</a>
-        </div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">La Mejor Tienda Online</div>
+      <div class="tag">Tecnología, hogar y más</div>
     </div>
 
-    <!-- ❄ NIEVE SOLO 10 SEGUNDOS -->
-    <script>
-        function crearCopo() {
-            const copo = document.createElement("div");
-            copo.classList.add("snowflake");
-            copo.innerHTML = "❄";
-            copo.style.left = Math.random() * 100 + "vw";
-            copo.style.animationDuration = (Math.random() * 3 + 2) + "s";
-            document.body.appendChild(copo);
+    <div class="controls">
+      <div class="search-wrap">
+        <input id="search-input" placeholder="Buscar productos... (p. ej. AirPods, PC)" />
+        <button id="search-btn">🔍</button>
+      </div>
 
-            setTimeout(() => {
-                copo.remove();
-            }, 5000);
-        }
+      <div class="categories-wrap">
+        <button id="categories-toggle" class="btn small">Categorías ▾</button>
+        <div id="categories-panel" class="panel hidden"></div>
+      </div>
 
-        let intervalo = setInterval(crearCopo, 200);
+      <button id="offers-btn" class="btn small">Ofertas</button>
+      <button id="ai-mode-btn" class="btn small primary">Modo IA</button>
+      <button id="account-btn" class="btn small">Mi cuenta</button>
+      <button id="cart-float" title="Abrir carrito">🛒 <span id="cart-count">0</span></button>
+    </div>
+  </header>
 
-        setTimeout(() => {
-            clearInterval(intervalo);
-        }, 10000);
-    </script>
+  <!-- Banner de bienvenida -->
+  <section class="hero">
+    <h1>🎉 Bienvenido a La Mejor Tienda Online</h1>
+    <p>Encuentra productos, ofertas y recibe ayuda instantánea con Modo IA.</p>
+  </section>
 
+  <!-- Ofertas -->
+  <section id="offers-section" class="offers hidden">
+    <h2>Ofertas destacadas</h2>
+    <div id="offers-list" class="grid"></div>
+  </section>
+
+  <!-- Productos -->
+  <main id="productos" class="grid" aria-live="polite"></main>
+
+  <!-- Quick view modal -->
+  <div id="quickview" class="modal hidden" aria-hidden="true">
+    <div class="modal-box">
+      <button class="close" id="quick-close">✖</button>
+      <div id="quick-content"></div>
+    </div>
+  </div>
+
+  <!-- Carrito panel -->
+  <aside id="cart-panel" class="cart-panel hidden" aria-hidden="true">
+    <h3>Tu carrito</h3>
+    <ul id="cart-items"></ul>
+    <div class="cart-footer">
+      <div>Total: <strong id="cart-total">0.00</strong> €</div>
+      <div class="cart-actions">
+        <button id="clear-cart" class="btn">Vaciar</button>
+        <button id="checkout" class="btn primary">Comprar todo</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Account modal -->
+  <div id="account-modal" class="modal hidden">
+    <div class="modal-box">
+      <button class="close" id="account-close">✖</button>
+      <div id="account-content"></div>
+    </div>
+  </div>
+
+  <!-- IA chat panel -->
+  <div id="ia-panel" class="modal hidden">
+    <div class="modal-box ia-box">
+      <button class="close" id="ia-close">✖</button>
+      <h3>Asistente IA — Tienda</h3>
+      <div id="ia-messages" class="ia-messages"></div>
+      <div class="ia-input">
+        <input id="ia-input" placeholder="Pregunta sobre productos, ofertas o envío...">
+        <button id="ia-send" class="btn">Enviar</button>
+      </div>
+      <small class="muted">IA local: respuestas rápidas sobre los productos que hay en la tienda.</small>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>© La Mejor Tienda Online — Proyecto personal</div>
+    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
+  </footer>
+
+  <!-- Contenedores para decoraciones y nieve según tu decoraciones.js -->
+  <div id="decor-root"></div>
+  <div id="snow-root"></div>
+
+  <!-- Scripts: productos.js (ya existente) + app logic -->
+  <script src="productos.js"></script>
+  <script src="ia.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
