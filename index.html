@@ -1,178 +1,198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Mejor Tienda Online</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Mejor Tienda Online</title>
 
-<style>
-/* ----------------- ESTILO GENERAL ------------------- */
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  margin: 0;
-  background: #f7f7f7;
-  transition: background 0.3s, color 0.3s;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #f5f5f5;
+            transition: 0.3s;
+        }
 
-header {
-  background: #ffcc00;
-  text-align: center;
-  padding: 25px;
-  font-size: 26px;
-  font-weight: bold;
-  color: #333;
-}
+        /* 🌙 MODO OSCURO AUTOMÁTICO */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #000 !important;
+                color: #fff !important;
+            }
+        }
 
-.contenedor {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-}
+        /* 🎄 DECORACIONES NAVIDAD */
+        .decoracion {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+        }
 
-.producto {
-  border: 1px solid #ccc;
-  margin: 10px;
-  width: 260px;
-  background: white;
-  border-radius: 12px;
-  text-align: center;
-  padding: 15px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+        /* Árbol abajo derecha */
+        .arbol {
+            bottom: 10px;
+            right: 10px;
+            width: 150px;
+            animation: subirBajar 4s infinite ease-in-out;
+        }
 
-.producto img {
-  width: 100%;
-  border-radius: 12px;
-}
+        /* Papá Noel abajo izquierda */
+        .papanoel {
+            bottom: 10px;
+            left: 10px;
+            width: 150px;
+            animation: moverLado 3s infinite ease-in-out;
+        }
 
-footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 15px;
-}
+        /* Guirnaldas */
+        .guirnalda {
+            top: 0;
+            width: 250px;
+        }
 
-/* ----------- MODO OSCURO AUTOMÁTICO ----------- */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #111;
-    color: white;
-  }
-  .producto {
-    background: #222;
-    color: white;
-  }
-  header {
-    background: #444;
-    color: #fff;
-  }
-  footer {
-    background: #000;
-  }
-}
+        .guirnalda-izq {
+            left: 0;
+        }
 
-/* ----------- DECORACIONES NAVIDEÑAS ----------- */
-.decoracion {
-  position: fixed;
-  z-index: 999;
-  pointer-events: none;
-}
+        .guirnalda-der {
+            right: 0;
+        }
 
-#arbol {
-  bottom: 10px;
-  right: 10px;
-  width: 130px;
-  animation: balanceo 3s infinite ease-in-out;
-}
+        /* ⛄ Animaciones */
+        @keyframes subirBajar {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
+        }
 
-#papanoel {
-  bottom: 10px;
-  left: 10px;
-  width: 140px;
-  animation: subirBajar 4s infinite ease-in-out;
-}
+        @keyframes moverLado {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(12px); }
+            100% { transform: translateX(0); }
+        }
 
-#guirnalda1 {
-  top: 0;
-  left: 0;
-  width: 200px;
-}
+        /* ❄ Copos de nieve */
+        .snowflake {
+            position: fixed;
+            top: -20px;
+            font-size: 24px;
+            color: white;
+            animation: caer 5s linear infinite;
+            z-index: 9999;
+        }
 
-#guirnalda2 {
-  top: 0;
-  right: 0;
-  width: 200px;
-}
+        @keyframes caer {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(110vh); }
+        }
 
-@keyframes balanceo {
-  0% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-  100% { transform: rotate(-3deg); }
-}
+        /* -------- TU WEB AQUÍ -------- */
+        header {
+            padding: 20px;
+            text-align: center;
+            background: #008cff;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-@keyframes subirBajar {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
+        .contenedor {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
 
-/* -------- COPOS DE NIEVE 10s -------- */
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  font-size: 20px;
-  z-index: 1000;
-  animation: caer 10s linear infinite;
-}
+        .producto {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
 
-@keyframes caer {
-  0% { transform: translateY(-10px); }
-  100% { transform: translateY(110vh); }
-}
-</style>
+        .producto:hover {
+            transform: scale(1.05);
+        }
+
+        .producto img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .btn {
+            margin-top: 8px;
+            display: inline-block;
+            padding: 10px 15px;
+            background: #0077ff;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #005bca;
+        }
+
+    </style>
 </head>
-
 <body>
 
-<header>🎄 Bienvenido a la Mejor Tienda Online 🎄</header>
+    <!-- 🎄 DECORACIONES FIJAS -->
+    <img src="decoraciones/arbol.png" class="decoracion arbol">
+    <img src="decoraciones/papanoel.png" class="decoracion papanoel">
+    <img src="decoraciones/guirnalda.png" class="decoracion guirnalda guirnalda-izq">
+    <img src="decoraciones/guirnalda.png" class="decoracion guirnalda guirnalda-der">
 
-<!-- DECORACIONES NAVIDAD (siempre visibles) -->
-<img id="arbol" class="decoracion" src="decoraciones/arbol.png">
-<img id="papanoel" class="decoracion" src="decoraciones/papanoel.png">
-<img id="guirnalda1" class="decoracion" src="decoraciones/guirnalda.png">
-<img id="guirnalda2" class="decoracion" src="decoraciones/guirnalda.png">
+    <!-- TU WEB -->
+    <header>🎁 La Mejor Tienda Online 🎁</header>
 
-<!-- CONTENEDOR DE PRODUCTOS -->
-<div class="contenedor" id="lista-productos"></div>
+    <div class="contenedor">
+        <div class="producto">
+            <img src="productos/airpods.jpg">
+            <h3>AirPods</h3>
+            <p>89,99€</p>
+            <a class="btn" href="#">Comprar</a>
+        </div>
 
-<footer>Gracias por visitar mi tienda ❤️</footer>
+        <div class="producto">
+            <img src="productos/samsungtv.jpg">
+            <h3>Samsung TV 55"</h3>
+            <p>499€</p>
+            <a class="btn" href="#">Comprar</a>
+        </div>
 
-<script src="productos.js"></script>
+        <div class="producto">
+            <img src="productos/reloj.jpg">
+            <h3>Smartwatch</h3>
+            <p>39,99€</p>
+            <a class="btn" href="#">Comprar</a>
+        </div>
+    </div>
 
-<!-- COPOS DE NIEVE SOLO 10s -->
-<script>
-function crearCopo() {
-  const copo = document.createElement("div");
-  copo.classList.add("snowflake");
-  copo.textContent = "❄";
-  copo.style.left = Math.random() * 100 + "vw";
-  copo.style.animationDuration = (4 + Math.random() * 6) + "s";
-  document.body.appendChild(copo);
-  setTimeout(() => copo.remove(), 10000);
-}
+    <!-- ❄ NIEVE SOLO 10 SEGUNDOS -->
+    <script>
+        function crearCopo() {
+            const copo = document.createElement("div");
+            copo.classList.add("snowflake");
+            copo.innerHTML = "❄";
+            copo.style.left = Math.random() * 100 + "vw";
+            copo.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(copo);
 
-let nieve = setInterval(crearCopo, 200);
+            setTimeout(() => {
+                copo.remove();
+            }, 5000);
+        }
 
-setTimeout(() => {
-  clearInterval(nieve);
-}, 10000); // ❄ SOLO 10 SEGUNDOS
-</script>
+        let intervalo = setInterval(crearCopo, 200);
 
-</body><!-- Decoraciones de Navidad -->
-<img src="decoraciones/arbol.png" class="decoracion arbol">
-<img src="decoraciones/papanoel.png" class="decoracion papanoel">
-<img src="decoraciones/guirnalda izquierda" class="decoracion guirnalda guirnalda-izq">
-<img src="decoraciones/guirnalda derecha" class="decoracion guirnalda guirnalda-der">
+        setTimeout(() => {
+            clearInterval(intervalo);
+        }, 10000);
+    </script>
 
+</body>
+</html>
