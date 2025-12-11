@@ -1,364 +1,297 @@
-// app.js - controla UI y ahora lee admin_products desde localStorage
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-function el(tag, attrs={}, html=''){ const e = document.createElement(tag); for(const k in attrs) e.setAttribute(k, attrs[k]); e.innerHTML = html; return e; }
+// app.js - lógica principal: carga productos, filtros, cart, account (local), IA (ia.js)
+(function(){
+  /* STATE */
+  const state = {
+    productos: typeof productos !== 'undefined' ? productos.slice() : [],
+    cart: JSON.parse(localStorage.getItem('cart_v1') || '[]'),
+    user: JSON.parse(localStorage.getItem('session_user') || 'null'),
+    categories: []
+  };
 
-// STATE
-let state = {
-  productos: typeof productos !== 'undefined' ? productos.slice() : [],
-  filtered: [],
-  selectedCategory: 'Todos',
-  user: JSON.parse(localStorage.getItem('session_user')) || null,
-  cart: []
-};
+  /* Try load admin_products.json if exists, else localStorage admin_products */
+  async function loadAdminProducts(){
+    try{
+      const resp = await fetch('admin_products.json');
+      if(resp.ok){
+        const admin = await resp.json();
+        if(Array.isArray(admin) && admin.length){
+          // merge admin at start
+          state.productos = admin.map((p,i)=>({
+            id: p.id || 'adm_'+Date.now()+'_'+i,
+            nombre: p.nombre || ('Admin '+i),
+            categoria: p.categoria || 'Admin',
+            descripcion: p.descripcion || '',
+            precio: Number(p.precio) || 9.99,
+            imagen: p.imagen || 'https://via.placeholder.com/640x420',
+            oferta: !!p.oferta
+          })).concat(state.productos);
+          console.log('admin_products.json loaded');
+        }
+      } else {
+        // fallback to localStorage admin_products
+        const adminLS = JSON.parse(localStorage.getItem('admin_products')||'[]');
+        if(adminLS.length){
+          state.productos = adminLS.concat(state.productos);
+          console.log('admin_products from localStorage loaded');
+        }
+      }
+    }catch(e){
+      // ignore
+    }
+  }
 
-// --- ADMIN PRODUCTS MERGE ---
-// If there are admin products in localStorage, merge them (admin_products is expected to be an array)
-function loadAdminProducts() {
-  try {
-    const admin = JSON.parse(localStorage.getItem('admin_products') || '[]');
-    if(!Array.isArray(admin) || admin.length===0) return;
-    // normalize admin products: ensure fields id,nombre,precio,categoria,imagen,descripcion
-    const mapped = admin.map((p, i) => {
-      return {
-        id: p.id || ('a'+Date.now()+i),
-        nombre: p.nombre || ('Producto admin '+(i+1)),
-        precio: Number(p.precio) || 9.99,
-        categoria: p.categoria || 'Admin',
-        descripcion: p.descripcion || '',
-        imagen: p.imagen || 'https://source.unsplash.com/640x420/?product'
-      };
+  /* Render categories */
+  function renderCategories(){
+    const cats = Array.from(new Set(state.productos.map(p=>p.categoria)));
+    state.categories = cats;
+    const list = document.getElementById('categories-list');
+    list.innerHTML = '';
+    const all = document.createElement('li'); all.textContent='Todos'; all.onclick = ()=>renderProducts(state.productos);
+    list.appendChild(all);
+    cats.forEach(c=>{
+      const li = document.createElement('li');
+      li.textContent = c;
+      li.onclick = ()=>renderProducts(state.productos.filter(p=>p.categoria===c));
+      list.appendChild(li);
     });
-    // Avoid id collisions: remove base products that have same id as admin
-    const existingIds = new Set(mapped.map(p=>String(p.id)));
-    state.productos = mapped.concat(state.productos.filter(p=>!existingIds.has(String(p.id))));
-    console.log('admin_products cargados:', mapped.length);
-  } catch(e) {
-    console.warn('No se pudieron cargar admin_products', e);
   }
-}
 
-// USER / AUTH (localStorage)
-function saveUsers(users){ localStorage.setItem('users_v1', JSON.stringify(users)); }
-function loadUsers(){ return JSON.parse(localStorage.getItem('users_v1')||'[]'); }
-
-function registerUser({email,name,password}){
-  const users = loadUsers();
-  if(users.find(u=>u.email===email)) throw new Error('Usuario ya existe');
-  const user = {id:Date.now(), email, name, password, orders: [], cart: []};
-  users.push(user); saveUsers(users);
-  setSession(user);
-  return user;
-}
-function loginUser({email,password}){
-  const users = loadUsers();
-  const u = users.find(x=>x.email===email && x.password===password);
-  if(!u) throw new Error('Credenciales incorrectas');
-  setSession(u); return u;
-}
-function setSession(user){
-  state.user = user;
-  localStorage.setItem('session_user', JSON.stringify(user));
-  state.cart = user.cart || [];
-  updateCartUI();
-  renderHeaderUser();
-}
-function logout(){
-  state.user = null;
-  localStorage.removeItem('session_user');
-  state.cart = [];
-  updateCartUI();
-  renderHeaderUser();
-}
-
-function persistUserChanges(){
-  if(!state.user) {
-    // guest: persist guest cart
-    localStorage.setItem('guest_cart', JSON.stringify(state.cart));
-    return;
-  }
-  const users = loadUsers();
-  const idx = users.findIndex(u=>u.id===state.user.id);
-  if(idx>=0){
-    users[idx].cart = state.cart;
-    users[idx].orders = users[idx].orders || state.user.orders || [];
-    saveUsers(users);
-    // refresh session copy
-    localStorage.setItem('session_user', JSON.stringify(users[idx]));
-    state.user = users[idx];
-  }
-}
-
-// CART
-function addToCart(productId){
-  const p = state.productos.find(x=>x.id==productId);
-  if(!p) return alert('Producto no encontrado');
-  const found = state.cart.find(i=>i.id==productId);
-  if(found) found.cantidad = (found.cantidad||1)+1;
-  else state.cart.push({...p, cantidad:1});
-  updateCartUI();
-  persistUserChanges();
-  alert(`${p.nombre} añadido al carrito`);
-}
-function cartIncrease(i){ state.cart[i].cantidad++; updateCartUI(); persistUserChanges(); }
-function cartDecrease(i){ state.cart[i].cantidad = Math.max(1, state.cart[i].cantidad-1); updateCartUI(); persistUserChanges(); }
-function cartRemove(i){ state.cart.splice(i,1); updateCartUI(); persistUserChanges(); }
-function clearCart(){ if(confirm('Vaciar carrito?')){ state.cart=[]; updateCartUI(); persistUserChanges(); } }
-
-function updateCartUI(){
-  $('#cart-count').textContent = state.cart.reduce((s,i)=>s+(i.cantidad||1),0) || 0;
-  const elCartItems = $('#cart-items');
-  if(!elCartItems) return;
-  elCartItems.innerHTML = '';
-  let total=0;
-  state.cart.forEach((it, idx)=>{
-    total += it.precio * (it.cantidad||1);
-    const li = el('li',{},`<div>${it.nombre} <small>(${it.categoria})</small></div>
-      <div>${it.precio.toFixed(2)}€ x ${it.cantidad} 
-      <div style="margin-top:6px"><button onclick="cartIncrease(${idx})">+</button>
-      <button onclick="cartDecrease(${idx})">-</button>
-      <button onclick="cartRemove(${idx})">Eliminar</button></div></div>`);
-    elCartItems.appendChild(li);
-  });
-  $('#cart-total').textContent = total.toFixed(2);
-}
-
-// CATEGORIES & SEARCH
-function renderCategories(){
-  const panel = $('#categories-panel'); panel.innerHTML='';
-  const allBtn = el('div',{},`<button class="btn small">Todos</button>`);
-  allBtn.firstChild.onclick = ()=>{ state.selectedCategory='Todos'; applyFilters(); panel.classList.add('hidden'); };
-  panel.appendChild(allBtn);
-  const cats = Array.from(new Set(state.productos.map(p=>p.categoria))).slice(0,30);
-  cats.forEach(c=>{
-    const b = el('div',{},`<button class="btn small">${c}</button>`);
-    b.firstChild.onclick = ()=>{ state.selectedCategory=c; applyFilters(); panel.classList.add('hidden'); };
-    panel.appendChild(b);
-  });
-}
-
-// FILTER + RENDER
-function applyFilters(query){
-  const q = (query || $('#search-input').value||'').toLowerCase().trim();
-  let list = state.productos.slice();
-  if(state.selectedCategory && state.selectedCategory!=='Todos') list = list.filter(p=>p.categoria===state.selectedCategory);
-  if(q) list = list.filter(p=> (p.nombre+' '+p.descripcion+' '+p.categoria).toLowerCase().includes(q));
-  state.filtered = list;
-  renderProducts(list);
-}
-
-function renderProducts(list){
-  const container = $('#productos'); container.innerHTML='';
-  (list || state.productos).forEach(p=>{
-    const card = el('div', {class:'card'});
-    card.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}" onclick="openQuick('${p.id}')">
-      <h3>${p.nombre}</h3>
-      <p class="desc">${p.descripcion}</p>
-      <div class="price">${p.precio.toFixed(2)} €</div>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn" onclick="openQuick('${p.id}')">Detalles</button>
-        <button class="btn primary" onclick="addToCart('${p.id}')">Añadir</button>
-      </div>`;
-    container.appendChild(card);
-  });
-}
-
-// QUICKVIEW
-function openQuick(id){
-  const p = state.productos.find(x=>String(x.id)===String(id));
-  if(!p) return;
-  $('#quick-content').innerHTML = `
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px"><img src="${p.imagen}" style="width:100%;border-radius:8px"></div>
-      <div style="flex:1;min-width:260px">
-        <h2>${p.nombre}</h2>
-        <p style="color:#6b7780">${p.descripcion}</p>
-        <p style="font-weight:800">${p.precio.toFixed(2)} €</p>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn" onclick="addToCart('${id}'); closeQuick()">Añadir al carrito</button>
-          <button class="btn primary" onclick="buyNow('${id}')">Comprar ahora</button>
+  /* Render products grid */
+  function renderProducts(list){
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = '';
+    (list || state.productos).forEach(p=>{
+      const card = document.createElement('article');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <h3>${p.nombre}</h3>
+        <div class="product-meta">
+          <div>${p.categoria}</div>
+          <div style="font-weight:800">${p.precio.toFixed(2)} €</div>
         </div>
-      </div>
-    </div>`;
-  $('#quickview').classList.remove('hidden');
-}
-function closeQuick(){ $('#quickview').classList.add('hidden'); }
-
-// OFFERS
-function renderOffers(){
-  const offers = state.productos.filter(p=>p.oferta===true).slice(0,12);
-  const list = $('#offers-list'); list.innerHTML='';
-  offers.forEach(p=>{
-    const c = el('div',{class:'card'});
-    c.innerHTML = `<img src="${p.imagen}"><h3>${p.nombre}</h3><div class="price">${p.precio.toFixed(2)} €</div>
-      <div><button class="btn" onclick="openQuick('${p.id}')">Detalles</button></div>`;
-    list.appendChild(c);
-  });
-  if(offers.length) $('#offers-section').classList.remove('hidden'); else $('#offers-section').classList.add('hidden');
-}
-
-// CHECKOUT (simulado)
-function buyNow(id){
-  const p = state.productos.find(x=>String(x.id)===String(id));
-  state.cart = [{...p, cantidad:1}];
-  persistUserChanges();
-  finalizeOrder();
-}
-
-function finalizeOrder(){
-  if(!state.user){
-    if(!confirm('Necesitas una cuenta para finalizar el pedido. ¿Quieres crear una ahora?')) return;
-    openAccount('login'); return;
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn" onclick="app_openQuick('${p.id}')">Detalles</button>
+          <button class="btn primary" onclick="app_addToCart('${p.id}')">Añadir</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
   }
-  if(!state.cart.length) return alert('Carrito vacío');
-  const users = loadUsers();
-  const idx = users.findIndex(u=>u.id===state.user.id);
-  if(idx>=0){
-    const order = { id: Date.now(), date: new Date().toISOString(), items: state.cart, total: state.cart.reduce((s,i)=>s+(i.precio*(i.cantidad||1)),0) };
-    users[idx].orders = users[idx].orders || [];
-    users[idx].orders.push(order);
-    users[idx].cart = []; // clear server cart
-    saveUsers(users);
-    // update session and state
-    state.user = users[idx];
-    localStorage.setItem('session_user', JSON.stringify(state.user));
-    state.cart = [];
-    updateCartUI();
-    alert('Pedido confirmado (simulado). Gracias!');
-  }
-}
 
-// ACCOUNT UI
-function renderHeaderUser(){
-  const btn = $('#account-btn');
-  btn.textContent = state.user ? `${state.user.name || state.user.email} ▾` : 'Mi cuenta';
-}
-
-function openAccount(tab='login'){
-  $('#account-content').innerHTML = '';
-  const content = $('#account-content');
-  if(!tab || tab==='login'){
+  /* Quick modal */
+  const quickModal = document.getElementById('quick-modal');
+  function openQuick(id){
+    const p = state.productos.find(x=>x.id===id);
+    if(!p) return;
+    const content = document.getElementById('quick-content');
     content.innerHTML = `
-      <div class="account-section">
-        <div class="account-box">
-          <h3>Iniciar sesión</h3>
-          <input id="login-email" placeholder="Email"><br>
-          <input id="login-pass" placeholder="Contraseña" type="password"><br>
-          <button id="do-login" class="btn primary">Entrar</button>
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px"><img src="${p.imagen}" style="width:100%;border-radius:8px"></div>
+        <div style="flex:1;min-width:260px">
+          <h2>${p.nombre}</h2>
+          <p style="color:var(--muted)">${p.descripcion}</p>
+          <p style="font-weight:800">${p.precio.toFixed(2)} €</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn" onclick="app_addToCart('${p.id}'); app_closeQuick();">Añadir al carrito</button>
+            <button class="btn primary" onclick="app_buyNow('${p.id}')">Comprar ahora</button>
+          </div>
         </div>
-        <div class="account-box">
-          <h3>Crear cuenta</h3>
-          <input id="reg-name" placeholder="Nombre"><br>
-          <input id="reg-email" placeholder="Email"><br>
-          <input id="reg-pass" placeholder="Contraseña" type="password"><br>
-          <button id="do-register" class="btn">Registrar</button>
-        </div>
-      </div>
-      <hr>
-      <div><strong>¿Ya tienes cuenta?</strong> Admin local — tus datos se guardan en este navegador.</div>
-    `;
-    $('#do-login').onclick = ()=>{
-      try{
-        const email = $('#login-email').value.trim();
-        const pass = $('#login-pass').value;
-        const u = loginUser({email, password:pass});
-        alert('Bienvenido ' + (u.name || u.email));
-        $('#account-modal').classList.add('hidden');
-        renderHeaderUser();
-      }catch(err){ alert(err.message); }
-    };
-    $('#do-register').onclick = ()=>{
-      try{
-        const name = $('#reg-name').value.trim();
-        const email = $('#reg-email').value.trim();
-        const pass = $('#reg-pass').value;
-        const u = registerUser({email, name, password:pass});
-        alert('Cuenta creada. Bienvenido ' + u.name);
-        $('#account-modal').classList.add('hidden');
-        renderHeaderUser();
-      }catch(err){ alert(err.message); }
-    };
+      </div>`;
+    quickModal.classList.remove('hidden');
+    quickModal.setAttribute('aria-hidden','false');
   }
-  if(tab==='profile'){
-    if(!state.user) return openAccount('login');
+  function closeQuick(){ quickModal.classList.add('hidden'); quickModal.setAttribute('aria-hidden','true'); }
+
+  /* CART */
+  function saveCart(){ localStorage.setItem('cart_v1', JSON.stringify(state.cart)); updateCartUI(); }
+  function addToCart(id){
+    const p = state.productos.find(x=>x.id===id); if(!p) return;
+    const found = state.cart.find(c=>c.id===id);
+    if(found) found.cantidad = (found.cantidad||1)+1;
+    else state.cart.push({ id:p.id, nombre:p.nombre, precio:p.precio, cantidad:1, imagen:p.imagen });
+    saveCart();
+    toast(`${p.nombre} añadido al carrito`);
+  }
+  function buyNow(id){
+    const p = state.productos.find(x=>x.id===id); state.cart = [{ id:p.id, nombre:p.nombre, precio:p.precio, cantidad:1, imagen:p.imagen }]; saveCart(); proceedCheckout();
+  }
+  function updateCartUI(){
+    document.getElementById('cartCount').textContent = state.cart.reduce((s,i)=>s+(i.cantidad||1),0);
+    const list = document.getElementById('cart-list');
+    if(!list) return;
+    list.innerHTML = '';
+    let total = 0;
+    state.cart.forEach((it, idx)=>{
+      total += it.precio * (it.cantidad||1);
+      const div = document.createElement('div'); div.className='cart-item';
+      div.innerHTML = `<img src="${it.imagen}"><div style="flex:1"><div style="font-weight:700">${it.nombre}</div><div style="color:var(--muted)">${(it.precio.toFixed(2))} € x ${it.cantidad}</div>
+        <div style="margin-top:8px"><button onclick="app_changeQty(${idx},-1)">-</button><button onclick="app_changeQty(${idx},1)">+</button><button onclick="app_removeFromCart(${idx})">Eliminar</button></div></div>`;
+      list.appendChild(div);
+    });
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+  }
+  function removeFromCart(i){ state.cart.splice(i,1); saveCart(); }
+  function changeQty(i,delta){ state.cart[i].cantidad = Math.max(1,(state.cart[i].cantidad||1)+delta); saveCart(); }
+  function clearCart(){ if(confirm('Vaciar carrito?')){ state.cart = []; saveCart(); } }
+
+  /* Checkout (simulado) */
+  function proceedCheckout(){
+    if(state.cart.length===0) return alert('Carrito vacío');
+    if(!state.user){ openAccountModal(); return; }
+    const name = prompt('Nombre para envío:'); if(!name) return alert('Nombre necesario');
+    const address = prompt('Dirección de envío:'); if(!address) return alert('Dirección necesaria');
+    const order = { id: 'ord_'+Date.now(), date: new Date().toISOString(), items: state.cart, total: state.cart.reduce((s,i)=>s+i.precio*(i.cantidad||1),0), name, address};
+    // save orders per-user in localStorage
+    const users = JSON.parse(localStorage.getItem('users_v1') || '[]');
+    const idx = users.findIndex(u=>u.email === (state.user && state.user.email));
+    if(idx>=0){ users[idx].orders = users[idx].orders || []; users[idx].orders.unshift(order); localStorage.setItem('users_v1', JSON.stringify(users)); }
+    // Also store general orders
+    let orders = JSON.parse(localStorage.getItem('orders_v1')||'[]'); orders.unshift(order); localStorage.setItem('orders_v1', JSON.stringify(orders));
+    state.cart = []; saveCart();
+    alert('Pedido confirmado. ID: ' + order.id);
+  }
+
+  /* Account (local) */
+  function openAccountModal(){
+    const modal = document.getElementById('account-modal'); modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false');
+    const content = document.getElementById('account-content');
+    content.innerHTML = '';
     const u = state.user;
-    content.innerHTML = `<h3>Perfil</h3><p><b>${u.name}</b> — ${u.email}</p>
-      <h4>Historial de pedidos</h4><div id="orders-list"></div>
-      <button id="logout-btn" class="btn">Cerrar sesión</button>`;
-    $('#logout-btn').onclick = ()=>{ logout(); $('#account-modal').classList.add('hidden'); };
-    const ul = $('#orders-list');
-    (u.orders||[]).forEach(o=>{
-      const d = el('div',{},`<b>Pedido ${o.id}</b> — ${new Date(o.date).toLocaleString()} — Total: ${o.total.toFixed(2)} €`);
-      ul.appendChild(d);
+    if(!u){
+      content.innerHTML = `
+        <h3>Iniciar sesión / Registrar</h3>
+        <input id="acct-name" placeholder="Nombre" style="width:100%;padding:8px;margin:6px 0">
+        <input id="acct-email" placeholder="Email" style="width:100%;padding:8px;margin:6px 0">
+        <input id="acct-pass" placeholder="Contraseña" type="password" style="width:100%;padding:8px;margin:6px 0">
+        <div style="display:flex;gap:8px">
+          <button id="acct-register" class="btn primary">Registrar</button>
+          <button id="acct-login" class="btn">Entrar</button>
+        </div>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">Tus datos se guardan solo en este navegador (localStorage).</div>
+      `;
+      document.getElementById('acct-register').onclick = ()=>{
+        const name = document.getElementById('acct-name').value.trim();
+        const email = document.getElementById('acct-email').value.trim();
+        const pass = document.getElementById('acct-pass').value;
+        if(!email||!pass||!name) return alert('Completa todos los campos');
+        const users = JSON.parse(localStorage.getItem('users_v1')||'[]');
+        if(users.find(x=>x.email===email)) return alert('Usuario ya existe');
+        const user = { id: Date.now(), name, email, pass, orders: [], cart: [] };
+        users.push(user); localStorage.setItem('users_v1', JSON.stringify(users));
+        state.user = { name, email }; localStorage.setItem('session_user', JSON.stringify(state.user));
+        alert('Cuenta creada');
+        modal.classList.add('hidden');
+      };
+      document.getElementById('acct-login').onclick = ()=>{
+        const email = document.getElementById('acct-email').value.trim();
+        const pass = document.getElementById('acct-pass').value;
+        const users = JSON.parse(localStorage.getItem('users_v1')||'[]');
+        const user = users.find(u=>u.email===email && u.pass===pass);
+        if(!user) return alert('Credenciales incorrectas');
+        state.user = { name: user.name, email: user.email }; localStorage.setItem('session_user', JSON.stringify(state.user));
+        alert('Bienvenido ' + user.name);
+        modal.classList.add('hidden');
+      };
+    } else {
+      // show profile
+      content.innerHTML = `<h3>Perfil</h3><p><strong>${u.name}</strong><br>${u.email}</p><button id="acct-logout" class="btn">Cerrar sesión</button><h4>Pedidos</h4><div id="user-orders"></div>`;
+      document.getElementById('acct-logout').onclick = ()=>{
+        state.user = null; localStorage.removeItem('session_user'); alert('Sesión cerrada'); modal.classList.add('hidden');
+      };
+      const users = JSON.parse(localStorage.getItem('users_v1')||'[]');
+      const userRec = users.find(x=>x.email===u.email);
+      const ordersEl = document.getElementById('user-orders');
+      (userRec && userRec.orders || []).forEach(o=>{
+        const d = document.createElement('div');
+        d.style.padding='8px'; d.style.borderBottom='1px solid rgba(255,255,255,0.03)';
+        d.innerHTML = `<b>${o.id}</b> — ${new Date(o.date).toLocaleString()} — ${o.total.toFixed(2)} €`;
+        ordersEl.appendChild(d);
+      });
+    }
+  }
+
+  /* Toast */
+  function toast(msg){
+    const t = document.createElement('div'); t.textContent = msg;
+    t.style.position='fixed'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.bottom='24px';
+    t.style.background='rgba(0,0,0,0.8)'; t.style.color='white'; t.style.padding='8px 12px'; t.style.borderRadius='8px'; t.style.zIndex=9999;
+    document.body.appendChild(t); setTimeout(()=>t.remove(),2000);
+  }
+
+  /* IA - uses IA_ASK from ia.js */
+  function initIA(){
+    const iaBtn = document.getElementById('ia-mode-btn');
+    const iaPanel = document.getElementById('ia-panel');
+    const iaClose = document.getElementById('ia-close');
+    const iaSend = document.getElementById('ia-send');
+    const iaInput = document.getElementById('ia-input');
+    const iaMessages = document.getElementById('ia-messages');
+
+    iaBtn.onclick = ()=>{ iaPanel.classList.remove('hidden'); iaPanel.setAttribute('aria-hidden','false'); iaMessages.innerHTML = ''; appendIABot('Hola — soy el asistente de la tienda.') };
+    iaClose.onclick = ()=>{ iaPanel.classList.add('hidden'); iaPanel.setAttribute('aria-hidden','true'); };
+    iaSend.onclick = async ()=>{
+      const q = iaInput.value.trim(); if(!q) return;
+      appendUser(q); iaInput.value='';
+      const r = await window.IA_ASK(q); appendIABot(r);
+    };
+
+    function appendUser(t){ const div = document.createElement('div'); div.className='ia-bubble user'; div.textContent = t; iaMessages.appendChild(div); iaMessages.scrollTop = iaMessages.scrollHeight; }
+    function appendIABot(t){ const div = document.createElement('div'); div.className='ia-bubble bot'; div.textContent = t; iaMessages.appendChild(div); iaMessages.scrollTop = iaMessages.scrollHeight; }
+    window.appendIABot = appendIABot;
+  }
+
+  /* decorations (decoraciones.js handles heavy lifting) */
+
+  /* UI wiring */
+  function wireUI(){
+    document.getElementById('menu-btn').onclick = ()=>{ document.getElementById('side-menu').classList.toggle('open'); };
+    document.getElementById('side-close').onclick = ()=>{ document.getElementById('side-menu').classList.remove('open'); };
+    document.getElementById('searchBar').addEventListener('input', (e)=> {
+      const q = e.target.value.toLowerCase().trim();
+      if(!q) renderProducts(state.productos.slice(0,60));
+      else renderProducts(state.productos.filter(p=> (p.nombre+' '+p.descripcion+' '+p.categoria).toLowerCase().includes(q)));
+    });
+    document.getElementById('cart-btn').onclick = ()=>{ const panel = document.getElementById('cart-panel'); panel.classList.toggle('hidden'); };
+    document.getElementById('clear-cart').onclick = ()=> clearCart();
+    document.getElementById('checkout-btn').onclick = ()=> proceedCheckout();
+    document.getElementById('account-btn').onclick = ()=> openAccountModal();
+    document.getElementById('quick-close').onclick = ()=> closeQuick();
+    document.getElementById('offers-btn').onclick = ()=> { renderOffers(); window.scrollTo({top:0,behavior:'smooth'}); };
+  }
+
+  /* render offers */
+  function renderOffers(){
+    const offers = state.productos.filter(p=>p.oferta);
+    const sec = document.getElementById('offers-section'); const list = document.getElementById('offers-list');
+    if(!offers.length){ sec.classList.add('hidden'); return; }
+    sec.classList.remove('hidden'); list.innerHTML='';
+    offers.slice(0,12).forEach(p=>{
+      const card = document.createElement('div'); card.className='product-card';
+      card.innerHTML = `<img src="${p.imagen}"><h3>${p.nombre}</h3><div style="font-weight:800">${p.precio.toFixed(2)} €</div>
+        <div style="margin-top:10px"><button class="btn" onclick="app_openQuick('${p.id}')">Detalles</button> <button class="btn primary" onclick="app_addToCart('${p.id}')">Añadir</button></div>`;
+      list.appendChild(card);
     });
   }
-  $('#account-modal').classList.remove('hidden');
-}
 
-// IA chat UI wiring (uses IA_ASK from ia.js)
-function initIA(){
-  $('#ia-messages').innerHTML = '';
-  appendIABot("Hola — soy el asistente de la tienda. Pregúntame por productos, ofertas o cómo comprar.");
-}
-function appendIABot(text){ const m = el('div',{'class':'ia-bubble bot'},text); $('#ia-messages').appendChild(m); $('#ia-messages').scrollTop = $('#ia-messages').scrollHeight; }
-function appendIAUser(text){ const m = el('div',{'class':'ia-bubble user'},text); $('#ia-messages').appendChild(m); $('#ia-messages').scrollTop = $('#ia-messages').scrollHeight; }
+  /* init */
+  window.app_openQuick = openQuick;
+  window.app_closeQuick = closeQuick;
+  window.app_addToCart = addToCart;
+  window.app_buyNow = buyNow;
+  window.app_changeQty = changeQty;
+  window.app_removeFromCart = removeFromCart;
 
-async function iaAsk(text){
-  appendIAUser(text);
-  const resp = await window.IA_ASK(text);
-  appendIABot(resp);
-}
-
-// EVENTS
-function wireEvents(){
-  $('#categories-toggle').onclick = ()=> $('#categories-panel').classList.toggle('hidden');
-  $('#search-btn').onclick = ()=> applyFilters();
-  $('#search-input').addEventListener('keydown', e=>{ if(e.key==='Enter') applyFilters(); });
-
-  $('#cart-float').onclick = ()=> $('#cart-panel').classList.toggle('hidden');
-  $('#quick-close').onclick = closeQuick;
-  $('#clear-cart').onclick = clearCart;
-  $('#checkout').onclick = finalizeOrder;
-
-  $('#account-btn').onclick = ()=> openAccount('login');
-  $('#account-close').onclick = ()=> $('#account-modal').classList.add('hidden');
-
-  $('#ai-mode-btn').onclick = ()=> { $('#ia-panel').classList.remove('hidden'); initIA(); };
-  $('#ia-close').onclick = ()=> $('#ia-panel').classList.add('hidden');
-  $('#ia-send').onclick = ()=> { const q = $('#ia-input').value.trim(); if(!q) return; iaAsk(q); $('#ia-input').value=''; };
-
-  $('#offers-btn').onclick = ()=> { renderOffers(); window.scrollTo({top:0,behavior:'smooth'}); };
-}
-
-// INIT
-function init(){
-  // merge admin products if present
-  loadAdminProducts();
-
-  state.productos = state.productos || [];
-  // mark some products as offers for demo
-  state.productos.slice(0,8).forEach((p,i)=> p.oferta = p.oferta || false);
-  renderCategories();
-  applyFilters();
-  renderOffers();
-  wireEvents();
-  // restore user/cart session
-  if(state.user){
-    state.cart = state.user.cart || [];
+  async function init(){
+    await loadAdminProducts();
+    renderCategories();
+    renderProducts(state.productos.slice(0,60)); // show 60 products initial
     updateCartUI();
-  } else {
-    state.cart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
-    updateCartUI();
+    wireUI();
+    initIA();
+    renderOffers();
   }
-  renderHeaderUser();
 
-  // expose some helpers for inline buttons
-  window.addToCart = addToCart;
-  window.openQuick = openQuick;
-  window.buyNow = buyNow;
-  window.cartIncrease = cartIncrease;
-  window.cartDecrease = cartDecrease;
-  window.cartRemove = cartRemove;
-}
-init();
+  init();
+
+})();
