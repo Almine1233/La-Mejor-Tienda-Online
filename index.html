@@ -1,249 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>La Mejor Tienda Online</title>
-
-  <!-- Fuente más elegante -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    /* ===== NAVBAR ===== */
-    nav {
-      background: #222;
-      color: white;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    nav .left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    nav button {
-      background: #444;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    nav button:hover {
-      background: #666;
-    }
-
-    /* ===== BUSCADOR ===== */
-    #buscador {
-      padding: 7px;
-      width: 200px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    /* ===== CARTEL BIENVENIDA ===== */
-    .bienvenida {
-      background: #ffe083;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    /* ===== CONTENEDOR PRODUCTOS ===== */
-    .contenedor {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 20px;
-    }
-
-    .producto {
-      width: 250px;
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .producto:hover {
-      transform: scale(1.03);
-    }
-    .producto img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .producto button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .comprar-btn {
-      background: #007bff;
-      color: white;
-    }
-    .carrito-btn {
-      background: #28a745;
-      color: white;
-    }
-
-    /* ===== CARRITO ===== */
-    #carrito-icono {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      font-size: 26px;
-      cursor: pointer;
-    }
-    #carrito-panel {
-      display: none;
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      background: white;
-      width: 300px;
-      max-height: 400px;
-      overflow-y: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      padding: 15px;
-    }
-
-    /* ===== PANEL MI CUENTA ===== */
-    #panel-cuenta {
-      display: none;
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      width: 260px;
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    /* ===== CHAT IA ===== */
-    #chat-ia {
-      display: none;
-      position: fixed;
-      bottom: 100px;
-      left: 20px;
-      width: 300px;
-      height: 380px;
-      background: white;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    #chat-log {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      margin-bottom: 10px;
-      padding: 8px;
-    }
-    #chat-input {
-      width: 100%;
-      padding: 7px;
-    }
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- ================= NAVBAR ================= -->
-  <nav>
-    <div class="left">
-      <button onclick="toggleCategorias()">Categorías</button>
-      <button onclick="window.location.href='ofertas.html'">Ofertas</button>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button id="menu-btn" class="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand">
+        <div class="logo">La Mejor Tienda Online</div>
+        <div class="tagline">Tecnología · Hogar · Ofertas</div>
+      </div>
     </div>
 
-    <input type="text" id="buscador" placeholder="Buscar productos..." onkeyup="buscarProductos()">
-
-    <div class="right">
-      <button onclick="toggleCuenta()">Mi Cuenta</button>
-      <button onclick="toggleIA()">Modo IA 🤖</button>
+    <div class="header-center">
+      <input id="searchBar" type="search" placeholder="Buscar productos..." aria-label="Buscar productos">
     </div>
+
+    <div class="header-right">
+      <button id="offers-btn" class="btn ghost">Ofertas</button>
+      <button id="ia-mode-btn" class="btn ghost">Modo IA</button>
+      <button id="account-btn" class="btn">Mi cuenta</button>
+      <button id="cart-btn" class="cart-btn">🛒 <span id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <!-- Side menu (categories) -->
+  <nav id="side-menu" class="side-menu" aria-hidden="true">
+    <div class="side-header">
+      <h3>Categorías</h3>
+      <button id="side-close" aria-label="Cerrar">✖</button>
+    </div>
+    <ul id="categories-list" class="categories-list"></ul>
   </nav>
 
-  <!-- PANEL CATEGORÍAS -->
-  <div id="panel-categorias" style="display:none; position:absolute; background:white; padding:10px; right:50%; transform:translateX(50%); top:60px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-    <p><b>Categorías</b></p>
-    <p onclick="filtrar('tecnologia')">Tecnología</p>
-    <p onclick="filtrar('audio')">Audio</p>
-    <p onclick="filtrar('gaming')">Gaming</p>
-    <p onclick="filtrar('hogar')">Hogar</p>
+  <!-- Hero / welcome -->
+  <section class="hero">
+    <h1>Bienvenido a la Mejor Tienda Online</h1>
+    <p>Encuentra tecnología, audio, hogar y mucho más. Explora ofertas y usa el asistente IA.</p>
+  </section>
+
+  <!-- Offers strip (hidden if none) -->
+  <section id="offers-section" class="offers-section hidden">
+    <h2>Ofertas destacadas</h2>
+    <div id="offers-list" class="offers-list"></div>
+  </section>
+
+  <!-- Products grid -->
+  <main id="product-grid" class="product-grid" aria-live="polite"></main>
+
+  <!-- Quick / product detail modal -->
+  <div id="quick-modal" class="modal hidden" role="dialog" aria-hidden="true">
+    <div class="modal-body">
+      <button class="modal-close" id="quick-close">✖</button>
+      <div id="quick-content"></div>
+    </div>
   </div>
 
-  <!-- PANEL CUENTA -->
-  <div id="panel-cuenta">
-    <h3>Mi Cuenta</h3>
-    <p><b>Usuario:</b> <span id="cuenta-nombre"></span></p>
-    <button onclick="logout()">Cerrar Sesión</button>
+  <!-- Cart panel -->
+  <aside id="cart-panel" class="cart-panel hidden" aria-hidden="true">
+    <h3>Tu carrito</h3>
+    <div class="cart-list" id="cart-list"></div>
+    <div class="cart-footer">
+      <div>Total: <strong id="cart-total">0.00</strong> €</div>
+      <div class="cart-actions">
+        <button id="clear-cart" class="btn">Vaciar</button>
+        <button id="checkout-btn" class="btn primary">Comprar todo</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Account modal -->
+  <div id="account-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-body">
+      <button class="modal-close" id="account-close">✖</button>
+      <div id="account-content"></div>
+    </div>
   </div>
 
-  <!-- CHAT IA -->
-  <div id="chat-ia">
-    <div id="chat-log"></div>
-    <input id="chat-input" placeholder="Pregúntame algo..." onkeypress="iaEnter(event)">
+  <!-- IA panel -->
+  <div id="ia-panel" class="ia-panel hidden" aria-hidden="true">
+    <div class="ia-header">
+      <h3>Asistente IA</h3>
+      <button id="ia-close">✖</button>
+    </div>
+    <div id="ia-messages" class="ia-messages"></div>
+    <div class="ia-input">
+      <input id="ia-input" placeholder="Pregunta sobre productos o la tienda...">
+      <button id="ia-send" class="btn">Enviar</button>
+    </div>
   </div>
 
-  <!-- CARTEL BIENVENIDA -->
-  <div class="bienvenida">
-    🎁 ¡Bienvenido a la Mejor Tienda Online! 🎄
-  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div>© La Mejor Tienda Online — Proyecto personal</div>
+    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
+  </footer>
 
-  <!-- PRODUCTOS -->
-  <div class="contenedor" id="lista-productos"></div>
+  <!-- Decoraciones root / snow root -->
+  <div id="decor-root"></div>
+  <div id="snow-root"></div>
 
-  <!-- CARRITO -->
-  <div id="carrito-icono">🛒</div>
-  <div id="carrito-panel">
-    <h3>Carrito</h3>
-    <ul id="carrito-lista"></ul>
-    <p><b>Total: <span id="carrito-total">0</span> €</b></p>
-    <button class="comprar-btn" onclick="window.location.href='comprar.html'">Comprar Todo</button>
-  </div>
-
+  <!-- Scripts -->
   <script src="productos.js"></script>
-  <script src="main.js"></script>
-
+  <script src="ia.js"></script>
+  <script src="decoraciones.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
-<script>
-const menuBtn = document.getElementById('menu-btn');
-const sideMenu = document.getElementById('side-menu');
-
-menuBtn.onclick = () => {
-    if (sideMenu.style.left === "0px") {
-        sideMenu.style.left = "-260px";
-    } else {
-        sideMenu.style.left = "0px";
-    }
-};
-</script>
