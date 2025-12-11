@@ -1,33 +1,47 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Finalizar compra</title><link rel="stylesheet" href="style.css"></head><body>
-<header class="topbar"><div class="logo">Finalizar compra</div></header>
-<main style="max-width:900px;margin:24px auto;background:#fff;padding:18px;border-radius:12px">
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header"><div style="padding:12px 20px">Finalizar compra — <a href="index.html">Volver</a></div></header>
+<main style="max-width:900px;margin:20px auto;padding:12px;background:var(--panel);border-radius:10px">
+  <h2>Resumen del pedido</h2>
   <div id="resumen"></div>
-  <form id="form">
-    <label>Nombre completo</label><input id="nombre" required>
-    <label>Email</label><input id="email" type="email" required>
-    <label>Dirección</label><textarea id="direccion" rows="3" required></textarea>
-    <label>Teléfono</label><input id="telefono" required>
-    <p style="color:#6b7780">Método de pago: próximamente</p>
+  <form id="checkout-form">
+    <label>Nombre</label><input id="cf-name" required style="width:100%;padding:8px;margin:6px 0">
+    <label>Email</label><input id="cf-email" type="email" required style="width:100%;padding:8px;margin:6px 0">
+    <label>Dirección</label><textarea id="cf-address" required style="width:100%;padding:8px;margin:6px 0"></textarea>
     <button type="submit" class="btn primary">Confirmar pedido</button>
   </form>
 </main>
 <script>
-  const cart = JSON.parse(localStorage.getItem('cart_v1')) || [];
+  const cart = JSON.parse(localStorage.getItem('cart_v1')||'[]');
   const resumen = document.getElementById('resumen');
-  let total = 0;
   if(!cart.length) resumen.innerHTML = '<p>No hay artículos en el carrito. <a href="index.html">Volver</a></p>';
-  else{
-    const ul=document.createElement('ul');
-    cart.forEach(p=>{ const li=document.createElement('li'); li.textContent=`${p.nombre} - ${p.precio} € x${p.cantidad||1}`; ul.appendChild(li); total+=p.precio*(p.cantidad||1);});
+  else {
+    const ul = document.createElement('div');
+    let total = 0;
+    cart.forEach(i=>{ total += i.precio * (i.cantidad||1); ul.innerHTML += `<div style="display:flex;justify-content:space-between;padding:6px 0">${i.nombre}<span>${(i.precio*(i.cantidad||1)).toFixed(2)} €</span></div>`; });
+    ul.innerHTML += `<hr><div style="text-align:right;font-weight:800">Total: ${total.toFixed(2)} €</div>`;
     resumen.appendChild(ul);
-    const t=document.createElement('p'); t.style.fontWeight='800'; t.textContent='Total: '+total.toFixed(2)+' €'; resumen.appendChild(t);
   }
-  document.getElementById('form').addEventListener('submit', e=>{
+
+  document.getElementById('checkout-form').addEventListener('submit', e=>{
     e.preventDefault();
-    alert('✅ Pedido confirmado. Gracias! (simulado)');
+    if(!cart.length) return alert('Carrito vacío');
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const address = document.getElementById('cf-address').value.trim();
+    const order = { id:'ord_'+Date.now(), date:new Date().toISOString(), name, email, address, items:cart, total: cart.reduce((s,i)=>s+i.precio*(i.cantidad||1),0) };
+    // save to local orders
+    let orders = JSON.parse(localStorage.getItem('orders_v1')||'[]'); orders.unshift(order); localStorage.setItem('orders_v1', JSON.stringify(orders));
+    // clear cart
     localStorage.removeItem('cart_v1');
-    window.location.href='index.html';
+    alert('Pedido confirmado (simulado). ID: ' + order.id);
+    window.location.href = 'index.html';
   });
 </script>
-</body></html>
+</body>
+</html>
