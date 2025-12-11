@@ -76,3 +76,72 @@ body{font-family:'Poppins',sans-serif;margin:0;background:linear-gradient(180deg
   .search-wrap input{width:120px}
   .ia-box{width:92%}
 }
+/* Header profesional */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    color: white;
+    padding: 15px 25px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.titulo {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Menú hamburguesa */
+.hamburger {
+    width: 30px;
+    cursor: pointer;
+}
+.hamburger span {
+    display: block;
+    height: 3px;
+    background: white;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* Menu lateral */
+#side-menu {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100%;
+    background: #1b1b1b;
+    color: white;
+    padding: 25px;
+    transition: 0.35s;
+    font-family: 'Segoe UI';
+}
+#side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+#side-menu li {
+    padding: 12px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #444;
+}
+#side-menu li:hover {
+    color: #00d4ff;
+}
+
+/* Search input */
+#search {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
