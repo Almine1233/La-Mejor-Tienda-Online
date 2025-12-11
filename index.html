@@ -235,3 +235,15 @@
 
 </body>
 </html>
+<script>
+const menuBtn = document.getElementById('menu-btn');
+const sideMenu = document.getElementById('side-menu');
+
+menuBtn.onclick = () => {
+    if (sideMenu.style.left === "0px") {
+        sideMenu.style.left = "-260px";
+    } else {
+        sideMenu.style.left = "0px";
+    }
+};
+</script>
