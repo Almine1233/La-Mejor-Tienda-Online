@@ -1,116 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>La Mejor Tienda Online</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-left">
-      <button id="menu-btn" class="hamburger" aria-label="Abrir menú">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="brand">
-        <div class="logo">La Mejor Tienda Online</div>
-        <div class="tagline">Tecnología · Hogar · Ofertas</div>
-      </div>
-    </div>
 
-    <div class="header-center">
-      <input id="searchBar" type="search" placeholder="Buscar productos..." aria-label="Buscar productos">
-    </div>
+<header>
+  <div class="logo">🛍️ La Mejor Tienda</div>
 
-    <div class="header-right">
-      <button id="offers-btn" class="btn ghost">Ofertas</button>
-      <button id="ia-mode-btn" class="btn ghost">Modo IA</button>
-      <button id="account-btn" class="btn">Mi cuenta</button>
-      <button id="cart-btn" class="cart-btn">🛒 <span id="cartCount">0</span></button>
-    </div>
-  </header>
+  <input type="text" id="buscador" placeholder="Buscar productos...">
 
-  <!-- Side menu (categories) -->
-  <nav id="side-menu" class="side-menu" aria-hidden="true">
-    <div class="side-header">
-      <h3>Categorías</h3>
-      <button id="side-close" aria-label="Cerrar">✖</button>
-    </div>
-    <ul id="categories-list" class="categories-list"></ul>
-  </nav>
+  <button id="btn-categorias">☰ Categorías</button>
+</header>
 
-  <!-- Hero / welcome -->
-  <section class="hero">
-    <h1>Bienvenido a la Mejor Tienda Online</h1>
-    <p>Encuentra tecnología, audio, hogar y mucho más. Explora ofertas y usa el asistente IA.</p>
-  </section>
+<section class="banner">
+  <h1>Bienvenido a la mejor tienda online</h1>
+  <p>Todo lo que buscas, en un solo lugar</p>
+</section>
 
-  <!-- Offers strip (hidden if none) -->
-  <section id="offers-section" class="offers-section hidden">
-    <h2>Ofertas destacadas</h2>
-    <div id="offers-list" class="offers-list"></div>
-  </section>
+<section id="categorias" class="categorias oculto">
+  <button onclick="filtrarCategoria('Todas')">Todas</button>
+  <button onclick="filtrarCategoria('Tecnología')">Tecnología</button>
+  <button onclick="filtrarCategoria('Gaming')">Gaming</button>
+  <button onclick="filtrarCategoria('Audio')">Audio</button>
+</section>
 
-  <!-- Products grid -->
-  <main id="product-grid" class="product-grid" aria-live="polite"></main>
+<section id="productos" class="productos"></section>
 
-  <!-- Quick / product detail modal -->
-  <div id="quick-modal" class="modal hidden" role="dialog" aria-hidden="true">
-    <div class="modal-body">
-      <button class="modal-close" id="quick-close">✖</button>
-      <div id="quick-content"></div>
-    </div>
-  </div>
+<div id="carrito">
+  🛒 <span id="contador">0</span>
+</div>
 
-  <!-- Cart panel -->
-  <aside id="cart-panel" class="cart-panel hidden" aria-hidden="true">
-    <h3>Tu carrito</h3>
-    <div class="cart-list" id="cart-list"></div>
-    <div class="cart-footer">
-      <div>Total: <strong id="cart-total">0.00</strong> €</div>
-      <div class="cart-actions">
-        <button id="clear-cart" class="btn">Vaciar</button>
-        <button id="checkout-btn" class="btn primary">Comprar todo</button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Account modal -->
-  <div id="account-modal" class="modal hidden" aria-hidden="true">
-    <div class="modal-body">
-      <button class="modal-close" id="account-close">✖</button>
-      <div id="account-content"></div>
-    </div>
-  </div>
-
-  <!-- IA panel -->
-  <div id="ia-panel" class="ia-panel hidden" aria-hidden="true">
-    <div class="ia-header">
-      <h3>Asistente IA</h3>
-      <button id="ia-close">✖</button>
-    </div>
-    <div id="ia-messages" class="ia-messages"></div>
-    <div class="ia-input">
-      <input id="ia-input" placeholder="Pregunta sobre productos o la tienda...">
-      <button id="ia-send" class="btn">Enviar</button>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div>© La Mejor Tienda Online — Proyecto personal</div>
-    <div>Contacto: <a href="mailto:tuemail@gmail.com">tuemail@gmail.com</a></div>
-  </footer>
-
-  <!-- Decoraciones root / snow root -->
-  <div id="decor-root"></div>
-  <div id="snow-root"></div>
-
-  <!-- Scripts -->
-  <script src="productos.js"></script>
-  <script src="ia.js"></script>
-  <script src="decoraciones.js"></script>
-  <script src="app.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
