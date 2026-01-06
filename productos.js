@@ -1,29 +1,32 @@
-// productos.js - genera productos dinámicamente (50 por categoría, imágenes placeholder)
-const CATEGORIES = [
-  'Tecnología','Audio','Accesorios','Dispositivos','Hogar','Cocina','Deporte','Moda'
+let productos = JSON.parse(localStorage.getItem("productos")) || [
+  {
+    id: 1,
+    nombre: "AirPods Pro",
+    precio: 249,
+    categoria: "Audio",
+    imagen: "images/airpods.jpg",
+    descripcion: "Auriculares inalámbricos con cancelación de ruido."
+  },
+  {
+    id: 2,
+    nombre: "PC Gaming",
+    precio: 1299,
+    categoria: "Tecnología",
+    imagen: "images/pc-gaming.jpg",
+    descripcion: "PC de alto rendimiento para gaming."
+  },
+  {
+    id: 3,
+    nombre: "Altavoz Bluetooth",
+    precio: 79,
+    categoria: "Audio",
+    imagen: "images/altavoz.jpg",
+    descripcion: "Sonido potente y batería de larga duración."
+  }
 ];
 
-const productos = [];
-let _pid = 1;
+function guardarProductos() {
+  localStorage.setItem("productos", JSON.stringify(productos));
+}
 
-CATEGORIES.forEach(cat=>{
-  for(let i=1;i<=50;i++){
-    const id = 'p' + (_pid++);
-    const nombre = `${cat} ${i}`;
-    const base = { 'Tecnología':250, 'Audio':80, 'Accesorios':22, 'Dispositivos':180, 'Hogar':90, 'Cocina':60, 'Deporte':40, 'Moda':35 }[cat] || 50;
-    const precio = Math.round((base + Math.random()*base)*100)/100;
-    // imágenes temáticas vía source.unsplash
-    const query = encodeURIComponent(cat + ' product');
-    const imagen = `https://source.unsplash.com/640x480/?${query}&sig=${i}`;
-    const oferta = (i % 13 === 0); // algunos en oferta
-    productos.push({
-      id,
-      nombre,
-      categoria: cat,
-      descripcion: `Excelente ${nombre} para ${cat.toLowerCase()}.`,
-      precio,
-      imagen,
-      oferta
-    });
-  }
-});
+guardarProductos();
