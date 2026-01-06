@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "nombre": "AirPods Pro",
+    "precio": 249,
+    "categoria": "Tecnología",
+    "oferta": true,
+    "imagen": "https://images.unsplash.com/photo-1585386959984-a4155222c5f0",
+    "descripcion": "Auriculares inalámbricos con cancelación de ruido"
+  },
+  {
+    "id": 2,
+    "nombre": "Torre PC Gaming",
+    "precio": 1299,
+    "categoria": "Gaming",
+    "oferta": false,
+    "imagen": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7",
+    "descripcion": "PC gaming de alto rendimiento"
+  },
+  {
+    "id": 3,
+    "nombre": "Altavoz Bluetooth",
+    "precio": 89,
+    "categoria": "Audio",
+    "oferta": true,
+    "imagen": "https://images.unsplash.com/photo-1585386959984-a4155222c5f0",
+    "descripcion": "Sonido potente y portátil"
+  }
+]
