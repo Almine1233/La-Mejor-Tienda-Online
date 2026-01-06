@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+
+<h2>Panel Admin</h2>
+
+<div id="login">
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+</div>
+
+<div id="panel" style="display:none">
+  <h3>Añadir producto</h3>
+  <input id="nombre" placeholder="Nombre">
+  <input id="precio" placeholder="Precio">
+  <input id="categoria" placeholder="Categoría">
+  <input id="imagen" placeholder="Ruta imagen (images/...)">
+  <textarea id="desc" placeholder="Descripción"></textarea>
+  <button onclick="add()">Añadir</button>
+</div>
+
+<script src="productos.js"></script>
+<script>
+  const USER = "admin";
+  const PASS = "1234";
+
+  function login() {
+    if (
+      document.getElementById("user").value === USER &&
+      document.getElementById("pass").value === PASS
+    ) {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("panel").style.display = "block";
+    } else {
+      alert("Credenciales incorrectas");
+    }
+  }
+
+  function add() {
+    productos.push({
+      id: Date.now(),
+      nombre: nombre.value,
+      precio: precio.value,
+      categoria: categoria.value,
+      imagen: imagen.value,
+      descripcion: desc.value
+    });
+    guardarProductos();
+    alert("Producto añadido");
+  }
+</script>
+
+</body>
+</html>
