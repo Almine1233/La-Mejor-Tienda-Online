@@ -7,32 +7,30 @@
 </head>
 <body>
 
-<header>
-  <div class="logo">🛍️ La Mejor Tienda</div>
-
-  <input type="text" id="buscador" placeholder="Buscar productos...">
-
-  <button id="btn-categorias">☰ Categorías</button>
+<header class="banner">
+  <h1>Bienvenido a La Mejor Tienda Online</h1>
+  <p>Encuentra tecnología, audio y mucho más</p>
 </header>
 
-<section class="banner">
-  <h1>Bienvenido a la mejor tienda online</h1>
-  <p>Todo lo que buscas, en un solo lugar</p>
-</section>
+<main id="productos" class="grid"></main>
 
-<section id="categorias" class="categorias oculto">
-  <button onclick="filtrarCategoria('Todas')">Todas</button>
-  <button onclick="filtrarCategoria('Tecnología')">Tecnología</button>
-  <button onclick="filtrarCategoria('Gaming')">Gaming</button>
-  <button onclick="filtrarCategoria('Audio')">Audio</button>
-</section>
+<script src="productos.js"></script>
+<script>
+  const contenedor = document.getElementById("productos");
 
-<section id="productos" class="productos"></section>
+  productos.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "producto";
+    card.innerHTML = `
+      <img src="${p.imagen}">
+      <h2>${p.nombre}</h2>
+      <p>${p.descripcion}</p>
+      <span>${p.precio} €</span>
+      <button>Comprar</button>
+    `;
+    contenedor.appendChild(card);
+  });
+</script>
 
-<div id="carrito">
-  🛒 <span id="contador">0</span>
-</div>
-
-<script src="main.js"></script>
 </body>
 </html>
