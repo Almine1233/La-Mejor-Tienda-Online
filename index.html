@@ -3,34 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <title>La Mejor Tienda Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fuente bonita -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="banner">
-  <h1>Bienvenido a La Mejor Tienda Online</h1>
-  <p>Encuentra tecnología, audio y mucho más</p>
+<header class="top-bar">
+  <div class="logo">🛍 La Mejor Tienda</div>
+
+  <input type="text" id="buscador" placeholder="Buscar productos...">
+
+  <select id="categorias">
+    <option value="Todos">☰ Categorías</option>
+  </select>
+
+  <a href="admin.html" class="admin-link">Mi cuenta</a>
 </header>
 
-<main id="productos" class="grid"></main>
+<section class="banner">
+  <h1>Bienvenido a la Mejor Tienda Online</h1>
+  <p>Todo lo que necesitas, en un solo lugar</p>
+</section>
 
-<script src="productos.js"></script>
-<script>
-  const contenedor = document.getElementById("productos");
+<main>
+  <div id="productos" class="productos"></div>
+</main>
 
-  productos.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "producto";
-    card.innerHTML = `
-      <img src="${p.imagen}">
-      <h2>${p.nombre}</h2>
-      <p>${p.descripcion}</p>
-      <span>${p.precio} €</span>
-      <button>Comprar</button>
-    `;
-    contenedor.appendChild(card);
-  });
-</script>
+<!-- Carrito -->
+<div id="carrito-icono">🛒</div>
 
+<div id="carrito-panel">
+  <h3>Tu carrito</h3>
+  <ul id="carrito-lista"></ul>
+  <p><strong>Total:</strong> <span id="total">0</span> €</p>
+  <a href="checkout.html" class="btn-comprar">Comprar todo</a>
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
