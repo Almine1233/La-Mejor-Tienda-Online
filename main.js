@@ -1,41 +1,80 @@
-let productos = [];
-let carrito = [];
+let productos = JSON.parse(localStorage.getItem("productos")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-fetch("productos.json")
-  .then(res => res.json())
-  .then(data => {
-    productos = data;
-    mostrarProductos(productos);
+const contenedor = document.getElementById("productos");
+const buscador = document.getElementById("buscador");
+const categoriasSelect = document.getElementById("categorias");
+
+function cargarCategorias() {
+  const categorias = ["Todos", ...new Set(productos.map(p => p.categoria))];
+  categoriasSelect.innerHTML = "";
+  categorias.forEach(cat => {
+    categoriasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
   });
+}
 
-function mostrarProductos(lista) {
-  const contenedor = document.getElementById("productos");
+function mostrarProductos() {
   contenedor.innerHTML = "";
+  const texto = buscador.value.toLowerCase();
+  const categoria = categoriasSelect.value;
 
-  lista.forEach(p => {
+  productos.forEach(p => {
+    if (
+      (categoria !== "Todos" && p.categoria !== categoria) ||
+      !p.nombre.toLowerCase().includes(texto)
+    ) return;
+
     contenedor.innerHTML += `
       <div class="producto">
         <img src="${p.imagen}">
         <h3>${p.nombre}</h3>
         <p>${p.descripcion}</p>
-        <strong>${p.precio} €</strong>
-        <button onclick="agregarCarrito(${p.id})">Añadir al carrito</button>
+        <p class="precio">${p.precio} €</p>
+        <button onclick="agregarCarrito('${p.nombre}')">Añadir al carrito</button>
       </div>
     `;
   });
 }
 
-function agregarCarrito(id) {
-  carrito.push(id);
-  document.getElementById("contador").textContent = carrito.length;
+function agregarCarrito(nombre) {
+  const prod = productos.find(p => p.nombre === nombre);
+  carrito.push(prod);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarCarrito();
 }
 
-document.getElementById("buscador").addEventListener("input", e => {
-  const texto = e.target.value.toLowerCase();
-  mostrarProductos(productos.filter(p => p.nombre.toLowerCase().includes(texto)));
-});
+function actualizarCarrito() {
+  const lista = document.getElementById("carrito-lista");
+  const total = document.getElementById("total");
+  lista.innerHTML = "";
+  let suma = 0;
 
-function filtrarCategoria(cat) {
-  if (cat === "Todas") mostrarProductos(productos);
-  else mostrarProductos(productos.filter(p => p.categoria === cat));
+  carrito.forEach((p, i) => {
+    suma += Number(p.precio);
+    lista.innerHTML += `
+      <li>
+        ${p.nombre} - ${p.precio} €
+        <button onclick="eliminar(${i})">❌</button>
+      </li>
+    `;
+  });
+
+  total.textContent = suma;
 }
+
+function eliminar(i) {
+  carrito.splice(i, 1);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarCarrito();
+}
+
+buscador.addEventListener("input", mostrarProductos);
+categoriasSelect.addEventListener("change", mostrarProductos);
+
+document.getElementById("carrito-icono").onclick = () => {
+  document.getElementById("carrito-panel").classList.toggle("abierto");
+};
+
+cargarCategorias();
+mostrarProductos();
+actualizarCarrito();
