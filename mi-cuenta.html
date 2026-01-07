@@ -5,11 +5,16 @@
 <title>Mi cuenta</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="protect()">
 
-<h2>Historial de compras</h2>
+<h2>Mi cuenta</h2>
+
+<button onclick="logout()">Cerrar sesión</button>
+
+<h3>Historial de compras</h3>
 <div id="historial"></div>
 
+<script src="auth.js"></script>
 <script>
 const historial = JSON.parse(localStorage.getItem("historial")) || [];
 const cont = document.getElementById("historial");
