@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi cuenta</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Historial de compras</h2>
+<div id="historial"></div>
+
+<script>
+const historial = JSON.parse(localStorage.getItem("historial")) || [];
+const cont = document.getElementById("historial");
+
+if (historial.length === 0) {
+  cont.innerHTML = "<p>No hay compras aún</p>";
+}
+
+historial.forEach(h => {
+  cont.innerHTML += `
+    <div class="producto">
+      <p><strong>${h.fecha}</strong></p>
+      ${h.productos.map(p => `<p>${p.nombre} - ${p.precio}€</p>`).join("")}
+    </div>
+  `;
+});
+</script>
+
+</body>
+</html>
