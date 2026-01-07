@@ -1,33 +1,46 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #111;
+  --primary: #111;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --card: #1c1f26;
+    --text: #f1f1f1;
+    --primary: #ffffff;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f5f6f8;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .top-bar {
   display: flex;
+  gap: 10px;
   align-items: center;
-  justify-content: space-between;
   padding: 15px;
-  background: #111;
-  color: white;
+  background: var(--primary);
+  color: var(--bg);
 }
 
 .top-bar input, .top-bar select {
   padding: 8px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
 }
 
-.admin-link {
-  color: white;
-  text-decoration: none;
-}
-
 .banner {
-  background: linear-gradient(135deg, #ffd54f, #ffb300);
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
   padding: 50px;
   text-align: center;
+  color: black;
 }
 
 .productos {
@@ -38,15 +51,15 @@ body {
 }
 
 .producto {
-  background: white;
-  border-radius: 12px;
+  background: var(--card);
+  border-radius: 14px;
   padding: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.1);
-  transition: transform .2s;
+  box-shadow: 0 10px 25px rgba(0,0,0,.15);
+  transition: all .3s ease;
 }
 
 .producto:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px) scale(1.02);
 }
 
 .producto img {
@@ -56,53 +69,13 @@ body {
   border-radius: 10px;
 }
 
-.precio {
-  font-weight: bold;
-}
-
 .producto button {
-  background: #111;
-  color: white;
-  border: none;
-  padding: 10px;
   width: 100%;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#carrito-icono {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #111;
-  color: white;
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-#carrito-panel {
-  position: fixed;
-  right: 20px;
-  bottom: 80px;
-  background: white;
-  width: 300px;
-  padding: 15px;
-  border-radius: 12px;
-  display: none;
-  box-shadow: 0 5px 20px rgba(0,0,0,.2);
-}
-
-#carrito-panel.abierto {
-  display: block;
-}
-
-.btn-comprar {
-  display: block;
-  text-align: center;
-  background: #28a745;
-  color: white;
   padding: 10px;
   border-radius: 8px;
-  text-decoration: none;
+  border: none;
+  background: var(--primary);
+  color: var(--bg);
+  cursor: pointer;
+  margin-top: 10px;
 }
