@@ -1,58 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin</title>
+<meta charset="UTF-8">
+<title>Panel Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+h1 { text-align: center; }
+
+.login, .panel {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input, select, textarea, button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover { background: #0056b3; }
+
+.producto-admin {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.producto-admin button {
+  width: auto;
+  margin-right: 5px;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Panel Admin</h2>
-
-<div id="login">
+<div class="login" id="login">
+  <h1>Admin Login</h1>
   <input id="user" placeholder="Usuario">
   <input id="pass" type="password" placeholder="Contraseña">
   <button onclick="login()">Entrar</button>
 </div>
 
-<div id="panel" style="display:none">
-  <h3>Añadir producto</h3>
+<div class="panel" id="panel" style="display:none">
+  <h1>Panel de Productos</h1>
+
+  <h3>Añadir / Editar producto</h3>
   <input id="nombre" placeholder="Nombre">
   <input id="precio" placeholder="Precio">
-  <input id="categoria" placeholder="Categoría">
-  <input id="imagen" placeholder="Ruta imagen (images/...)">
-  <textarea id="desc" placeholder="Descripción"></textarea>
-  <button onclick="add()">Añadir</button>
+  <input id="imagen" placeholder="URL de imagen">
+  <select id="categoria">
+    <option>Tecnología</option>
+    <option>Audio</option>
+    <option>Gaming</option>
+    <option>Hogar</option>
+    <option>Otros</option>
+  </select>
+  <textarea id="descripcion" placeholder="Descripción"></textarea>
+  <button onclick="guardarProducto()">Guardar producto</button>
+
+  <hr>
+
+  <h3>Filtrar por categoría</h3>
+  <select id="filtro" onchange="mostrarProductos()">
+    <option value="Todos">Todos</option>
+    <option>Tecnología</option>
+    <option>Audio</option>
+    <option>Gaming</option>
+    <option>Hogar</option>
+    <option>Otros</option>
+  </select>
+
+  <div id="lista"></div>
 </div>
 
-<script src="productos.js"></script>
 <script>
-  const USER = "AlanBedoyaGomes";
-  const PASS = "22072011";
+const USER = "almine";
+const PASS = "1234";
+let editIndex = null;
 
-  function login() {
-    if (
-      document.getElementById("user").value === USER &&
-      document.getElementById("pass").value === PASS
-    ) {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("panel").style.display = "block";
-    } else {
-      alert("Credenciales incorrectas");
-    }
+function login() {
+  if (user.value === USER && pass.value === PASS) {
+    login.style.display = "none";
+    panel.style.display = "block";
+    mostrarProductos();
+  } else {
+    alert("Datos incorrectos");
+  }
+}
+
+function obtenerProductos() {
+  return JSON.parse(localStorage.getItem("productos")) || [];
+}
+
+function guardarProductos(p) {
+  localStorage.setItem("productos", JSON.stringify(p));
+}
+
+function guardarProducto() {
+  let productos = obtenerProductos();
+  const nuevo = {
+    nombre: nombre.value,
+    precio: precio.value,
+    imagen: imagen.value,
+    categoria: categoria.value,
+    descripcion: descripcion.value
+  };
+
+  if (editIndex !== null) {
+    productos[editIndex] = nuevo;
+    editIndex = null;
+  } else {
+    productos.push(nuevo);
   }
 
-  function add() {
-    productos.push({
-      id: Date.now(),
-      nombre: nombre.value,
-      precio: precio.value,
-      categoria: categoria.value,
-      imagen: imagen.value,
-      descripcion: desc.value
-    });
-    guardarProductos();
-    alert("Producto añadido");
-  }
+  guardarProductos(productos);
+  limpiarFormulario();
+  mostrarProductos();
+}
+
+function mostrarProductos() {
+  const productos = obtenerProductos();
+  const filtroCat = filtro.value;
+  lista.innerHTML = "";
+
+  productos.forEach((p, i) => {
+    if (filtroCat !== "Todos" && p.categoria !== filtroCat) return;
+
+    lista.innerHTML += `
+      <div class="producto-admin">
+        <b>${p.nombre}</b> - ${p.precio}€ (${p.categoria})
+        <br>
+        <button onclick="editar(${i})">Editar</button>
+        <button onclick="eliminar(${i})">Eliminar</button>
+      </div>
+    `;
+  });
+}
+
+function editar(i) {
+  const p = obtenerProductos()[i];
+  nombre.value = p.nombre;
+  precio.value = p.precio;
+  imagen.value = p.imagen;
+  categoria.value = p.categoria;
+  descripcion.value = p.descripcion;
+  editIndex = i;
+}
+
+function eliminar(i) {
+  if (!confirm("¿Eliminar producto?")) return;
+  let productos = obtenerProductos();
+  productos.splice(i, 1);
+  guardarProductos(productos);
+  mostrarProductos();
+}
+
+function limpiarFormulario() {
+  nombre.value = "";
+  precio.value = "";
+  imagen.value = "";
+  descripcion.value = "";
+}
 </script>
 
 </body>
