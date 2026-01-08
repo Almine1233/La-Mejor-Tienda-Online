@@ -6,237 +6,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg:#f4f6f8;
-  --text:#111;
-  --card:#fff;
-  --accent:#ffb703;
-}
-[data-theme="dark"]{
-  --bg:#0f172a;
-  --text:#f8fafc;
-  --card:#1e293b;
-  --accent:#f59e0b;
-}
-
-*{box-sizing:border-box;font-family:Poppins}
-body{margin:0;background:var(--bg);color:var(--text)}
-
-header{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:15px 20px;
-  background:var(--card);
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-.logo{font-weight:600;font-size:20px}
-input,select,button{padding:8px;border-radius:8px;border:1px solid #ccc}
-button{cursor:pointer}
-
-.banner{
-  background:var(--accent);
-  padding:50px 20px;
-  text-align:center;
-  color:#111;
-}
-
-main{padding:20px}
-.productos{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:20px;
-}
-
-.producto{
-  background:var(--card);
-  padding:15px;
-  border-radius:14px;
-  box-shadow:0 10px 20px rgba(0,0,0,.08);
-  display:flex;
-  flex-direction:column;
-}
-
-.producto img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.producto button{
-  margin-top:auto;
-  background:#2563eb;
-  color:white;
-  border:none;
-}
-
-#carrito-icono{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#22c55e;
-  color:white;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-}
-
-#carrito{
-  position:fixed;
-  bottom:90px;
-  right:20px;
-  background:var(--card);
-  width:320px;
-  padding:15px;
-  border-radius:15px;
-  display:none;
-}
-
-#menu{
-  position:fixed;
-  left:-260px;
-  top:0;
-  height:100%;
-  width:260px;
-  background:var(--card);
-  padding:20px;
-  transition:.3s;
-}
-#menu.open{left:0}
-
-#chatIA{
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  width:300px;
-  background:var(--card);
-  padding:10px;
-  border-radius:15px;
-  display:none;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- MENÚ CATEGORÍAS -->
 <div id="menu">
   <h3>Categorías</h3>
   <div id="listaCategorias"></div>
 </div>
 
-<header>
+<header class="top-bar">
   <button onclick="toggleMenu()">☰</button>
   <div class="logo">🛍 La Mejor Tienda</div>
   <input id="buscador" placeholder="Buscar productos">
   <button onclick="toggleTheme()">🌙</button>
-  <button onclick="login()">Mi cuenta</button>
+  <a href="login.html" class="cuenta">Mi cuenta</a>
 </header>
 
 <section class="banner">
   <h1>Bienvenido a la Mejor Tienda Online</h1>
-  <p>Una tienda tipo Amazon, hecha a medida</p>
+  <p>Todo lo que necesitas, en un solo lugar</p>
 </section>
 
 <main>
-  <div class="productos" id="productos"></div>
+  <div id="productos" class="productos"></div>
 </main>
 
+<!-- CARRITO -->
 <div id="carrito-icono" onclick="toggleCarrito()">🛒</div>
 
 <div id="carrito">
-  <h3>Carrito</h3>
+  <h3>Tu carrito</h3>
   <ul id="listaCarrito"></ul>
-  <b>Total: <span id="total">0</span>€</b>
+  <p><strong>Total:</strong> <span id="total">0</span> €</p>
+  <a href="checkout.html" class="btn-comprar">Comprar</a>
 </div>
 
-<div id="chatIA">
-  <h4>IA Asistente</h4>
-  <p>Pregunta por productos, precios u ofertas</p>
-  <input placeholder="Escribe aquí...">
-</div>
-
-<script>
-const admin={user:"admin",pass:"1234"}
-let carrito=JSON.parse(localStorage.getItem("carrito"))||[]
-
-const productos=[
-  {id:1,n:"AirPods Pro",p:249,c:"Tecnología",img:"https://source.unsplash.com/400x300/?airpods"},
-  {id:2,n:"PC Gaming",p:1299,c:"Gaming",img:"https://source.unsplash.com/400x300/?gaming-pc"},
-  {id:3,n:"Altavoz Bluetooth",p:89,c:"Audio",img:"https://source.unsplash.com/400x300/?speaker"},
-  {id:4,n:"Smartphone",p:699,c:"Tecnología",img:"https://source.unsplash.com/400x300/?smartphone"},
-  {id:5,n:"Teclado Mecánico",p:120,c:"Gaming",img:"https://source.unsplash.com/400x300/?keyboard"}
-]
-
-function render(){
-  const cont=document.getElementById("productos")
-  cont.innerHTML=""
-  productos.forEach(p=>{
-    cont.innerHTML+=`
-    <div class="producto">
-      <img src="${p.img}">
-      <h4>${p.n}</h4>
-      <p>${p.p} €</p>
-      <button onclick="add(${p.id})">Añadir</button>
-    </div>`
-  })
-}
-render()
-
-function add(id){
-  carrito.push(productos.find(p=>p.id===id))
-  localStorage.setItem("carrito",JSON.stringify(carrito))
-  renderCarrito()
-}
-function renderCarrito(){
-  const ul=document.getElementById("listaCarrito")
-  ul.innerHTML=""
-  let t=0
-  carrito.forEach(p=>{
-    t+=p.p
-    ul.innerHTML+=`<li>${p.n} - ${p.p}€</li>`
-  })
-  document.getElementById("total").innerText=t
-}
-renderCarrito()
-
-function toggleCarrito(){
-  const c=document.getElementById("carrito")
-  c.style.display=c.style.display==="block"?"none":"block"
-}
-
-function toggleMenu(){
-  document.getElementById("menu").classList.toggle("open")
-}
-
-function toggleTheme(){
-  document.documentElement.dataset.theme=
-    document.documentElement.dataset.theme==="dark"?"":"dark"
-}
-
-function login(){
-  const u=prompt("Usuario")
-  const p=prompt("Contraseña")
-  if(u===admin.user && p===admin.pass){
-    alert("Modo ADMIN activado")
-  }else{
-    alert("Bienvenido "+u)
-  }
-}
-
-if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-  document.documentElement.dataset.theme="dark"
-}
-</script>
-
+<script src="productos.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
