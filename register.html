@@ -7,15 +7,30 @@
 </head>
 <body>
 
-<h2>Crear cuenta</h2>
+<div class="form">
+  <h2>Crear cuenta</h2>
 
-<input id="user" placeholder="Usuario">
-<input id="pass" type="password" placeholder="Contraseña">
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
 
-<button onclick="register()">Registrarse</button>
+  <button class="btn" onclick="register()">Crear cuenta</button>
+</div>
 
-<p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+<script>
+function register(){
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
 
-<script src="auth.js"></script>
+  if(!u||!p) return alert("Rellena todo");
+
+  const users=JSON.parse(localStorage.getItem("users"))||[];
+  users.push({user:u,pass:p});
+  localStorage.setItem("users",JSON.stringify(users));
+
+  alert("Cuenta creada");
+  location.href="login.html";
+}
+</script>
+
 </body>
 </html>
