@@ -1,80 +1,58 @@
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-const contenedor = document.getElementById("productos");
-const buscador = document.getElementById("buscador");
-const categoriasSelect = document.getElementById("categorias");
+const cont = document.getElementById("productos")
+const buscador = document.getElementById("buscador")
 
-function cargarCategorias() {
-  const categorias = ["Todos", ...new Set(productos.map(p => p.categoria))];
-  categoriasSelect.innerHTML = "";
-  categorias.forEach(cat => {
-    categoriasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-  });
+function render(lista){
+  cont.innerHTML=""
+  lista.forEach(p=>{
+    cont.innerHTML+=`
+    <div class="producto">
+      <img src="${p.img}">
+      <h4>${p.n}</h4>
+      <p>${p.p} €</p>
+      <button onclick="add(${p.id})">Añadir</button>
+    </div>`
+  })
+}
+render(productos)
+
+buscador.oninput=()=>{
+  render(productos.filter(p=>p.n.toLowerCase().includes(buscador.value.toLowerCase())))
 }
 
-function mostrarProductos() {
-  contenedor.innerHTML = "";
-  const texto = buscador.value.toLowerCase();
-  const categoria = categoriasSelect.value;
-
-  productos.forEach(p => {
-    if (
-      (categoria !== "Todos" && p.categoria !== categoria) ||
-      !p.nombre.toLowerCase().includes(texto)
-    ) return;
-
-    contenedor.innerHTML += `
-      <div class="producto">
-        <img src="${p.imagen}">
-        <h3>${p.nombre}</h3>
-        <p>${p.descripcion}</p>
-        <p class="precio">${p.precio} €</p>
-        <button onclick="agregarCarrito('${p.nombre}')">Añadir al carrito</button>
-      </div>
-    `;
-  });
+function add(id){
+  carrito.push(productos.find(p=>p.id===id))
+  localStorage.setItem("carrito",JSON.stringify(carrito))
+  renderCarrito()
 }
 
-function agregarCarrito(nombre) {
-  const prod = productos.find(p => p.nombre === nombre);
-  carrito.push(prod);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarCarrito();
+function renderCarrito(){
+  const ul=document.getElementById("listaCarrito")
+  ul.innerHTML=""
+  let t=0
+  carrito.forEach(p=>{
+    t+=p.p
+    ul.innerHTML+=`<li>${p.n} - ${p.p}€</li>`
+  })
+  document.getElementById("total").innerText=t
+}
+renderCarrito()
+
+function toggleCarrito(){
+  const c=document.getElementById("carrito")
+  c.style.display=c.style.display==="block"?"none":"block"
 }
 
-function actualizarCarrito() {
-  const lista = document.getElementById("carrito-lista");
-  const total = document.getElementById("total");
-  lista.innerHTML = "";
-  let suma = 0;
-
-  carrito.forEach((p, i) => {
-    suma += Number(p.precio);
-    lista.innerHTML += `
-      <li>
-        ${p.nombre} - ${p.precio} €
-        <button onclick="eliminar(${i})">❌</button>
-      </li>
-    `;
-  });
-
-  total.textContent = suma;
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("open")
 }
 
-function eliminar(i) {
-  carrito.splice(i, 1);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarCarrito();
+function toggleTheme(){
+  document.documentElement.dataset.theme=
+    document.documentElement.dataset.theme==="dark"?"":"dark"
 }
 
-buscador.addEventListener("input", mostrarProductos);
-categoriasSelect.addEventListener("change", mostrarProductos);
-
-document.getElementById("carrito-icono").onclick = () => {
-  document.getElementById("carrito-panel").classList.toggle("abierto");
-};
-
-cargarCategorias();
-mostrarProductos();
-actualizarCarrito();
+if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+  document.documentElement.dataset.theme="dark"
+}
