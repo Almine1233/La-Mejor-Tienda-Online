@@ -7,15 +7,33 @@
 </head>
 <body>
 
-<h2>Iniciar sesión</h2>
+<div class="form">
+  <h2>Iniciar sesión</h2>
 
-<input id="user" placeholder="Usuario">
-<input id="pass" type="password" placeholder="Contraseña">
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
 
-<button onclick="login()">Entrar</button>
+  <button class="btn" onclick="login()">Entrar</button>
 
-<p>¿No tienes cuenta? <a href="register.html">Crear cuenta</a></p>
+  <p>¿No tienes cuenta? <a href="register.html">Crear cuenta</a></p>
+</div>
 
-<script src="auth.js"></script>
+<script>
+function login(){
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
+
+  const users=JSON.parse(localStorage.getItem("users"))||[];
+  const ok=users.find(x=>x.user===u && x.pass===p);
+
+  if(ok){
+    localStorage.setItem("session",u);
+    location.href=u==="admin"?"admin.html":"index.html";
+  }else{
+    alert("Credenciales incorrectas");
+  }
+}
+</script>
+
 </body>
 </html>
