@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>La Mejor Tienda Online</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>La Mejor Tienda Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <!-- Fuente profesional -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- MENÚ CATEGORÍAS -->
-<div id="menu">
-  <h3>Categorías</h3>
-  <div id="listaCategorias"></div>
-</div>
-
 <header class="top-bar">
-  <button onclick="toggleMenu()">☰</button>
-  <div class="logo">🛍 La Mejor Tienda</div>
-  <input id="buscador" placeholder="Buscar productos">
-  <button onclick="toggleTheme()">🌙</button>
-  <a href="login.html" class="cuenta">Mi cuenta</a>
+  <div class="logo">La Mejor Tienda</div>
+
+  <input type="text" id="buscador" placeholder="Buscar productos...">
+
+  <div class="menu-categorias">
+    ☰
+    <div class="categorias-panel" id="categorias"></div>
+  </div>
+
+  <a href="login.html" class="btn-cuenta">Mi cuenta</a>
 </header>
 
 <section class="banner">
   <h1>Bienvenido a la Mejor Tienda Online</h1>
-  <p>Todo lo que necesitas, en un solo lugar</p>
+  <p>Compra con confianza. Calidad, rapidez y atención real.</p>
 </section>
 
 <main>
-  <div id="productos" class="productos"></div>
+  <section class="productos" id="productos"></section>
 </main>
 
-<!-- CARRITO -->
-<div id="carrito-icono" onclick="toggleCarrito()">🛒</div>
+<!-- Carrito flotante -->
+<div id="carrito-icono">🛒</div>
 
-<div id="carrito">
+<div id="carrito-panel">
   <h3>Tu carrito</h3>
-  <ul id="listaCarrito"></ul>
-  <p><strong>Total:</strong> <span id="total">0</span> €</p>
-  <a href="checkout.html" class="btn-comprar">Comprar</a>
+  <ul id="carrito-lista"></ul>
+  <p class="total">Total: <span id="total">0</span> €</p>
+  <a href="checkout.html" class="btn-principal">Finalizar compra</a>
 </div>
 
-<script src="productos.js"></script>
+<footer>
+  <p>© 2026 La Mejor Tienda Online · <a href="info.html">Información</a></p>
+</footer>
+
 <script src="main.js"></script>
 </body>
 </html>
