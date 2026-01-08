@@ -2,29 +2,35 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin</title>
+<title>Panel Admin</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="form">
-  <h2>Panel de administración</h2>
+<header class="top-bar">
+  <div class="logo">Panel de Administración</div>
+  <button onclick="logout()">Cerrar sesión</button>
+</header>
 
-  <input id="name" placeholder="Nombre producto">
-  <input id="price" type="number" placeholder="Precio">
-  
-  <select id="cat">
-    <option>Tecnología</option>
-    <option>Audio</option>
-    <option>Gaming</option>
-  </select>
+<main class="admin">
 
-  <input type="file" id="img">
+<section class="admin-box">
+  <h3>Añadir producto</h3>
 
-  <button class="btn" onclick="add()">Añadir producto</button>
-</div>
+  <input id="nombre" placeholder="Nombre">
+  <input id="precio" type="number" placeholder="Precio">
+  <input id="categoria" placeholder="Categoría">
+  <input id="img" placeholder="URL de imagen">
 
-<div class="grid" id="list"></div>
+  <button onclick="add()">Añadir</button>
+</section>
+
+<section class="admin-box">
+  <h3>Productos</h3>
+  <ul id="lista"></ul>
+</section>
+
+</main>
 
 <script src="admin.js"></script>
 </body>
