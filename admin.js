@@ -1,47 +1,42 @@
-if(localStorage.getItem("session")!=="admin"){
+if(localStorage.getItem("admin")!=="true"){
   location.href="login.html";
 }
 
-let products=JSON.parse(localStorage.getItem("products"))||[];
+let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
-const list=document.getElementById("list");
+const lista = document.getElementById("lista");
 
 function render(){
-  list.innerHTML="";
-  products.forEach((p,i)=>{
-    list.innerHTML+=`
-      <div class="card">
-        <img src="${p.img}">
-        <h3>${p.name}</h3>
-        <p>${p.price}€</p>
-        <button class="btn" onclick="del(${i})">Eliminar</button>
-      </div>
+  lista.innerHTML="";
+  productos.forEach((p,i)=>{
+    lista.innerHTML += `
+      <li>
+        ${p.nombre} - ${p.precio}€
+        <button onclick="del(${i})">🗑</button>
+      </li>
     `;
   });
+  localStorage.setItem("productos", JSON.stringify(productos));
 }
 
 function add(){
-  const f=document.getElementById("img").files[0];
-  const r=new FileReader();
-
-  r.onload=()=>{
-    products.push({
-      id:Date.now(),
-      name:name.value,
-      price:+price.value,
-      cat:cat.value,
-      img:r.result
-    });
-    localStorage.setItem("products",JSON.stringify(products));
-    render();
-  };
-  r.readAsDataURL(f);
+  productos.push({
+    nombre:nombre.value,
+    precio:precio.value,
+    categoria:categoria.value,
+    img:img.value
+  });
+  render();
 }
 
 function del(i){
-  products.splice(i,1);
-  localStorage.setItem("products",JSON.stringify(products));
+  productos.splice(i,1);
   render();
+}
+
+function logout(){
+  localStorage.removeItem("admin");
+  location.href="index.html";
 }
 
 render();
