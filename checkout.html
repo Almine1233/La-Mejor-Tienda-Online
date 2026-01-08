@@ -7,26 +7,21 @@
 </head>
 <body>
 
-<h2>Compra finalizada</h2>
-<button onclick="finalizar()">Confirmar compra</button>
+<section class="banner">
+<h1>Finalizar compra</h1>
+<p>Introduce tus datos</p>
+</section>
 
-<script>
-function finalizar() {
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  const historial = JSON.parse(localStorage.getItem("historial")) || [];
+<main class="checkout">
+<input placeholder="Nombre completo">
+<input placeholder="Dirección">
+<input placeholder="Ciudad">
+<input placeholder="Email">
 
-  historial.push({
-    fecha: new Date().toLocaleString(),
-    productos: carrito
-  });
-
-  localStorage.setItem("historial", JSON.stringify(historial));
-  localStorage.removeItem("carrito");
-
-  alert("Compra guardada en tu historial");
-  location.href = "index.html";
-}
-</script>
+<button onclick="alert('Compra completada (demo)')">
+Confirmar pedido
+</button>
+</main>
 
 </body>
 </html>
