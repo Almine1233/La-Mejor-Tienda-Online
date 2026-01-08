@@ -5,35 +5,31 @@
 <title>Iniciar sesión</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="auth">
 
-<div class="form">
+<div class="auth-box">
   <h2>Iniciar sesión</h2>
 
   <input id="user" placeholder="Usuario">
   <input id="pass" type="password" placeholder="Contraseña">
 
-  <button class="btn" onclick="login()">Entrar</button>
+  <button onclick="login()">Entrar</button>
 
   <p>¿No tienes cuenta? <a href="register.html">Crear cuenta</a></p>
 </div>
 
 <script>
 function login(){
-  const u=document.getElementById("user").value;
-  const p=document.getElementById("pass").value;
+  const u = user.value;
+  const p = pass.value;
 
-  const users=JSON.parse(localStorage.getItem("users"))||[];
-  const ok=users.find(x=>x.user===u && x.pass===p);
-
-  if(ok){
-    localStorage.setItem("session",u);
-    location.href=u==="admin"?"admin.html":"index.html";
-  }else{
-    alert("Credenciales incorrectas");
+  if(u==="admin" && p==="1234"){
+    localStorage.setItem("admin","true");
+    location.href="admin.html";
+  } else {
+    alert("Usuario o contraseña incorrectos");
   }
 }
 </script>
-
 </body>
 </html>
