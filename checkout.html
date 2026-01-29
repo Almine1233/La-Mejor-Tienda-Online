@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Finalizar compra</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Finalizar compra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<section class="banner">
-<h1>Finalizar compra</h1>
-<p>Introduce tus datos</p>
-</section>
+<div class="checkout">
 
-<main class="checkout">
-<input placeholder="Nombre completo">
-<input placeholder="Dirección">
-<input placeholder="Ciudad">
-<input placeholder="Email">
+  <div class="checkout-form">
+    <h2>Datos de envío</h2>
 
-<button onclick="alert('Compra completada (demo)')">
-Confirmar pedido
-</button>
-</main>
+    <input placeholder="Nombre completo">
+    <input placeholder="Dirección">
+    <input placeholder="Ciudad">
+    <input placeholder="Código postal">
+
+    <button>Confirmar pedido</button>
+  </div>
+
+  <div class="checkout-summary">
+    <h3>Resumen</h3>
+    <p>Productos: <span>89 €</span></p>
+    <p>Envío: <span>Gratis</span></p>
+    <hr>
+    <h2>Total: 89 €</h2>
+  </div>
+
+</div>
 
 </body>
 </html>
