@@ -10,22 +10,45 @@
 
 <div class="checkout">
 
+  <!-- PASOS -->
+  <div class="checkout-steps">
+    <div class="checkout-step active">1. Envío</div>
+    <div class="checkout-step">2. Pago</div>
+    <div class="checkout-step">3. Confirmación</div>
+  </div>
+
+  <!-- FORMULARIO -->
   <div class="checkout-form">
     <h2>Datos de envío</h2>
 
-    <input placeholder="Nombre completo">
-    <input placeholder="Dirección">
-    <input placeholder="Ciudad">
-    <input placeholder="Código postal">
+    <label>Nombre completo</label>
+    <input type="text" placeholder="Juan Pérez">
+
+    <label>Dirección</label>
+    <input type="text" placeholder="Calle Ejemplo 123">
+
+    <label>Ciudad</label>
+    <input type="text" placeholder="Madrid">
+
+    <label>Código postal</label>
+    <input type="text" placeholder="28001">
 
     <button>Confirmar pedido</button>
+
+    <div class="checkout-trust">
+      🔒 Pago seguro · Protección de datos · Soporte 24/7
+    </div>
   </div>
 
+  <!-- RESUMEN -->
   <div class="checkout-summary">
-    <h3>Resumen</h3>
-    <p>Productos: <span>89 €</span></p>
-    <p>Envío: <span>Gratis</span></p>
+    <h3>Resumen del pedido</h3>
+
+    <p><span>Productos</span><span>89 €</span></p>
+    <p><span>Envío</span><span>Gratis</span></p>
+
     <hr>
+
     <h2>Total: 89 €</h2>
   </div>
 
