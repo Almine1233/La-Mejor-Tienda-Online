@@ -2,13 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Finalizar compra</title>
+  <title>Finalizar compra | La Mejor Tienda</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="checkout">
+<!-- HEADER SIMPLE -->
+<header class="header">
+  <div class="logo">🛍 La Mejor Tienda</div>
+</header>
+
+<!-- CHECKOUT -->
+<section class="checkout">
 
   <!-- PASOS -->
   <div class="checkout-steps">
@@ -21,51 +32,45 @@
   <div class="checkout-form">
     <h2>Datos de envío</h2>
 
-    <label>Nombre completo</label>
-    <input type="text" placeholder="Juan Pérez">
+    <input type="text" placeholder="Nombre completo">
+    <input type="text" placeholder="Dirección">
+    <input type="text" placeholder="Ciudad">
+    <input type="text" placeholder="Código postal">
+    <input type="email" placeholder="Correo electrónico">
 
-    <label>Dirección</label>
-    <input type="text" placeholder="Calle Ejemplo 123">
-
-    <label>Ciudad</label>
-    <input type="text" placeholder="Madrid">
-
-    <label>Código postal</label>
-    <input type="text" placeholder="28001">
-
-    <button>Confirmar pedido</button>
-
-    <div class="checkout-trust">
-      🔒 Pago seguro · Protección de datos · Soporte 24/7
-    </div>
+    <button>Continuar al pago</button>
   </div>
 
   <!-- RESUMEN -->
   <div class="checkout-summary">
     <h3>Resumen del pedido</h3>
 
-    <p><span>Productos</span><span>89 €</span></p>
-    <p><span>Envío</span><span>Gratis</span></p>
+    <div class="summary-item">
+      <span>Productos</span>
+      <span>89 €</span>
+    </div>
+
+    <div class="summary-item">
+      <span>Envío</span>
+      <span class="free">Gratis</span>
+    </div>
 
     <hr>
 
-    <h2>Total: 89 €</h2>
+    <div class="summary-total">
+      <span>Total</span>
+      <span>89 €</span>
+    </div>
+
+    <p class="secure-text">🔒 Pago 100% seguro</p>
   </div>
 
-</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  © 2026 La Mejor Tienda · Compra segura y garantizada
+</footer>
 
 </body>
 </html>
-<div class="checkout-form hidden" id="pago">
-  <h2>Método de pago</h2>
-
-  <div class="payment-option active">
-    💳 Tarjeta de crédito / débito
-  </div>
-
-  <div class="payment-option">
-    ⏳ Pagar más tarde
-  </div>
-
-  <button>Pagar ahora</button>
-</div>
