@@ -467,3 +467,9 @@ body {
 .checkout-summary hr {
   margin: 20px 0;
 }
+@media (max-width: 900px) {
+  .checkout {
+    grid-template-columns: 1fr;
+    padding: 30px;
+  }
+}
