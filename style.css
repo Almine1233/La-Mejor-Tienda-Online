@@ -199,3 +199,115 @@ body {
     color: #94a3b8;
   }
 }
+/* =========================
+   🧑‍💼 ADMIN PANEL
+========================= */
+
+.admin-body {
+  background: #f1f5f9;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+  width: 240px;
+  background: #020617;
+  color: white;
+  padding: 30px 20px;
+}
+
+.admin-sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.admin-sidebar a {
+  display: block;
+  color: #cbd5f5;
+  text-decoration: none;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.admin-sidebar a:hover {
+  color: white;
+}
+
+/* MAIN */
+.admin-main {
+  flex: 1;
+  padding: 40px;
+}
+
+.admin-main h1 {
+  margin-bottom: 30px;
+}
+
+/* FORM */
+.admin-form {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  display: grid;
+  gap: 14px;
+  max-width: 500px;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.admin-form button {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* PRODUCTOS */
+.admin-products {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.admin-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.admin-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.admin-card h3 {
+  margin: 10px 0;
+}
+
+.admin-card button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-card .delete {
+  background: #dc2626;
+  color: white;
+}
