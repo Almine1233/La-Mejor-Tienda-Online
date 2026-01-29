@@ -366,3 +366,53 @@ body {
   margin-top: 20px;
   font-size: 14px;
 }
+.cart-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px;
+  border-radius: 14px;
+  background: white;
+}
+
+.cart-item .remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #dc2626;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cart-item:hover .remove {
+  opacity: 1;
+}
+.about {
+  padding: 80px 40px;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.about-grid div {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
