@@ -149,3 +149,53 @@ body {
   padding: 30px;
   margin-top: 80px;
 }
+/* =========================
+   🌙 MODO OSCURO AUTOMÁTICO
+========================= */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0f172a;
+    color: #e5e7eb;
+  }
+
+  .header {
+    background: #020617;
+    box-shadow: none;
+  }
+
+  .logo {
+    color: #e5e7eb;
+  }
+
+  .nav input {
+    background: #020617;
+    color: #e5e7eb;
+    border: 1px solid #334155;
+  }
+
+  .menu-btn,
+  .account-btn {
+    background: #1e293b;
+    color: #e5e7eb;
+  }
+
+  .hero {
+    background: linear-gradient(120deg, #020617, #020617);
+  }
+
+  .card {
+    background: #020617;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  .card h3,
+  .price {
+    color: #e5e7eb;
+  }
+
+  .footer {
+    background: #020617;
+    color: #94a3b8;
+  }
+}
