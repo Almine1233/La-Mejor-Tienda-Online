@@ -1,53 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>La Mejor Tienda Online</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fuente profesional -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Fuente premium -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="top-bar">
-  <div class="logo">La Mejor Tienda</div>
+<header class="header">
+  <div class="logo">🛍 La Mejor Tienda</div>
 
-  <input type="text" id="buscador" placeholder="Buscar productos...">
-
-  <div class="menu-categorias">
-    ☰
-    <div class="categorias-panel" id="categorias"></div>
-  </div>
-
-  <a href="login.html" class="btn-cuenta">Mi cuenta</a>
+  <nav class="nav">
+    <input type="text" placeholder="Buscar productos..." />
+    <button class="menu-btn">☰ Categorías</button>
+    <a href="login.html" class="account-btn">Mi cuenta</a>
+    <div class="cart">🛒</div>
+  </nav>
 </header>
 
-<section class="banner">
-  <h1>Bienvenido a la Mejor Tienda Online</h1>
-  <p>Compra con confianza. Calidad, rapidez y atención real.</p>
+<section class="hero">
+  <h1>Compra con confianza</h1>
+  <p>Productos de calidad, envíos rápidos y atención real</p>
+  <button class="cta">Ver ofertas</button>
 </section>
 
-<main>
-  <section class="productos" id="productos"></section>
+<main class="container">
+  <h2>Productos destacados</h2>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://picsum.photos/400/300?1" />
+      <h3>Auriculares Pro</h3>
+      <p class="price">49,99 €</p>
+      <button>Añadir al carrito</button>
+    </div>
+
+    <div class="card">
+      <img src="https://picsum.photos/400/300?2" />
+      <h3>Smartwatch X</h3>
+      <p class="price">89,99 €</p>
+      <button>Añadir al carrito</button>
+    </div>
+
+    <div class="card">
+      <img src="https://picsum.photos/400/300?3" />
+      <h3>Zapatillas Urban</h3>
+      <p class="price">59,99 €</p>
+      <button>Añadir al carrito</button>
+    </div>
+
+    <div class="card">
+      <img src="https://picsum.photos/400/300?4" />
+      <h3>Mochila Premium</h3>
+      <p class="price">39,99 €</p>
+      <button>Añadir al carrito</button>
+    </div>
+  </div>
 </main>
 
-<!-- Carrito flotante -->
-<div id="carrito-icono">🛒</div>
-
-<div id="carrito-panel">
-  <h3>Tu carrito</h3>
-  <ul id="carrito-lista"></ul>
-  <p class="total">Total: <span id="total">0</span> €</p>
-  <a href="checkout.html" class="btn-principal">Finalizar compra</a>
-</div>
-
-<footer>
-  <p>© 2026 La Mejor Tienda Online · <a href="info.html">Información</a></p>
+<footer class="footer">
+  <p>© 2026 La Mejor Tienda Online · Compra segura</p>
 </footer>
 
-<script src="main.js"></script>
 </body>
 </html>
