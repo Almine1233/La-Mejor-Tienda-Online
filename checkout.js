@@ -25,3 +25,8 @@ form.querySelector("button").addEventListener("click", () => {
     [...inputs].map(i => i.value)
   ));
 });
+const saved = JSON.parse(localStorage.getItem("checkoutData"));
+if (saved) {
+  document.querySelectorAll(".checkout-form input")
+    .forEach((input, i) => input.value = saved[i]);
+}
