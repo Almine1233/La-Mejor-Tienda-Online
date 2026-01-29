@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Panel Admin</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Admin · La Mejor Tienda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="admin-body">
 
-<header class="top-bar">
-  <div class="logo">Panel de Administración</div>
-  <button onclick="logout()">Cerrar sesión</button>
-</header>
+<div class="admin-layout">
 
-<main class="admin">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <h2>Admin</h2>
+    <a href="#">📦 Productos</a>
+    <a href="#">📂 Categorías</a>
+    <a href="#">📊 Estadísticas</a>
+    <a href="index.html">🏠 Volver a la tienda</a>
+  </aside>
 
-<section class="admin-box">
-  <h3>Añadir producto</h3>
+  <!-- MAIN -->
+  <main class="admin-main">
 
-  <input id="nombre" placeholder="Nombre">
-  <input id="precio" type="number" placeholder="Precio">
-  <input id="categoria" placeholder="Categoría">
-  <input id="img" placeholder="URL de imagen">
+    <h1>Gestión de productos</h1>
 
-  <button onclick="add()">Añadir</button>
-</section>
+    <!-- FORMULARIO -->
+    <form id="product-form" class="admin-form">
+      <input type="text" id="title" placeholder="Nombre del producto" required>
+      <input type="number" id="price" placeholder="Precio (€)" required>
 
-<section class="admin-box">
-  <h3>Productos</h3>
-  <ul id="lista"></ul>
-</section>
+      <select id="category">
+        <option>Tecnología</option>
+        <option>Moda</option>
+        <option>Hogar</option>
+        <option>Deporte</option>
+      </select>
 
-</main>
+      <input type="file" id="image" accept="image/*">
+      <textarea id="description" placeholder="Descripción del producto"></textarea>
+
+      <button type="submit">Añadir producto</button>
+    </form>
+
+    <!-- LISTA -->
+    <div class="admin-products" id="admin-products"></div>
+
+  </main>
+</div>
 
 <script src="admin.js"></script>
 </body>
