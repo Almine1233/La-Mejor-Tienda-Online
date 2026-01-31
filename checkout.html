@@ -2,51 +2,64 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Finalizar compra | La Mejor Tienda</title>
+  <title>Checkout | La Mejor Tienda</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fuente -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER SIMPLE -->
 <header class="header">
   <div class="logo">🛍 La Mejor Tienda</div>
 </header>
 
-<!-- CHECKOUT -->
 <section class="checkout">
 
   <!-- PASOS -->
   <div class="checkout-steps">
-    <div class="checkout-step active">1. Envío</div>
-    <div class="checkout-step">2. Pago</div>
-    <div class="checkout-step">3. Confirmación</div>
+    <div class="checkout-step active" id="step-1">1. Envío</div>
+    <div class="checkout-step" id="step-2">2. Pago</div>
+    <div class="checkout-step" id="step-3">3. Confirmación</div>
   </div>
 
-  <!-- FORMULARIO -->
-  <div class="checkout-form">
+  <!-- PASO 1 -->
+  <div class="checkout-form" id="shipping">
     <h2>Datos de envío</h2>
 
-    <input type="text" placeholder="Nombre completo">
-    <input type="text" placeholder="Dirección">
-    <input type="text" placeholder="Ciudad">
-    <input type="text" placeholder="Código postal">
-    <input type="email" placeholder="Correo electrónico">
+    <input placeholder="Nombre completo">
+    <input placeholder="Dirección">
+    <input placeholder="Ciudad">
+    <input placeholder="Código postal">
+    <input placeholder="Correo electrónico">
 
-    <button>Continuar al pago</button>
+    <button onclick="goToPayment()">Continuar al pago</button>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="checkout-form hidden" id="payment">
+    <h2>Método de pago</h2>
+
+    <div class="payment-option active">💳 Tarjeta de crédito</div>
+    <div class="payment-option">🅿 PayPal</div>
+    <div class="payment-option">⏳ Pagar más tarde</div>
+
+    <button onclick="goToConfirmation()">Pagar ahora</button>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="checkout-form hidden" id="confirmation">
+    <h2>¡Pedido confirmado! 🎉</h2>
+    <p>Gracias por tu compra. Te hemos enviado un correo con los detalles.</p>
+    <button onclick="window.location.href='index.html'">Volver a la tienda</button>
   </div>
 
   <!-- RESUMEN -->
   <div class="checkout-summary">
-    <h3>Resumen del pedido</h3>
+    <h3>Resumen</h3>
 
     <div class="summary-item">
-      <span>Productos</span>
+      <span>Producto</span>
       <span>89 €</span>
     </div>
 
@@ -62,15 +75,11 @@
       <span>89 €</span>
     </div>
 
-    <p class="secure-text">🔒 Pago 100% seguro</p>
+    <p class="secure-text">🔒 Pago seguro</p>
   </div>
 
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  © 2026 La Mejor Tienda · Compra segura y garantizada
-</footer>
-
+<script src="script.js"></script>
 </body>
 </html>
