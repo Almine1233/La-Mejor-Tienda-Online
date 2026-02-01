@@ -1,71 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>La Mejor Tienda Online</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Fuente premium -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Tienda – Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="header">
-  <div class="logo">🛍 La Mejor Tienda</div>
-
-  <nav class="nav">
-    <input type="text" placeholder="Buscar productos..." />
-    <button class="menu-btn">☰ Categorías</button>
-    <a href="login.html" class="account-btn">Mi cuenta</a>
-    <div class="cart">🛒</div>
-  </nav>
+  <h1 class="logo">🛍️ MiMarketplace</h1>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
 </header>
 
-<section class="hero">
-  <h1>Compra con confianza</h1>
-  <p>Productos de calidad, envíos rápidos y atención real</p>
-  <button class="cta">Ver ofertas</button>
-</section>
-
 <main class="container">
-  <h2>Productos destacados</h2>
 
-  <div class="grid">
-    <div class="card">
-      <img src="https://picsum.photos/400/300?1" />
+  <!-- PRODUCTOS -->
+  <section class="products">
+
+    <div class="product">
+      <img src="images/producto1.jpg">
       <h3>Auriculares Pro</h3>
-      <p class="price">49,99 €</p>
-      <button>Añadir al carrito</button>
+      <p>89 €</p>
+      <button onclick="addToCart('Auriculares Pro', 89)">Añadir</button>
     </div>
 
-    <div class="card">
-      <img src="https://picsum.photos/400/300?2" />
+    <div class="product">
+      <img src="images/producto2.jpg">
       <h3>Smartwatch X</h3>
-      <p class="price">89,99 €</p>
-      <button>Añadir al carrito</button>
+      <p>129 €</p>
+      <button onclick="addToCart('Smartwatch X', 129)">Añadir</button>
     </div>
 
-    <div class="card">
-      <img src="https://picsum.photos/400/300?3" />
-      <h3>Zapatillas Urban</h3>
-      <p class="price">59,99 €</p>
-      <button>Añadir al carrito</button>
+    <div class="product">
+      <img src="images/producto3.jpg">
+      <h3>Teclado Mecánico</h3>
+      <p>99 €</p>
+      <button onclick="addToCart('Teclado Mecánico', 99)">Añadir</button>
     </div>
 
-    <div class="card">
-      <img src="https://picsum.photos/400/300?4" />
-      <h3>Mochila Premium</h3>
-      <p class="price">39,99 €</p>
-      <button>Añadir al carrito</button>
-    </div>
-  </div>
+  </section>
+
 </main>
 
-<footer class="footer">
-  <p>© 2026 La Mejor Tienda Online · Compra segura</p>
-</footer>
+<!-- CARRITO -->
+<div class="cart" id="cart">
+  <h2>Tu carrito</h2>
+  <div id="cart-items"></div>
+  <div class="cart-total">
+    Total: <span id="cart-total">0</span> €
+  </div>
+  <button class="checkout-btn">Finalizar compra</button>
+</div>
 
+<script src="script.js"></script>
 </body>
 </html>
