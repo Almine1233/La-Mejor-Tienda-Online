@@ -43,7 +43,33 @@ function renderProducts() {
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   cart.push(product);
+  function updateCart() {
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${item.name}
+      <span>
+        ${item.price} €
+        <button onclick="removeItem(${index})">❌</button>
+      </span>
+    `;
+    cartItems.appendChild(li);
+  });
+
+  cartTotal.textContent = total;
+  cartCount.textContent = cart.length;
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
   updateCart();
+}
+
 }
 
 function updateCart() {
