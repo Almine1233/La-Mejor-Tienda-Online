@@ -2,53 +2,29 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>MiMarketplace</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Fuente -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <title>Tienda</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="logo">🛍 MiMarketplace</div>
-
-  <div class="header-right">
-    <div class="cart-icon">
-      🛒 <span id="cart-count">0</span>
-    </div>
+  <div class="logo">Mi Marketplace</div>
+  <div class="cart">
+    🛒 <span id="cart-count">0</span>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Compra y vende productos increíbles</h1>
-  <p>Un marketplace creado por la comunidad</p>
-</section>
-
-<!-- PRODUCTOS -->
 <main class="container">
-  <h2>Productos destacados</h2>
-
-  <div class="grid" id="product-grid">
-    <!-- JS inyecta productos -->
-  </div>
+  <h2>Productos</h2>
+  <div class="grid" id="product-grid"></div>
 </main>
 
-<!-- CARRITO -->
-<div class="cart-panel" id="cart-panel">
-  <h3>Tu carrito</h3>
+<aside class="cart-panel">
+  <h3>Carrito</h3>
   <ul id="cart-items"></ul>
-
-  <div class="cart-total">
-    Total: <span id="cart-total">0</span> €
-  </div>
-
-  <button class="checkout-btn">Finalizar compra</button>
-</div>
+  <p>Total: <strong><span id="cart-total">0</span> €</strong></p>
+  <a href="checkout.html" class="checkout-btn">Ir al checkout</a>
+</aside>
 
 <script src="app.js"></script>
 </body>
