@@ -2,59 +2,54 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Tienda – Marketplace</title>
+  <title>MiMarketplace</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="header">
-  <h1 class="logo">🛍️ MiMarketplace</h1>
-  <div class="cart-icon" onclick="toggleCart()">
-    🛒 <span id="cart-count">0</span>
+  <div class="logo">🛍 MiMarketplace</div>
+
+  <div class="header-right">
+    <div class="cart-icon">
+      🛒 <span id="cart-count">0</span>
+    </div>
   </div>
 </header>
 
+<!-- HERO -->
+<section class="hero">
+  <h1>Compra y vende productos increíbles</h1>
+  <p>Un marketplace creado por la comunidad</p>
+</section>
+
+<!-- PRODUCTOS -->
 <main class="container">
+  <h2>Productos destacados</h2>
 
-  <!-- PRODUCTOS -->
-  <section class="products">
-
-    <div class="product">
-      <img src="images/producto1.jpg">
-      <h3>Auriculares Pro</h3>
-      <p>89 €</p>
-      <button onclick="addToCart('Auriculares Pro', 89)">Añadir</button>
-    </div>
-
-    <div class="product">
-      <img src="images/producto2.jpg">
-      <h3>Smartwatch X</h3>
-      <p>129 €</p>
-      <button onclick="addToCart('Smartwatch X', 129)">Añadir</button>
-    </div>
-
-    <div class="product">
-      <img src="images/producto3.jpg">
-      <h3>Teclado Mecánico</h3>
-      <p>99 €</p>
-      <button onclick="addToCart('Teclado Mecánico', 99)">Añadir</button>
-    </div>
-
-  </section>
-
+  <div class="grid" id="product-grid">
+    <!-- JS inyecta productos -->
+  </div>
 </main>
 
 <!-- CARRITO -->
-<div class="cart" id="cart">
-  <h2>Tu carrito</h2>
-  <div id="cart-items"></div>
+<div class="cart-panel" id="cart-panel">
+  <h3>Tu carrito</h3>
+  <ul id="cart-items"></ul>
+
   <div class="cart-total">
     Total: <span id="cart-total">0</span> €
   </div>
+
   <button class="checkout-btn">Finalizar compra</button>
 </div>
 
-<script src="script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
