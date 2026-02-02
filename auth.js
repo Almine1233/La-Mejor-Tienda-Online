@@ -1,45 +1,18 @@
-// REGISTRO
 function register() {
-  const user = document.getElementById("user").value;
-  const pass = document.getElementById("pass").value;
-
-  if (!user || !pass) {
-    alert("Completa todos los campos");
+  const email = document.getElementById("email").value;
+  if (!email) {
+    alert("Email obligatorio");
     return;
   }
-
-  localStorage.setItem("user", user);
-  localStorage.setItem("pass", pass);
-
-  alert("Cuenta creada correctamente");
-  window.location.href = "login.html";
+  localStorage.setItem("user", email);
+  window.location.href = "index.html";
 }
 
-// LOGIN
 function login() {
-  const user = document.getElementById("user").value;
-  const pass = document.getElementById("pass").value;
-
-  const savedUser = localStorage.getItem("user");
-  const savedPass = localStorage.getItem("pass");
-
-  if (user === savedUser && pass === savedPass) {
-    localStorage.setItem("logged", "true");
-    window.location.href = "mi-cuenta.html";
-  } else {
-    alert("Usuario o contraseña incorrectos");
+  const user = localStorage.getItem("user");
+  if (!user) {
+    alert("No existe usuario");
+    return;
   }
-}
-
-// PROTECCIÓN DE PÁGINAS
-function protect() {
-  if (localStorage.getItem("logged") !== "true") {
-    window.location.href = "login.html";
-  }
-}
-
-// LOGOUT
-function logout() {
-  localStorage.removeItem("logged");
   window.location.href = "index.html";
 }
