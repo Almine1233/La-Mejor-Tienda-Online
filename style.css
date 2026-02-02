@@ -49,3 +49,47 @@ body {
   gap: 40px;
   padding: 40px;
 }
+/* =========================
+   🖤 BLACK PREMIUM THEME
+========================= */
+
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
+}
+
+.header {
+  background: rgba(2,6,23,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1e293b;
+}
+
+.card,
+.checkout-form,
+.checkout-summary,
+.auth-card,
+.admin-card {
+  background: linear-gradient(180deg, #020617, #020617);
+  border: 1px solid #1e293b;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.01);
+}
+
+button {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+button:hover {
+  filter: brightness(1.15);
+}
+
+.price {
+  color: #a5b4fc;
+  font-weight: 600;
+}
+
+.checkout-step.active {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
