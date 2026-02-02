@@ -24,11 +24,8 @@ const cartItems = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
 
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-/* =========================
-   RENDER PRODUCTOS
-========================= */
 function renderProducts() {
   products.forEach(p => {
     const card = document.createElement("div");
@@ -43,9 +40,6 @@ function renderProducts() {
   });
 }
 
-/* =========================
-   CARRITO
-========================= */
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   cart.push(product);
@@ -63,23 +57,20 @@ function updateCart() {
 
   cart.forEach((item, index) => {
     total += item.price;
-
     const li = document.createElement("li");
     li.innerHTML = `
-      ${item.name}
-      <span>
-        ${item.price} €
-        <button onclick="removeItem(${index})">❌</button>
-      </span>
+      ${item.name} - ${item.price} €
+      <button onclick="removeItem(${index})">❌</button>
     `;
     cartItems.appendChild(li);
   });
 
   cartTotal.textContent = total;
   cartCount.textContent = cart.length;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("total", total);
 }
 
-/* =========================
-   INIT
-========================= */
 renderProducts();
+updateCart();
