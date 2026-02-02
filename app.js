@@ -26,6 +26,9 @@ const cartCount = document.getElementById("cart-count");
 
 let cart = [];
 
+/* =========================
+   RENDER PRODUCTOS
+========================= */
 function renderProducts() {
   products.forEach(p => {
     const card = document.createElement("div");
@@ -40,10 +43,21 @@ function renderProducts() {
   });
 }
 
+/* =========================
+   CARRITO
+========================= */
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   cart.push(product);
-  function updateCart() {
+  updateCart();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function updateCart() {
   cartItems.innerHTML = "";
   let total = 0;
 
@@ -65,26 +79,7 @@ function addToCart(id) {
   cartCount.textContent = cart.length;
 }
 
-function removeItem(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
-
-}
-
-function updateCart() {
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(item => {
-    total += item.price;
-    const li = document.createElement("li");
-    li.innerHTML = `${item.name} <span>${item.price}€</span>`;
-    cartItems.appendChild(li);
-  });
-
-  cartTotal.textContent = total;
-  cartCount.textContent = cart.length;
-}
-
+/* =========================
+   INIT
+========================= */
 renderProducts();
