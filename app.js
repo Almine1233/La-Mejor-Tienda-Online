@@ -1,75 +1,66 @@
 const products = [
-  {
-    id: 1,
-    name: "Auriculares Pro",
-    price: 89,
-    image: "https://picsum.photos/400/300?1"
-  },
-  {
-    id: 2,
-    name: "Smartwatch X",
-    price: 129,
-    image: "https://picsum.photos/400/300?2"
-  },
-  {
-    id: 3,
-    name: "Teclado Mecánico",
-    price: 99,
-    image: "https://picsum.photos/400/300?3"
-  }
+  { id: 1, name: "Auriculares Pro", price: 89, image: "https://picsum.photos/400/300?1" },
+  { id: 2, name: "Smartwatch X", price: 129, image: "https://picsum.photos/400/300?2" },
+  { id: 3, name: "Teclado Mecánico", price: 99, image: "https://picsum.photos/400/300?3" }
 ];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const grid = document.getElementById("product-grid");
 const cartItems = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
 function renderProducts() {
+  if (!grid) return;
   products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${p.image}">
-      <h3>${p.name}</h3>
-      <div class="price">${p.price} €</div>
-      <button onclick="addToCart(${p.id})">Añadir</button>
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>${p.price} €</p>
+        <button onclick="addToCart(${p.id})">Añadir</button>
+      </div>
     `;
-    grid.appendChild(card);
   });
 }
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   cart.push(product);
-  updateCart();
+  saveCart();
 }
 
 function removeItem(index) {
   cart.splice(index, 1);
+  saveCart();
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
   updateCart();
 }
 
 function updateCart() {
+  if (!cartItems) return;
   cartItems.innerHTML = "";
   let total = 0;
 
-  cart.forEach((item, index) => {
+  cart.forEach((item, i) => {
     total += item.price;
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${item.name} - ${item.price} €
-      <button onclick="removeItem(${index})">❌</button>
+    cartItems.innerHTML += `
+      <li>
+        ${item.name}
+        <button onclick="removeItem(${i})">✖</button>
+      </li>
     `;
-    cartItems.appendChild(li);
   });
 
   cartTotal.textContent = total;
   cartCount.textContent = cart.length;
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("total", total);
+  const checkoutTotal = document.getElementById("checkout-total");
+  if (checkoutTotal) checkoutTotal.textContent = total;
 }
 
 renderProducts();
