@@ -52,3 +52,24 @@ function toggleCart() {
 }
 
 renderCart();
+window.addEventListener("load", () => {
+  if (!localStorage.getItem("visited")) {
+    showWelcome();
+    localStorage.setItem("visited", "true");
+  }
+});
+
+function showWelcome() {
+  const modal = document.createElement("div");
+  modal.className = "welcome-modal";
+  modal.innerHTML = `
+    <div class="welcome-card">
+      <h1>👋 Bienvenido a MiMarketplace</h1>
+      <p>Descubre productos únicos y vende los tuyos.</p>
+      <button onclick="this.parentElement.parentElement.remove()">
+        Empezar
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
