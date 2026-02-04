@@ -69,3 +69,10 @@ if (!localStorage.getItem("visited")) {
   alert("👋 Bienvenido a MiMarketplace\nCompra, vende o haz ambas cosas.");
   localStorage.setItem("visited", "true");
 }
+{
+  id: 1,
+  name: "Auriculares Pro",
+  price: 89,
+  image: "...",
+  seller: "usuario_123"
+}
