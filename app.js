@@ -76,3 +76,12 @@ if (!localStorage.getItem("visited")) {
   image: "...",
   seller: "usuario_123"
 }
+function addProduct(name, price, image) {
+  products.push({
+    id: Date.now(),
+    name,
+    price,
+    image,
+    seller: "currentUser"
+  });
+}
