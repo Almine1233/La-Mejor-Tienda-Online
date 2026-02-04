@@ -93,3 +93,8 @@ button:hover {
 .checkout-step.active {
   background: linear-gradient(135deg, #2563eb, #7c3aed);
 }
+body {
+  background: radial-gradient(circle at top, #1a1a2e, #000);
+  color: #eee;
+  transition: background 0.5s;
+}
