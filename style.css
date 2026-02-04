@@ -98,3 +98,11 @@ body {
   color: #eee;
   transition: background 0.5s;
 }
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
