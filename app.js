@@ -65,3 +65,7 @@ function updateCart() {
 
 renderProducts();
 updateCart();
+if (!localStorage.getItem("visited")) {
+  alert("👋 Bienvenido a MiMarketplace\nCompra, vende o haz ambas cosas.");
+  localStorage.setItem("visited", "true");
+}
