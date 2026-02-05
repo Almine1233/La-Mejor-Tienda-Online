@@ -2,22 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mi Marketplace</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiMarketplace</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
-  <div class="logo">🛒 MiMarketplace</div>
-  <div class="header-right">
-    <span id="cart-icon">🛍 <span id="cart-count">0</span></span>
-    <a href="login.html" class="btn">Cuenta</a>
-  </div>
+  <h1>🛒 MiMarketplace</h1>
+  <nav>
+    <a href="sell.html">Vender</a>
+    <a href="login.html">Cuenta</a>
+    <span class="cart">🛒 <span id="cart-count">0</span></span>
+  </nav>
 </header>
 
 <section class="hero">
-  <h1>Compra y vende productos como nunca antes</h1>
+  <h2>Compra y vende productos como nunca antes</h2>
   <p>Una mezcla entre Amazon y YouTube, creada por la comunidad</p>
 </section>
 
@@ -26,13 +26,12 @@
   <div id="product-grid" class="grid"></div>
 </main>
 
-<!-- CARRITO -->
-<div id="cart-panel" class="cart-panel hidden">
+<aside class="cart-panel">
   <h3>Tu carrito</h3>
   <ul id="cart-items"></ul>
   <p>Total: <strong><span id="cart-total">0</span> €</strong></p>
-  <a href="checkout.html" class="btn-primary">Finalizar compra</a>
-</div>
+  <button class="btn-primary">Finalizar compra</button>
+</aside>
 
 <script src="js/app.js"></script>
 </body>
