@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,12 +18,14 @@
     <input placeholder="Nombre completo">
     <input placeholder="Dirección">
     <input placeholder="Ciudad">
-    <button>Continuar al pago</button>
+    <input placeholder="Código postal">
+    <button class="btn-primary">Confirmar pedido</button>
   </div>
 
   <div class="checkout-summary">
     <h3>Resumen</h3>
-    <p>Total: €<span id="checkout-total">0</span></p>
+    <p>Total: <strong><span id="checkout-total">0</span> €</strong></p>
+    <p class="secure">🔒 Pago seguro y protegido</p>
   </div>
 </main>
 
