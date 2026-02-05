@@ -7,6 +7,7 @@ const products = [
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const grid = document.getElementById("product-grid");
+const cartPanel = document.getElementById("cart-panel");
 const cartItems = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
@@ -31,11 +32,6 @@ function addToCart(id) {
   saveCart();
 }
 
-function removeItem(index) {
-  cart.splice(index, 1);
-  saveCart();
-}
-
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCart();
@@ -49,39 +45,43 @@ function updateCart() {
   cart.forEach((item, i) => {
     total += item.price;
     cartItems.innerHTML += `
-      <li>
-        ${item.name}
-        <button onclick="removeItem(${i})">✖</button>
-      </li>
+      <li>${item.name} - ${item.price} € 
+      <button onclick="removeItem(${i})">✖</button></li>
     `;
   });
 
-  cartTotal.textContent = total;
-  cartCount.textContent = cart.length;
+  if (cartTotal) cartTotal.textContent = total;
+  if (cartCount) cartCount.textContent = cart.length;
 
   const checkoutTotal = document.getElementById("checkout-total");
   if (checkoutTotal) checkoutTotal.textContent = total;
 }
 
+function removeItem(index) {
+  cart.splice(index, 1);
+  saveCart();
+}
+
+document.getElementById("cart-icon")?.addEventListener("click", () => {
+  cartPanel.classList.toggle("hidden");
+});
+
+/* USUARIOS */
+function register() {
+  const u = document.getElementById("reg-user").value;
+  const p = document.getElementById("reg-pass").value;
+  localStorage.setItem("user", JSON.stringify({ u, p }));
+  alert("Cuenta creada");
+}
+
+function login() {
+  alert("Login simulado");
+}
+
 renderProducts();
 updateCart();
+
 if (!localStorage.getItem("visited")) {
-  alert("👋 Bienvenido a MiMarketplace\nCompra, vende o haz ambas cosas.");
+  alert("👋 Bienvenido a MiMarketplace");
   localStorage.setItem("visited", "true");
-}
-{
-  id: 1,
-  name: "Auriculares Pro",
-  price: 89,
-  image: "...",
-  seller: "usuario_123"
-}
-function addProduct(name, price, image) {
-  products.push({
-    id: Date.now(),
-    name,
-    price,
-    image,
-    seller: "currentUser"
-  });
 }
