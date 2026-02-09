@@ -1,19 +1,47 @@
-<h2 id="seller"></h2>
-<div class="grid" id="seller-products"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<header class="header">
+  <div class="logo">Perfil</div>
+</header>
+
+<main class="container">
+  <h2 id="seller-name"></h2>
+
+  <button id="follow-btn"></button>
+
+  <div class="grid" id="seller-products"></div>
+</main>
+
+<script src="social.js"></script>
 <script>
 const seller = new URLSearchParams(location.search).get("u");
-document.getElementById("seller").innerText = "Perfil de " + seller;
+document.getElementById("seller-name").innerText = "👤 " + seller;
+
+const btn = document.getElementById("follow-btn");
+btn.innerHTML = `Seguir (${followers(seller)})`;
+btn.onclick = () => follow(seller);
 
 const products = JSON.parse(localStorage.getItem("products")) || [];
+const grid = document.getElementById("seller-products");
+
 products
   .filter(p => p.seller === seller)
   .forEach(p => {
-    document.getElementById("seller-products").innerHTML += `
+    grid.innerHTML += `
       <div class="card">
         <img src="${p.image}">
         <h3>${p.name}</h3>
-        <div>${p.price} €</div>
-      </div>`;
+        <p>${p.price} €</p>
+      </div>
+    `;
   });
 </script>
+</body>
+</html>
