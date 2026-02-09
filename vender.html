@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vender</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Vender producto</div>
+</header>
+
+<main class="container">
+  <form class="admin-form" onsubmit="addProduct(event)">
+    <input id="name" placeholder="Nombre del producto">
+    <input id="price" type="number" placeholder="Precio">
+    <input id="image" placeholder="URL de imagen">
+    <button>Publicar</button>
+  </form>
+</main>
+
+<script>
+function addProduct(e) {
+  e.preventDefault();
+
+  const products = JSON.parse(localStorage.getItem("products")) || [];
+  const seller = localStorage.getItem("currentUser") || "anon";
+
+  products.push({
+    id: Date.now(),
+    name: name.value,
+    price: price.value,
+    image: image.value,
+    seller
+  });
+
+  localStorage.setItem("products", JSON.stringify(products));
+  location.href = "index.html";
+}
+</script>
+</body>
+</html>
