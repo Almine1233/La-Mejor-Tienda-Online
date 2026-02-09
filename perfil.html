@@ -1,0 +1,19 @@
+<h2 id="seller"></h2>
+<div class="grid" id="seller-products"></div>
+
+<script>
+const seller = new URLSearchParams(location.search).get("u");
+document.getElementById("seller").innerText = "Perfil de " + seller;
+
+const products = JSON.parse(localStorage.getItem("products")) || [];
+products
+  .filter(p => p.seller === seller)
+  .forEach(p => {
+    document.getElementById("seller-products").innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <div>${p.price} €</div>
+      </div>`;
+  });
+</script>
