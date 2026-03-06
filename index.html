@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>MiMarketplace</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiMarketplace</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <header class="header">
-  <div class="logo">🛒 MiMarketplace</div>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="vender.html">Vender</a>
-    <a href="mi-cuenta.html">Cuenta</a>
-    <a href="checkout.html">🛒 <span id="cart-count">0</span></a>
-  </nav>
+
+<div class="logo">MiMarketplace</div>
+
+<input id="search" placeholder="Buscar productos...">
+
+<div class="cart">
+
+🛒 <span id="cart-count">0</span>
+
+</div>
+
 </header>
 
+
 <main class="container">
-  <h1>Explora productos</h1>
-  <div class="grid" id="product-grid"></div>
+
+<h2 class="section-title">Productos destacados</h2>
+
+<div id="product-grid" class="products-grid"></div>
+
 </main>
 
+
+<div class="cart-panel">
+
+<h3>Carrito</h3>
+
+<ul id="cart-items"></ul>
+
+<p>Total: <span id="cart-total">0</span> €</p>
+
+<a href="checkout.html" class="checkout-btn">Finalizar compra</a>
+
+</div>
+
+
 <script src="app.js"></script>
-<script src="social.js"></script>
+
 </body>
 </html>
